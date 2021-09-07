@@ -15,13 +15,13 @@
  */
 package org.thingsboard.server.dao.device;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.eclipse.leshan.core.util.Hex;
-import org.eclipse.leshan.server.bootstrap.InvalidConfigurationException;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.leshan.core.SecurityMode;
+import org.eclipse.leshan.core.util.Hex;
 import org.eclipse.leshan.core.util.SecurityUtil;
+import org.eclipse.leshan.server.bootstrap.InvalidConfigurationException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -30,12 +30,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.thingsboard.common.util.JacksonUtil;
 import org.thingsboard.server.common.data.Device;
-import org.thingsboard.server.common.data.DeviceProfile;
 import org.thingsboard.server.common.data.device.credentials.BasicMqttCredentials;
 import org.thingsboard.server.common.data.device.credentials.lwm2m.LwM2MClientCredentials;
 import org.thingsboard.server.common.data.device.credentials.lwm2m.PSKClientCredentials;
 import org.thingsboard.server.common.data.device.credentials.lwm2m.X509ClientCredentials;
-import org.thingsboard.server.common.data.device.profile.DeviceProfileTransportConfiguration;
 import org.thingsboard.server.common.data.device.profile.Lwm2mDeviceProfileTransportConfiguration;
 import org.thingsboard.server.common.data.id.DeviceId;
 import org.thingsboard.server.common.data.id.EntityId;
@@ -46,11 +44,6 @@ import org.thingsboard.server.common.msg.EncryptionUtil;
 import org.thingsboard.server.dao.entity.AbstractEntityService;
 import org.thingsboard.server.dao.exception.DataValidationException;
 import org.thingsboard.server.dao.service.DataValidator;
-
-import static org.thingsboard.server.common.data.CacheConstants.DEVICE_CREDENTIALS_CACHE;
-import static org.thingsboard.server.dao.service.Validator.validateId;
-import static org.thingsboard.server.dao.service.Validator.validateString;
-import org.eclipse.leshan.core.SecurityMode;
 import org.thingsboard.server.transport.lwm2m.config.LwM2MSecureServerConfig;
 import org.thingsboard.server.transport.lwm2m.config.LwM2MTransportBootstrapConfig;
 import org.thingsboard.server.transport.lwm2m.config.LwM2MTransportServerConfig;
@@ -63,6 +56,10 @@ import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Map;
+
+import static org.thingsboard.server.common.data.CacheConstants.DEVICE_CREDENTIALS_CACHE;
+import static org.thingsboard.server.dao.service.Validator.validateId;
+import static org.thingsboard.server.dao.service.Validator.validateString;
 
 @Service
 @Slf4j
@@ -325,8 +322,21 @@ public class DeviceCredentialsServiceImpl extends AbstractEntityService implemen
     private void checkClientKey (JsonNode node) throws InvalidConfigurationException {
         String modeName = node.get("securityConfigClientMode").asText();
         // checks security config
-
-        if (SecurityMode.RPK.name().equals(modeName)) {
+        // HexDec Len = 32,64,128
+        if (SecurityMode.PSK.name().equals(modeName)) {
+            String key = node.get("key").textValue();
+            assertIf(key == null || key.isEmpty(),
+                    "pre-shared-key mode, Client`s private key or id must be not null or empty.");
+            assertIf(!key.matches("-?[0-9a-fA-F]+"),
+                    "pre-shared-key mode, Client`s private key or id must be HexDecimal format.");
+            assertIf(key.length()%32 != 0 ,
+                    "pre-shared-key mode, Client`s private key or id must be a multiple of 32.");
+            assertIf(key.length() > 128,
+                    "pre-shared-key mode, Client`s private key or id must be not more than 128.");
+            String identity = node.get("identity").textValue();
+            assertIf(identity == null || identity.isEmpty(),
+                    "pre-shared-key mode, Client`s identity key must be not null or empty.");
+        } else if (SecurityMode.RPK.name().equals(modeName)) {
             String value = node.get("key").textValue();
             assertIf(decodeRfc7250PublicKey(org.eclipse.leshan.core.util.Hex.decodeHex(((String) value).toCharArray())) == null,
                     "raw-public-key mode, Client`s public key or id must be RFC7250 encoded public key");
