@@ -16,6 +16,6 @@
 
 FROM adoptopenjdk/maven-openjdk11:latest
 
-ADD application/target/thingsboard-3.3.0-SNAPSHOT-boot.jar /opt/app.jar
+ADD application/target/thingsboard-3.3.2-SNAPSHOT-boot.jar /opt/app.jar
 
 CMD ["java","-jar","-Dspring.config.additional-location=/opt/rubikx-iot-data/external-config/iot-central-override.yml", "/opt/app.jar"]

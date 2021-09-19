@@ -18,7 +18,7 @@ version: '3.8'
 
 services:
   web:
-    image: rubikx/iot-central:3.3.0
+    image: rubikx/iot-central:3.3.2
     container_name: iot-central
     ports:
       - "8080:8080"
