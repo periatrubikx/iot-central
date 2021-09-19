@@ -14,19 +14,28 @@
 /// limitations under the License.
 ///
 
-import { Component } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { Authority } from '@shared/models/authority.enum';
+import { NodeRedComponent } from '@home/pages/node-red/node-red.component';
 
-@Component({
-  selector: 'tb-logo',
-  templateUrl: './logo.component.html',
-  styleUrls: ['./logo.component.scss']
-})
-export class LogoComponent {
-
-  logo = 'assets/logo_title_white.svg';
-
-  gotoThingsboard(): void {
-    window.open('https://iot.rubikx.io', '_blank');
+const routes: Routes = [
+  {
+    path: 'node-red',
+    component: NodeRedComponent,
+    data: {
+      auth: [Authority.TENANT_ADMIN],
+      title: 'node-red.node-red',
+      breadcrumb: {
+        label: 'node-red.node-red',
+        icon: 'settings_ethernet'
+      }
+    }
   }
+];
 
-}
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class NodeRedRoutingModule { }

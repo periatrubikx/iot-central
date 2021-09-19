@@ -7,7 +7,7 @@ SET LOADER_PATH=%BASE%\conf,%BASE%\extensions
 
 SET jarfile=%BASE%\thingsboard-${project.version}-boot.jar
 SET installDir=%BASE%\data
-SET loadDemo=true
+SET loadDemo=false
 
 IF "%SQL_DATA_FOLDER%" == "" (	
 	SET SQL_DATA_FOLDER=/tmp

@@ -247,6 +247,13 @@ export class MenuService {
       },
       {
         id: guid(),
+        name: 'node-red.node-red',
+        type: 'link',
+        path: '/node-red',
+        icon: 'touch_app'
+      },
+      {
+        id: guid(),
         name: 'customer.customers',
         type: 'link',
         path: '/customers',
@@ -334,6 +341,13 @@ export class MenuService {
       },
       {
         id: guid(),
+        name: 'digital-twin.digital-twin',
+        type: 'link',
+        path: '/digital-twin',
+        icon: '3d_rotation'
+      },
+      {
+        id: guid(),
         name: 'audit-log.audit-logs',
         type: 'link',
         path: '/auditLogs',
@@ -385,6 +399,11 @@ export class MenuService {
             name: 'rulechain.rulechains',
             icon: 'settings_ethernet',
             path: '/ruleChains'
+          },
+          {
+            name: 'node-red.node-red',
+            icon: 'settings_ethernet',
+            path: '/node-red'
           }
         ]
       },
@@ -406,6 +425,21 @@ export class MenuService {
             icon: 'domain',
             path: '/assets'
           }
+        ]
+      },
+      {
+        name: 'AI/ML',
+        places: [
+          {
+            name: 'digital-twin.digital-twin',
+            path: '/digital-twin',
+            icon: '3d_rotation'
+          },
+          // {
+          //   name: 'machine-learning.machine-learning',
+          //   path: '/machine-learning',
+          //   icon: 'donut_large'
+          // }
         ]
       },
       {
@@ -560,6 +594,13 @@ export class MenuService {
         type: 'link',
         path: '/dashboards',
         icon: 'dashboard'
+      },
+      {
+        id: guid(),
+        name: 'digital-twin.digital-twin',
+        type: 'link',
+        path: '/digital-twin',
+        icon: '3d_rotation'
       }
     );
     return sections;
@@ -621,6 +662,16 @@ export class MenuService {
             name: 'dashboard.dashboards',
             icon: 'dashboard',
             path: '/dashboards'
+          }
+        ]
+      },
+      {
+        name: 'digital-twin.digital-twin',
+        places: [
+          {
+            name: 'digital-twin.digital-twin',
+            path: '/digital-twin',
+            icon: '3d_rotation'
           }
         ]
       }

@@ -17,7 +17,7 @@ if %jver% NEQ 110 GOTO JAVA_NOT_INSTALLED
 SET loadDemo=false
 
 if "%1" == "--loadDemo" (
-    SET loadDemo=true
+    SET loadDemo=false
 )
 
 SET BASE=%~dp0

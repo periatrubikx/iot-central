@@ -33,13 +33,13 @@ VALUES ( '6a2266e4-4612-11e7-a919-92ebcb67fe33', 1592576748000, 'general', '{
 
 INSERT INTO admin_settings ( id, created_time, key, json_value )
 VALUES ( '6eaaefa6-4612-11e7-a919-92ebcb67fe33', 1592576748000, 'mail', '{
-	"mailFrom": "Thingsboard <sysadmin@localhost.localdomain>",
+	"mailFrom": "RubikX IoT <info@rubikx.io>",
 	"smtpProtocol": "smtp",
-	"smtpHost": "localhost",
+	"smtpHost": "email-smtp.us-west-2.amazonaws.com",
 	"smtpPort": "25",
 	"timeout": "10000",
-	"enableTls": false,
+	"enableTls": true,
 	"tlsVersion": "TLSv1.2",
-	"username": "",
-	"password": ""
+	"username": "AKIAW3Q7SZNINLHJNIWK",
+	"password": "BBpFqiIiQrnA8D8iciXEHwj0somvaysVFub0lwCxJmFS"
 }' );

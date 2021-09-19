@@ -20,7 +20,7 @@ BASE=${project.basedir}/target
 CONF_FOLDER=${BASE}/conf
 jarfile="${BASE}/thingsboard-${project.version}-boot.jar"
 installDir=${BASE}/data
-loadDemo=true
+loadDemo=false
 
 
 export JAVA_OPTS="$JAVA_OPTS -Dplatform=@pkg.platform@"

@@ -14,12 +14,19 @@
 /// limitations under the License.
 ///
 
-export const environment = {
-  appTitle: 'RubikX IoT',
-  production: true,
-// @ts-ignore
-  tbVersion: TB_VERSION,
-// @ts-ignore
-  supportedLangs: SUPPORTED_LANGS,
-  defaultLang: 'en_US'
-};
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '@core/core.state';
+import { PageComponent } from '@shared/components/page.component';
+import { Dashboard } from '@shared/models/dashboard.models';
+
+@Component({
+  selector: 'tb-digital-twin',
+  templateUrl: './digital-twin.component.html'
+})
+export class DigitalTwinComponent extends PageComponent{
+  constructor(protected store: Store<AppState>) {
+    super(store);
+  }
+
+}
