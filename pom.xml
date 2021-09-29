@@ -137,6 +137,7 @@
         <module>common</module>
         <module>rule-engine</module>
         <module>dao</module>
+        <module>rubikx-core</module>
         <module>transport</module>
         <module>ui-ngx</module>
         <module>tools</module>
@@ -855,6 +856,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.rubikx</groupId>
+                <artifactId>rubikx-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.thingsboard</groupId>
                 <artifactId>netty-mqtt</artifactId>

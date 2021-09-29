@@ -47,6 +47,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.rubikx</groupId>
+            <artifactId>rubikx-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-epoll</artifactId>
             <version>${netty.version}</version>
