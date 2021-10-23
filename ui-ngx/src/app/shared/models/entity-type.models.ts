@@ -36,7 +36,8 @@ export enum EntityType {
   API_USAGE_STATE = 'API_USAGE_STATE',
   TB_RESOURCE = 'TB_RESOURCE',
   OTA_PACKAGE = 'OTA_PACKAGE',
-  RPC = 'RPC'
+  RPC = 'RPC',
+  SHIFTS = 'SHIFTS'
 }
 
 export enum AliasEntityType {
@@ -119,6 +120,20 @@ export const entityTypeTranslations = new Map<EntityType | AliasEntityType, Enti
         noEntities: 'user.no-users-text',
         search: 'user.search',
         selectedEntities: 'user.selected-users'
+      }
+    ],
+    [
+      EntityType.SHIFTS,
+      {
+        type:'entity.type-shift',
+        typePlural:'entity.type-shifts',
+        list:'entity.list-of-shift',
+        nameStartsWith:'entity.user-name-starts-with',
+        details:'shift.shift-details',
+        add:'shift.add',
+        noEntities:'shift.no-shifts-text',
+        search:'shift.search',
+        selectedEntities:'shift.selected-shift'
       }
     ],
     [
@@ -352,6 +367,12 @@ export const entityTypeResources = new Map<EntityType, EntityTypeResource<BaseDa
       EntityType.ASSET,
       {
         helpLinkId: 'assets'
+      }
+    ],
+    [
+      EntityType.SHIFTS,
+      {
+        helpLinkId: 'shifts'
       }
     ],
     [

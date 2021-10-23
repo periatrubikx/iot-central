@@ -294,7 +294,14 @@ export class MenuService {
         type: 'link',
         path: '/entityViews',
         icon: 'view_quilt'
-      }
+      },
+      {
+        id: guid(),
+        name: 'shift.shifts',
+        type: 'link',
+        path: '/shift',
+        icon:'transfer_within_a_station'
+      },
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
@@ -472,6 +479,16 @@ export class MenuService {
             path: '/entityViews'
           }
         ]
+      },
+      {
+        name: 'shift.management',
+        places: [
+          {
+            name: 'shift.shifts',
+            icon: 'transfer_within_a_station',
+            path: '/shift'
+          }
+        ]
       }
     );
     if (authState.edgesSupportEnabled) {
@@ -574,7 +591,15 @@ export class MenuService {
         type: 'link',
         path: '/entityViews',
         icon: 'view_quilt'
-      }
+      },
+      {
+        id: guid(),
+        name: 'shift.shift',
+        type: 'link',
+        path: '/shift',
+        icon:'transfer_within_a_station'
+      },
+
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
@@ -636,6 +661,16 @@ export class MenuService {
             name: 'entity-view.entity-views',
             icon: 'view_quilt',
             path: '/entityViews'
+          }
+        ]
+      },
+      {
+        name: 'shift.view.Shift',
+        places: [
+          {
+            name: 'shift.shift',
+            icon:'transfer_within_a_station',
+            path: '/shift'
           }
         ]
       }

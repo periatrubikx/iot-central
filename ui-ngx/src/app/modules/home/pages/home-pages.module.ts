@@ -38,6 +38,7 @@ import { EdgeModule } from '@home/pages/edge/edge.module';
 import { OtaUpdateModule } from '@home/pages/ota-update/ota-update.module';
 import { NodeRedModule } from '@home/pages/node-red/node-red.module';
 import { DigitalTwinModule } from '@home/pages/digital-twin/digital-twin.module';
+import { ShiftModule } from './shift/shift.module';
 
 @NgModule({
   exports: [
@@ -59,8 +60,7 @@ import { DigitalTwinModule } from '@home/pages/digital-twin/digital-twin.module'
     ApiUsageModule,
     OtaUpdateModule,
     UserModule,
-    NodeRedModule,
-    DigitalTwinModule,
+    ShiftModule
   ],
   providers: [
     {

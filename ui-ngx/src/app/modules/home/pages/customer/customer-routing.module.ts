@@ -28,6 +28,7 @@ import { DashboardPageComponent } from '@home/components/dashboard-page/dashboar
 import { BreadCrumbConfig } from '@shared/components/breadcrumb';
 import { dashboardBreadcumbLabelFunction, DashboardResolver } from '@home/pages/dashboard/dashboard-routing.module';
 import { EdgesTableConfigResolver } from '@home/pages/edge/edges-table-config.resolver';
+import { ShiftTableConfigResolver } from '../shift/shift-table-config.resolver';
 
 const routes: Routes = [
   {
@@ -96,7 +97,23 @@ const routes: Routes = [
         resolve: {
           entitiesTableConfig: AssetsTableConfigResolver
         }
-      },
+      },  
+      {
+        path: ':customerId/shifts',
+        component: EntitiesTableComponent,
+        data: {
+          auth: [Authority.TENANT_ADMIN],
+          title: 'customer.shifts',
+          shiftsType: 'customer',
+          breadcrumb: {
+            label: 'customer.shifts',
+            icon: 'domain'
+          }
+        },
+        resolve: {
+          entitiesTableConfig: ShiftTableConfigResolver
+        }
+      },  
       {
         path: ':customerId/edgeInstances',
         component: EntitiesTableComponent,

@@ -144,7 +144,6 @@
         <module>application</module>
         <module>msa</module>
         <module>rest-client</module>
-        <module>rubikx-core</module>
     </modules>
 
     <profiles>
