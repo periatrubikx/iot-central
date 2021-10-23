@@ -8,6 +8,9 @@ Pre-requisite
    alternatively, you can run the following too if you get some licence check errors
    ``mvn clean install -DskipTests=true -Dlicense.skip=true``
 
+If you run into PKIX certificate issue, you can by pass it by running the following command;
+   ``-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true``
+
 2. Start PG database server locally
    ``docker run -d --name tb-pg -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v ${CUSTOM_MOUNT}:/var/lib/postgresql/data -p 6432:5432 postgres``
 
