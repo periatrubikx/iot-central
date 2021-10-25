@@ -131,6 +131,16 @@ export class EntitySubTypeListComponent implements ControlValueAccessor, OnInit,
           this.entitySubtypes = null;
         });
         break;
+      case EntityType.SHIFTS:
+        this.placeholder = this.required ? this.translate.instant('shift.enter-shift-type')
+          : this.translate.instant('shift.any-shift');
+        this.secondaryPlaceholder = '+' + this.translate.instant('shift.shift-type');
+        this.noSubtypesMathingText = 'shift.no-shift-types-matching';
+        this.subtypeListEmptyText = 'shift.shift-type-list-empty';
+        this.broadcastSubscription = this.broadcast.on('shiftSaved',()=>{
+          this.entitySubtypes = null;
+        })
+        break;
       case EntityType.DEVICE:
         this.placeholder = this.required ? this.translate.instant('device.enter-device-type')
           : this.translate.instant('device.any-device');

@@ -20,7 +20,7 @@ export class ShiftTableHeaderComponent extends EntityTableHeaderComponent<ShiftI
 
 
    shiftTypeChanged(shiftType: string) {
-    this.entitiesTableConfig.componentsData.shiftType = shiftType;
+    this.entitiesTableConfig.componentsData.shiftsType = shiftType;
     this.entitiesTableConfig.table.resetSortAndFilter(true);
   }
 }

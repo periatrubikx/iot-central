@@ -118,6 +118,14 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
           this.subTypes = null;
         });
         break;
+      case EntityType.SHIFTS:
+        this.selectEntitySubtypeText = 'shift.select-shift-type';
+        this.entitySubtypeText = 'shift.shift-type';
+        this.entitySubtypeRequiredText = 'shift.shift-type-required';
+        this.broadcastSubscription = this.broadcast.on('shiftSaved',()=>{
+          this.subTypes = null;
+        })
+        break;
       case EntityType.DEVICE:
         this.selectEntitySubtypeText = 'device.select-device-type';
         this.entitySubtypeText = 'device.device-type';

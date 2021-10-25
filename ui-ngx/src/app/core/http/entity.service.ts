@@ -92,6 +92,7 @@ import {
 import { RuleChainMetaData, RuleChainType } from '@shared/models/rule-chain.models';
 import { WidgetService } from '@core/http/widget.service';
 import { DeviceProfileService } from '@core/http/device-profile.service';
+import { ShiftService } from './shift.service';
 
 @Injectable({
   providedIn: 'root'
@@ -115,7 +116,8 @@ export class EntityService {
     private otaPackageService: OtaPackageService,
     private widgetService: WidgetService,
     private deviceProfileService: DeviceProfileService,
-    private utils: UtilsService
+    private utils: UtilsService,
+    private shiftService : ShiftService
   ) { }
 
   private getEntityObservable(entityType: EntityType, entityId: string,
@@ -311,6 +313,14 @@ export class EntityService {
           entitiesObservable = this.assetService.getCustomerAssetInfos(customerId, pageLink, subType, config);
         } else {
           entitiesObservable = this.assetService.getTenantAssetInfos(pageLink, subType, config);
+        }
+        break;
+      case EntityType.SHIFTS:
+        pageLink.sortOrder.property = 'name';
+        if(authUser.authority == Authority.CUSTOMER_USER){
+          entitiesObservable = this.shiftService.getCustomerShiftInfos(customerId,pageLink,subType,config);
+        } else {
+          entitiesObservable = this.shiftService.getShiftInfos(pageLink,subType,config)
         }
         break;
       case EntityType.EDGE:
@@ -708,6 +718,7 @@ export class EntityService {
         entityFieldKeys.push(entityFields.type.keyName);
         break;
       case EntityType.DEVICE:
+      case EntityType.SHIFTS:
       case EntityType.EDGE:
       case EntityType.ASSET:
         entityFieldKeys.push(entityFields.name.keyName);

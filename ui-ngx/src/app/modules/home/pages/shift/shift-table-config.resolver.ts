@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
 import { Customer } from '@app/shared/models/customer.model';
 import { TranslateService } from '@ngx-translate/core';
 import { ShiftTableHeaderComponent } from './shift-table-header/shift-table-header.component';
+import { ShiftService } from '@app/core/http/shift.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +42,13 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     this.config.entityComponent= ShiftComponent;
     this.config.entityTranslations = entityTypeTranslations.get(EntityType.SHIFTS);
     this.config.entityResources = entityTypeResources.get(EntityType.SHIFTS)
-    this.config.detailsReadonly = () => (this.config.componentsData.assetScope === 'customer' || this.config.componentsData.assetScope === 'customer_user');
+
+    this.config.detailsReadonly = () => (this.config.componentsData.shiftScope === 'customer' || this.config.componentsData.shiftScope === 'customer_user');
     this.config.headerComponent = ShiftTableHeaderComponent
   }
 
 
-  configureColumns(assetScope: string): Array<EntityTableColumn<ShiftInfo>> {
+  configureColumns(shiftScope: string): Array<EntityTableColumn<ShiftInfo>> {
     const columns: Array<EntityTableColumn<ShiftInfo>> = [
       new DateEntityTableColumn<ShiftInfo>('createdTime', 'common.created-time', this.datePipe, '150px'),
       new EntityTableColumn<ShiftInfo>('name', 'shift.name', '25%'),
@@ -54,13 +56,9 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
       new EntityTableColumn<ShiftInfo>('startTime', 'shift.startTime', '25%'),
       new EntityTableColumn<ShiftInfo>('endTime','shift.endTime','25%')
     ];
-    if (assetScope === 'tenant') {
+    if (shiftScope === 'tenant') {
       columns.push(
         new EntityTableColumn<ShiftInfo>('customerTitle', 'customer.customer', '25%'),
-        new EntityTableColumn<ShiftInfo>('customerIsPublic', 'asset.public', '60px',
-          entity => {
-            return checkBoxCell(entity.customerIsPublic);
-          }, () => ({}), false),
       );
     }
     return columns;
@@ -81,11 +79,11 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
         }
         else if (authUser.authority === Authority.CUSTOMER_USER) {
           this.config.componentsData.shiftScope = 'customer_user';
+          this.customerId = authUser.customerId;
         }
-        this.customerId = authUser.customerId;
       }),
       mergeMap(() =>
-      this.customerId ? this.customerService.getCustomer(this.customerId) : of(null as Customer)
+          this.customerId ? this.customerService.getCustomer(this.customerId) : of(null as Customer)
       ),
       map((parentCustomer) => {
         if (parentCustomer) {
@@ -95,9 +93,9 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
             this.config.tableTitle = parentCustomer.title + ': ' + this.translate.instant('shift.shifts');
           }
         }
-          
+
         this.config.columns = this.configureColumns(this.config.componentsData.shiftScope);
-        // this.configureEntityFunctions(this.config.componentsData.deviceScope);
+        this.configureEntityFuncations(this.config.componentsData.shiftScope);
 
         this.config.addEnabled = !(this.config.componentsData.shiftScope === 'customer_user' || this.config.componentsData.shiftScope === 'customer');
         this.config.entitiesDeleteEnabled = this.config.componentsData.shiftScope === 'tenant';
@@ -106,6 +104,17 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
         return this.config;
       })
     );
+  }
+
+  configureEntityFuncations(shiftScope:string):void{
+    if(shiftScope === 'tenant'){
+      this.config.entitiesFetchFunction = pageLink =>
+      this.shiftService.getShiftInfos(pageLink,this.config.componentsData.shiftsType);
+    }
+    else{
+      this.config.entitiesFetchFunction = pageLink =>
+       this.shiftService.getCustomerShiftInfos(this.customerId,pageLink,this.config.componentsData.shiftsType);
+    }
   }
 
 }

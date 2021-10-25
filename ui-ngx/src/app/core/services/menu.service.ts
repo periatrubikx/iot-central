@@ -665,7 +665,7 @@ export class MenuService {
         ]
       },
       {
-        name: 'shift.view.Shift',
+        name: 'shift.management',
         places: [
           {
             name: 'shift.shift',

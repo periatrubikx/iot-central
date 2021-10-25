@@ -27,6 +27,7 @@ import { BroadcastService } from '@app/core/services/broadcast.service';
 import { AssetService } from '@core/http/asset.service';
 import { EdgeService } from '@core/http/edge.service';
 import { EntityViewService } from '@core/http/entity-view.service';
+import { ShiftService } from '@app/core/http/shift.service';
 
 @Component({
   selector: 'tb-entity-subtype-select',
@@ -104,6 +105,14 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
           this.subTypes = null;
           this.subTypesOptionsSubject.next('');
         });
+        break;
+      case EntityType.SHIFTS:
+        this.entitySubtypeTitle = 'shift.shift-type';
+        this.entitySubtypeRequiredText='shift.shift-type-required';
+        this.broadcastSubscription = this.broadcast.on('shiftSaved',()=>{
+          this.subTypes =null;
+          this.subTypesOptionsSubject.next('');
+        })
         break;
       case EntityType.DEVICE:
         this.entitySubtypeTitle = 'device.device-type';
@@ -214,6 +223,9 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
       switch (this.entityType) {
         case EntityType.ASSET:
           this.subTypes = this.assetService.getAssetTypes({ignoreLoading: true});
+          break;
+        case EntityType.SHIFTS:
+          this.subTypes = this.shiftService.getShiftArea({ignoreLoading:true})
           break;
         case EntityType.DEVICE:
           this.subTypes = this.deviceService.getDeviceTypes({ignoreLoading: true});

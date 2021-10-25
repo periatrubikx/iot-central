@@ -442,7 +442,7 @@
         "selected-assets": "{ count, plural, 1 {1 asset} other {# assets} } selected"
     },
     "shift":{
-        "shift": "shift",
+        "shift": "Shift",
         "shifts": "Shifts",
         "add": "Add Shift",
         "management": "Shift management",
@@ -453,7 +453,18 @@
         "selected-shift": "{ count, plural, 1 {1 shift} other {# shifts} } selected",
         "list-of-shift": "{ count, plural, 1 {One shift} other {List of # shift} }",
         "type-shift": "Shift",
-        "type-shifts": "shits"
+        "type-shifts": "Shits",
+        "name":"Name",
+        "areaName":"Area Name",
+        "startTime":"Start Time",
+        "endTime":"End Time",
+        "areas": "Area name",
+        "select-shift-type": "Select area",
+        "shift-type": "Shift type",
+        "shift-type-required": "Shift type is required.",
+        "enter-shift-type": "Enter Shift type",
+        "no-shift-types-matching": "No shift types matching '{{entitySubtype}}' were found.",
+        "shift-type-list-empty": "No shift types selected."
     },
     "attribute": {
         "attributes": "Attributes",

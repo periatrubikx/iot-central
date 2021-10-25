@@ -42,7 +42,7 @@ export class EntityViewComponent extends EntityComponent<EntityViewInfo> {
 
   entityViewScope: 'tenant' | 'customer' | 'customer_user' | 'edge';
 
-  allowedEntityTypes = [EntityType.DEVICE, EntityType.ASSET];
+  allowedEntityTypes = [EntityType.DEVICE, EntityType.ASSET,EntityType.SHIFTS];
 
   maxStartTimeMs: Observable<number | null>;
   minEndTimeMs: Observable<number | null>;

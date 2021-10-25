@@ -179,6 +179,11 @@ export class EntityAutocompleteComponent implements ControlValueAccessor, OnInit
           this.noEntitiesMatchingText = 'asset.no-assets-matching';
           this.entityRequiredText = 'asset.asset-required';
           break;
+        case EntityType.SHIFTS:
+          this.entityText = 'shift.shift';
+          this.noEntitiesMatchingText = 'shift.no-shifts-matching';
+          this.entityRequiredText = 'shift.shift-required'
+          break;
         case EntityType.DEVICE:
           this.entityText = 'device.device';
           this.noEntitiesMatchingText = 'device.no-devices-matching';
