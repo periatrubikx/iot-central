@@ -36,6 +36,7 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
                 private customerService: CustomerService,
                 private translate: TranslateService,
                 private datePipe: DatePipe,
+                private shiftService : ShiftService
                 ){
 
     this.config.entityType = EntityType.SHIFTS;
