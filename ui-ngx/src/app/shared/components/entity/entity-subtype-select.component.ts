@@ -80,6 +80,7 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
               public translate: TranslateService,
               private deviceService: DeviceService,
               private assetService: AssetService,
+              private shiftService : ShiftService,
               private edgeService: EdgeService,
               private entityViewService: EntityViewService,
               private fb: FormBuilder) {
@@ -96,7 +97,6 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
   }
 
   ngOnInit() {
-
     switch (this.entityType) {
       case EntityType.ASSET:
         this.entitySubtypeTitle = 'asset.asset-type';
