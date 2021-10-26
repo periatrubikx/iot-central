@@ -111,6 +111,7 @@ import org.thingsboard.server.dao.ota.OtaPackageService;
 import org.thingsboard.server.dao.relation.RelationService;
 import org.thingsboard.server.dao.rpc.RpcService;
 import org.thingsboard.server.dao.rule.RuleChainService;
+import org.thingsboard.server.dao.shift.ShiftService;
 import org.thingsboard.server.dao.tenant.TbTenantProfileCache;
 import org.thingsboard.server.dao.tenant.TenantProfileService;
 import org.thingsboard.server.dao.tenant.TenantService;
@@ -278,6 +279,9 @@ public abstract class BaseController {
 
     @Autowired
     protected EntityActionService entityActionService;
+
+    @Autowired
+    protected ShiftService shiftService;
 
     @Value("${server.log_controller_error_stack_trace}")
     @Getter
