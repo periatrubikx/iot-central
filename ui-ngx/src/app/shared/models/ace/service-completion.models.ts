@@ -34,6 +34,8 @@ export const deviceInfoHref = '<a href="https://github.com/thingsboard/thingsboa
 
 export const assetInfoHref = '<a href="https://github.com/thingsboard/thingsboard/blob/13e6b10b7ab830e64d31b99614a9d95a1a25928a/ui-ngx/src/app/shared/models/asset.models.ts#L32">AssetInfo</a>';
 
+export const shiftInfoHref = '<a href="https://github.com/thingsboard/thingsboard/blob/13e6b10b7ab830e64d31b99614a9d95a1a25928a/ui-ngx/src/app/shared/models/asset.models.ts#L32">ShiftInfo</a>'
+
 export const entityViewInfoHref = '<a href = "https://github.com/thingsboard/thingsboard/blob/13e6b10b7ab830e64d31b99614a9d95a1a25928a/ui-ngx/src/app/shared/models/entity-view.models.ts#L47">EntityViewInfo</a>';
 
 export const entityRelationsQueryHref = '<a href="https://github.com/thingsboard/thingsboard/blob/13e6b10b7ab830e64d31b99614a9d95a1a25928a/ui-ngx/src/app/shared/models/relation.models.ts#L69">EntityRelationsQuery</a>';
@@ -356,6 +358,40 @@ export const serviceCompletions: TbEditorCompletions = {
         ],
         return: observableVoid()
       }
+    }
+  },
+  shiftService:{
+    description:'Shift Service API<br>',
+    meta:'service',
+    type:'',
+    children:{
+      getTenantShiftInfos:{
+        description:'Get tenant shifts',
+        meta:'function',
+        args:[
+          pageLinkArg,
+          {name:'type',type:'string',optional:true,description:'Shift areas'},
+          requestConfigArg
+        ],
+        return : observableArrayReturnType(shiftInfoHref)
+      },
+      getShiftAreas: {
+        description: 'Get all available shifts areas',
+        meta: 'function',
+        args: [
+          requestConfigArg
+        ],
+        return: observableArrayReturnType('<a href="https://github.com/thingsboard/thingsboard/blob/13e6b10b7ab830e64d31b99614a9d95a1a25928a/ui-ngx/src/app/shared/models/entity-type.models.ts#L295">EntitySubtype</a>')
+      },
+      saveShift: {
+        description: 'Save shift',
+        meta: 'function',
+        args: [
+          {name: 'shift', type: shiftInfoHref, description: 'shift object to save'},
+          requestConfigArg
+        ],
+        return: observableReturnType(shiftInfoHref)
+      },
     }
   },
   assetService: {

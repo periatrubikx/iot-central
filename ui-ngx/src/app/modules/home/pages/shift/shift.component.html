@@ -1,8 +1,44 @@
 <div class="tb-details-buttons" fxLayout.xs="column">
-  <button mat-raised-button color="primary"
-          [disabled]="(isLoading$ | async)"
-          (click)="onEntityAction($event, 'makePublic')"
-          [fxShow]="!isEdit && shiftScope === 'tenant' && !isAssignedToCustomer(entity) && !entity?.customerIsPublic">
-    {{'asset.make-public' | translate }}
-  </button>
-</div>
+    <button mat-raised-button color="primary"
+            [disabled]="(isLoading$ | async)"
+            (click)="onEntityAction($event, 'makePublic')"
+            [fxShow]="!isEdit && shiftScope === 'tenant' && !isAssignedToCustomer(entity) && !entity?.customerIsPublic">
+      {{'shift.make-public' | translate }}
+    </button>
+    </div>
+
+    <form [formGroup]="entityForm">
+      <fieldset [disabled]="(isLoading$ | async) || !isEdit">
+        <mat-form-field class="mat-block">
+          <mat-label translate>shift.name</mat-label>
+          <input matInput formControlName="name" required>
+          <mat-error *ngIf="entityForm.get('name').hasError('required')">
+            {{ 'shift.name-required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset [disabled]="(isLoading$ | async) || !isEdit">
+        <mat-form-field class="mat-block">
+          <mat-label translate>shift.areaName</mat-label>
+          <input matInput formControlName="areaName" required>
+          <mat-error *ngIf="entityForm.get('areaName').hasError('required')">
+            {{ 'shift.area-name-required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </fieldset>
+
+      <tb-datetime
+      dateText="shift.start-date"
+      timeText="shift.start-ts"
+      [maxDate]="maxStartTimeMs | async"
+      formControlName="startTimeMs"
+    ></tb-datetime>
+    <tb-datetime
+      dateText="shift.end-date"
+      timeText="shift.end-ts"
+      [minDate]="minEndTimeMs | async"
+      formControlName="endTimeMs"
+    ></tb-datetime>
+
+    </form>

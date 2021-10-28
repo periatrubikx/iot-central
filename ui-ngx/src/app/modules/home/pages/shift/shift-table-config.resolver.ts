@@ -110,7 +110,7 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
   configureEntityFuncations(shiftScope:string):void{
     if(shiftScope === 'tenant'){
       this.config.entitiesFetchFunction = pageLink =>
-      this.shiftService.getShiftInfos(pageLink,this.config.componentsData.shiftsType);
+      this.shiftService.getTenantShiftInfos(pageLink,this.config.componentsData.shiftsType);
     }
     else{
       this.config.entitiesFetchFunction = pageLink =>

@@ -32,18 +32,18 @@ export interface BaseData<T extends HasId> {
 }
 
 export interface Shift extends BaseData<ShiftId>{
-    tenantId:TenantId;
-    customerId:CustomerId;
+    tenantId?:TenantId;
+    customerId?:CustomerId;
     name:string;
     areaName:string;
-    startTime:string;
-    endTime:string;
+    startTimeMs: number;
+    endTimeMs: number;
     additionalInfo?:any;
 }
 
 
 
-export interface ShiftInfo extends Shift{ 
+export interface ShiftInfo extends Shift{
     customerTitle : string;
     customerIsPublic:boolean
 }

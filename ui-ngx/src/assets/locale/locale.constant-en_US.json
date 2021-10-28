@@ -464,7 +464,14 @@
         "shift-type-required": "Shift type is required.",
         "enter-shift-type": "Enter Shift type",
         "no-shift-types-matching": "No shift types matching '{{entitySubtype}}' were found.",
-        "shift-type-list-empty": "No shift types selected."
+        "shift-type-list-empty": "No shift types selected.",
+        "area-name-required":"Area Name is required.",
+        "name-required":"Name is required.",
+        "start-date": "Start date",
+        "start-ts": "Start time",
+        "end-date": "End date",
+        "end-ts": "End time",
+        "make-public": "Make asset public"
     },
     "attribute": {
         "attributes": "Attributes",

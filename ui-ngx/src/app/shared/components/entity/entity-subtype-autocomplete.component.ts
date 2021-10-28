@@ -37,6 +37,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { AssetService } from '@core/http/asset.service';
 import { EntityViewService } from '@core/http/entity-view.service';
 import { EdgeService } from '@core/http/edge.service';
+import { ShiftService } from '@app/core/http/shift.service';
 
 @Component({
   selector: 'tb-entity-subtype-autocomplete',
@@ -94,6 +95,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
               private assetService: AssetService,
               private edgeService: EdgeService,
               private entityViewService: EntityViewService,
+              private shiftService : ShiftService,
               private fb: FormBuilder) {
     this.subTypeFormGroup = this.fb.group({
       subType: [null]
@@ -227,6 +229,9 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
       switch (this.entityType) {
         case EntityType.ASSET:
           subTypesObservable = this.assetService.getAssetTypes({ignoreLoading: true});
+          break;
+        case EntityType.SHIFTS:
+          subTypesObservable = this.shiftService.getShiftArea({ignoreLoading:true});
           break;
         case EntityType.DEVICE:
           subTypesObservable = this.deviceService.getDeviceTypes({ignoreLoading: true});

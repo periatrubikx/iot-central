@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ShiftInfo } from '@app/shared/models/shift.models';
+import { Shift, ShiftInfo } from '@app/shared/models/shift.models';
 import { PageData, PageLink } from '@app/shared/public-api';
 import { Observable } from 'rxjs';
 import { defaultHttpOptionsFromConfig, RequestConfig } from './http-utils';
@@ -15,19 +15,24 @@ export class ShiftService {
     private http: HttpClient
   ) { }
 
-  public getShiftInfos(pageLink:PageLink,type:string='',config?:RequestConfig):Observable<PageData<ShiftInfo>>{
+  public getTenantShiftInfos(pageLink:PageLink,type:string='',config?:RequestConfig):Observable<PageData<ShiftInfo>>{
     return this.http.get<PageData<ShiftInfo>>(`/api/shift/shiftInfos${pageLink.toQuery()}&type=${type}`,
-      defaultHttpOptionsFromConfig(config))
+    defaultHttpOptionsFromConfig(config))
   }
 
 
   public getShiftArea(config?:RequestConfig):Observable<Array<EntitySubtype>>{
-    return this.http.get<Array<EntitySubtype>>('api/areaInfos',defaultHttpOptionsFromConfig(config));
+    return this.http.get<Array<EntitySubtype>>('/api/shift/areaInfos', defaultHttpOptionsFromConfig(config));
   }
 
   public getCustomerShiftInfos(customerId:string,pageLink:PageLink,type:string='',
-                               config?:RequestConfig):Observable<PageData<ShiftInfo>>{
-    return this.http.get<PageData<ShiftInfo>>(`api/cutomer/${customerId}/shiftInfos${pageLink.toQuery()}&type=${type}`,
+          config?:RequestConfig):Observable<PageData<ShiftInfo>>{
+      return this.http.get<PageData<ShiftInfo>>(`api/cutomer/${customerId}/shiftInfos${pageLink.toQuery()}&type=${type}`,
       defaultHttpOptionsFromConfig(config))
   }
+
+  public saveShift(asset: Shift, config?: RequestConfig): Observable<Shift> {
+    return this.http.post<Shift>('/api/shift', asset, defaultHttpOptionsFromConfig(config));
+  }
+
 }

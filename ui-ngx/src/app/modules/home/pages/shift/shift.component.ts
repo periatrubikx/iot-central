@@ -7,6 +7,7 @@ import { EntityType } from '@shared/models/entity-type.models';
 import { EntityComponent } from '../../components/entity/entity.component';
 import { EntityTableConfig } from '../../models/entity/entities-table-config.models';
 import { NULL_UUID } from '@shared/models/id/has-uuid';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'tb-shift',
@@ -16,11 +17,12 @@ import { NULL_UUID } from '@shared/models/id/has-uuid';
 export class ShiftComponent extends EntityComponent<ShiftInfo> {
 
 
-
-
   entityType = EntityType;
   shiftScope: 'tenant' | 'customer' | 'customer_user' ;
 
+
+  maxStartTimeMs: Observable<number | null>;
+  minEndTimeMs: Observable<number | null>;
 
   constructor(
     protected store: Store<AppState>,
@@ -34,6 +36,8 @@ export class ShiftComponent extends EntityComponent<ShiftInfo> {
   ngOnInit(): void {
     this.shiftScope = this.entitiesTableConfigValue.componentsData.shiftScope;
     super.ngOnInit();
+    this.maxStartTimeMs = this.entityForm.get('endTimeMs').valueChanges;
+    this.minEndTimeMs = this.entityForm.get('startTimeMs').valueChanges;
   }
 
   isAssignedToCustomer(entity: ShiftInfo): boolean {
@@ -45,8 +49,9 @@ export class ShiftComponent extends EntityComponent<ShiftInfo> {
     return this.fb.group(
       {
         name: [entity ? entity.name : '', [Validators.required]],
-        type: [entity ? entity.areaName : null, [Validators.required]],
-        label: [entity ? entity.label : ''],
+        areaName: [entity ? entity.areaName : null, [Validators.required]],
+        startTimeMs: [entity ? entity.startTimeMs : null],
+        endTimeMs: [entity ? entity.endTimeMs : null],
         additionalInfo: this.fb.group(
           {
             description: [entity && entity.additionalInfo ? entity.additionalInfo.description : ''],

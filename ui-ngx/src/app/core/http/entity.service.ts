@@ -93,6 +93,7 @@ import { RuleChainMetaData, RuleChainType } from '@shared/models/rule-chain.mode
 import { WidgetService } from '@core/http/widget.service';
 import { DeviceProfileService } from '@core/http/device-profile.service';
 import { ShiftService } from './shift.service';
+import { Shift } from '@app/shared/models/shift.models';
 
 @Injectable({
   providedIn: 'root'
@@ -320,7 +321,7 @@ export class EntityService {
         if(authUser.authority == Authority.CUSTOMER_USER){
           entitiesObservable = this.shiftService.getCustomerShiftInfos(customerId,pageLink,subType,config);
         } else {
-          entitiesObservable = this.shiftService.getShiftInfos(pageLink,subType,config)
+          entitiesObservable = this.shiftService.getTenantShiftInfos(pageLink,subType,config)
         }
         break;
       case EntityType.EDGE:

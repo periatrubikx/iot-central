@@ -31,6 +31,7 @@ import { EdgeService } from '@core/http/edge.service';
 import { EntityViewService } from '@core/http/entity-view.service';
 import { BroadcastService } from '@core/services/broadcast.service';
 import { COMMA, ENTER, SEMICOLON } from '@angular/cdk/keycodes';
+import { ShiftService } from '@app/core/http/shift.service';
 
 @Component({
   selector: 'tb-entity-subtype-list',
@@ -99,6 +100,7 @@ export class EntitySubTypeListComponent implements ControlValueAccessor, OnInit,
               private deviceService: DeviceService,
               private edgeService: EdgeService,
               private entityViewService: EntityViewService,
+              private shiftService : ShiftService,
               private fb: FormBuilder) {
     this.entitySubtypeListFormGroup = this.fb.group({
       entitySubtypeList: [this.entitySubtypeList, this.required ? [Validators.required] : []],
@@ -276,6 +278,9 @@ export class EntitySubTypeListComponent implements ControlValueAccessor, OnInit,
       switch (this.entityType) {
         case EntityType.ASSET:
           subTypesObservable = this.assetService.getAssetTypes({ignoreLoading: true});
+          break;
+        case EntityType.SHIFTS:
+          subTypesObservable = this.shiftService.getShiftArea({ignoreLoading:true});
           break;
         case EntityType.DEVICE:
           subTypesObservable = this.deviceService.getDeviceTypes({ignoreLoading: true});
