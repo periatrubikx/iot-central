@@ -10,12 +10,13 @@ import org.thingsboard.server.common.data.page.PageLink;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
 public class ShiftAreaImpl implements ShiftAreaService{
     @Override
-    public PageData<ShiftArea> findAreasByTenantId(TenantId tenantId, PageLink pageLink) {
+    public List<ShiftArea> findAreasByTenantId(TenantId tenantId) {
         ArrayList<ShiftArea> shiftAreas = new ArrayList<>();
         ShiftArea shiftArea = new ShiftArea();
         shiftArea.setTenantId(tenantId);
@@ -27,8 +28,6 @@ public class ShiftAreaImpl implements ShiftAreaService{
         shiftArea1.setName("Treatment");
         shiftAreas.add(shiftArea1);
 
-        PageData<ShiftArea> shiftAreaPageData = new PageData<>(shiftAreas, 1, 1, false);
-
-        return shiftAreaPageData;
+        return shiftAreas;
     }
 }

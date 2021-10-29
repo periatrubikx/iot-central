@@ -6,6 +6,8 @@ import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 
+import java.util.List;
+
 public interface ShiftAreaService {
-    PageData<ShiftArea> findAreasByTenantId(TenantId tenantId, PageLink pageLink);
+    List<ShiftArea> findAreasByTenantId(TenantId tenantId);
 }

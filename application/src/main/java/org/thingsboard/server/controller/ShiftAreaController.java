@@ -15,9 +15,13 @@
  */
 package org.thingsboard.server.controller;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.thingsboard.server.common.data.EntitySubtype;
 import org.thingsboard.server.common.data.Shift;
 import org.thingsboard.server.common.data.ShiftArea;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
@@ -25,6 +29,9 @@ import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.queue.util.TbCoreComponent;
+import org.thingsboard.server.service.security.model.SecurityUser;
+
+import java.util.List;
 
 import static org.thingsboard.server.controller.ControllerConstants.*;
 
@@ -33,28 +40,21 @@ import static org.thingsboard.server.controller.ControllerConstants.*;
 @RequestMapping("/api")
 public class ShiftAreaController extends BaseController {
 
-    @ApiOperation(value = "Get Area (getAreas)",
-            notes = "Returns a page of shifts. " +
-                    PAGE_DATA_PARAMETERS)
-    @RequestMapping(value = "/shift/areaInfos", params = {"pageSize", "page"}, method = RequestMethod.GET)
+
+    @ApiOperation(value = "Get Areas (getAreas)",
+            notes = "Returns a list of Areas.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/shift/areaInfos", method = RequestMethod.GET)
     @ResponseBody
-    public PageData<ShiftArea> getArea(
-            @ApiParam(value = PAGE_SIZE_DESCRIPTION, required = true)
-            @RequestParam int pageSize,
-            @ApiParam(value = PAGE_NUMBER_DESCRIPTION, required = true)
-            @RequestParam int page,
-            @ApiParam(value = CUSTOMER_TEXT_SEARCH_DESCRIPTION)
-            @RequestParam(required = false) String textSearch,
-            @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = CUSTOMER_SORT_PROPERTY_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortProperty,
-            @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+    public List<ShiftArea> getAssetTypes() throws ThingsboardException {
         try {
-            PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
-            TenantId tenantId = getCurrentUser().getTenantId();
-            return checkNotNull(shiftAreaService.findAreasByTenantId(tenantId, pageLink));
+            SecurityUser user = getCurrentUser();
+            TenantId tenantId = user.getTenantId();
+            List<ShiftArea> areasByTenantId = shiftAreaService.findAreasByTenantId(tenantId);
+            return areasByTenantId;
         } catch (Exception e) {
             throw handleException(e);
         }
     }
+
 }
