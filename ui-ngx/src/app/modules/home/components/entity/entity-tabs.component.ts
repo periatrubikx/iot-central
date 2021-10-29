@@ -109,19 +109,23 @@ export abstract class EntityTabsComponent<T extends BaseData<HasId>,
   }
 
   ngAfterViewInit(): void {
+    
     this.entityTabsSubject.next(this.entityTabs.toArray());
     this.entityTabs.changes.subscribe(
       () => {
+        
         this.entityTabsSubject.next(this.entityTabs.toArray());
       }
     );
   }
 
   protected setEntity(entity: T) {
+    
     this.entityValue = entity;
   }
 
   protected setEntitiesTableConfig(entitiesTableConfig: C) {
+    
     this.entitiesTableConfigValue = entitiesTableConfig;
   }
 

@@ -94,6 +94,18 @@
         <input matInput formControlName="assetNameFilter">
       </mat-form-field>
     </ng-template>
+    <ng-template [ngSwitchCase]="aliasFilterType.shiftAreas">
+      <tb-entity-subtype-autocomplete required
+                                      formControlName="shiftAreas"
+                                      [entityType]="entityType.SHIFTS">
+      </tb-entity-subtype-autocomplete>
+      <mat-form-field class="mat-block">
+        <mat-label translate>shift.name-starts-with</mat-label>
+        <mat-icon class="mat-primary" aria-hidden="false" aria-label="help-icon" matSuffix style="cursor:pointer;"
+                  matTooltip="{{'shift.help-text' | translate }}">help</mat-icon>
+        <input matInput formControlName="shiftAreasNameFilter">
+      </mat-form-field>
+    </ng-template>
     <ng-template [ngSwitchCase]="aliasFilterType.deviceType">
       <tb-entity-subtype-autocomplete required
                                       formControlName="deviceType"
@@ -264,6 +276,14 @@
         required
         [entityType]="entityType.ASSET"
         formControlName="assetTypes">
+      </tb-entity-subtype-list>
+    </ng-template>
+    <ng-template [ngSwitchCase]="aliasFilterType.shiftAreasSearchQuery">
+      <div class="mat-caption tb-required" style="color: rgba(0,0,0,0.57);" translate>shift.shift-areas</div>
+      <tb-entity-subtype-list
+        required
+        [entityType]="entityType.SHIFTS"
+        formControlName="shiftAreas">
       </tb-entity-subtype-list>
     </ng-template>
     <ng-template [ngSwitchCase]="aliasFilterType.deviceSearchQuery">

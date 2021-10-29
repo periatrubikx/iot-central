@@ -280,7 +280,7 @@ export class EntitySubTypeListComponent implements ControlValueAccessor, OnInit,
           subTypesObservable = this.assetService.getAssetTypes({ignoreLoading: true});
           break;
         case EntityType.SHIFTS:
-          subTypesObservable = this.shiftService.getShiftArea({ignoreLoading:true});
+          subTypesObservable = this.shiftService.getShiftAreas({ignoreLoading:true});
           break;
         case EntityType.DEVICE:
           subTypesObservable = this.deviceService.getDeviceTypes({ignoreLoading: true});

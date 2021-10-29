@@ -225,7 +225,7 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
           this.subTypes = this.assetService.getAssetTypes({ignoreLoading: true});
           break;
         case EntityType.SHIFTS:
-          this.subTypes = this.shiftService.getShiftArea({ignoreLoading:true})
+          this.subTypes = this.shiftService.getShiftAreas({ignoreLoading:true})
           break;
         case EntityType.DEVICE:
           this.subTypes = this.deviceService.getDeviceTypes({ignoreLoading: true});

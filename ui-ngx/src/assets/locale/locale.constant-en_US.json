@@ -326,6 +326,9 @@
         "filter-type-asset-type": "Asset type",
         "filter-type-asset-type-description": "Assets of type '{{assetType}}'",
         "filter-type-asset-type-and-name-description": "Assets of type '{{assetType}}' and with name starting with '{{prefix}}'",
+        "filter-type-shift-area": "Shift areas",
+        "filter-type-shift-type-description": "Assets of type '{{shiftAreas}}'",
+        "filter-type-shift-type-and-name-description": "Assets of type '{{shiftAreas}}' and with name starting with '{{prefix}}'",
         "filter-type-device-type": "Device type",
         "filter-type-device-type-description": "Devices of type '{{deviceType}}'",
         "filter-type-device-type-and-name-description": "Devices of type '{{deviceType}}' and with name starting with '{{prefix}}'",
@@ -339,6 +342,8 @@
         "filter-type-relations-query-description": "{{entities}} that have {{relationType}} relation {{direction}} {{rootEntity}}",
         "filter-type-asset-search-query": "Asset search query",
         "filter-type-asset-search-query-description": "Assets with types {{assetTypes}} that have {{relationType}} relation {{direction}} {{rootEntity}}",
+        "filter-type-shift-search-query": "Shift search query",
+        "filter-type-shift-search-query-description": "Assets with types {{shiftAreas}} that have {{relationType}} relation {{direction}} {{rootEntity}}",
         "filter-type-device-search-query": "Device search query",
         "filter-type-device-search-query-description": "Devices with types {{deviceTypes}} that have {{relationType}} relation {{direction}} {{rootEntity}}",
         "filter-type-entity-view-search-query": "Entity view search query",
@@ -362,7 +367,8 @@
         "unlimited-level": "Unlimited level",
         "state-entity": "Dashboard state entity",
         "all-entities": "All entities",
-        "any-relation": "any"
+        "any-relation": "any",
+        "help-text": "Use '%' according to need: '%shift_areas_contains%', '%shift_areas_ends', 'shift_starts_with'."
     },
     "asset": {
         "asset": "Asset",
@@ -471,7 +477,8 @@
         "start-ts": "Start time",
         "end-date": "End date",
         "end-ts": "End time",
-        "make-public": "Make asset public"
+        "make-public": "Make shift public",
+        "list-of-shifts": "{ count, plural, 1 {One shift} other {List of # shifts} }"
     },
     "attribute": {
         "attributes": "Attributes",

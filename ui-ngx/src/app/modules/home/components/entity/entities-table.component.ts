@@ -132,6 +132,7 @@ export class EntitiesTableComponent extends PageComponent implements AfterViewIn
   }
 
   ngOnInit() {
+    
     if (this.entitiesTableConfig) {
       this.init(this.entitiesTableConfig);
     } else {
@@ -151,6 +152,7 @@ export class EntitiesTableComponent extends PageComponent implements AfterViewIn
   }
 
   private init(entitiesTableConfig: EntityTableConfig<BaseData<HasId>>) {
+    
     this.isDetailsOpen = false;
     this.entitiesTableConfig = entitiesTableConfig;
     if (this.entitiesTableConfig.headerComponent) {
@@ -250,6 +252,7 @@ export class EntitiesTableComponent extends PageComponent implements AfterViewIn
   }
 
   private updatePaginationSubscriptions() {
+    
     if (this.sortSubscription) {
       this.sortSubscription.unsubscribe();
       this.sortSubscription = null;
@@ -583,7 +586,7 @@ export class EntitiesTableComponent extends PageComponent implements AfterViewIn
   }
 
   trackByEntityId(index: number, entity: BaseData<HasId>) {
-    return entity.id.id;
+    return entity.id ? entity.id.id : '';
   }
 
 }

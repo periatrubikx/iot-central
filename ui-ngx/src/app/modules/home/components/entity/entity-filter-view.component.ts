@@ -94,6 +94,18 @@ export class EntityFilterViewComponent implements ControlValueAccessor {
               {assetType});
           }
           break;
+        case AliasFilterType.shiftAreas:
+          const shiftArea = this.filter.shiftAreasType;
+          prefix = this.filter.shiftAreaNameFilter;
+          if(prefix && prefix.length){
+            this.filterDisplayValue = this.translate.instant('alias.filter-type-shift-type-and-name-description',
+            {shiftArea,prefix});
+          }
+          else{
+            this.filterDisplayValue = this.translate.instant('alias.filter-type-shift-type-description',
+            {shiftArea});
+          }
+          break;
         case AliasFilterType.deviceType:
           const deviceType = this.filter.deviceType;
           prefix = this.filter.deviceNameFilter;
@@ -180,6 +192,7 @@ export class EntityFilterViewComponent implements ControlValueAccessor {
           }
           break;
         case AliasFilterType.assetSearchQuery:
+        case AliasFilterType.shiftAreasSearchQuery:
         case AliasFilterType.deviceSearchQuery:
         case AliasFilterType.edgeSearchQuery:
         case AliasFilterType.entityViewSearchQuery:
@@ -213,7 +226,19 @@ export class EntityFilterViewComponent implements ControlValueAccessor {
             this.filterDisplayValue = this.translate.instant('alias.filter-type-asset-search-query-description',
               translationValues
             );
-          } else if (this.filter.type === AliasFilterType.deviceSearchQuery) {
+          }
+          else if(this.filter.type ===  AliasFilterType.shiftAreasSearchQuery){
+            const shiftAreaQuoted = [];
+            this.filter.shiftAreas.forEach((filterShiftArea)=>{
+              shiftAreaQuoted.push(`'${filterShiftArea}'`);
+            });
+            const shiftAreaText = shiftAreaQuoted.join(', ');
+            translationValues.shiftArea = shiftAreaText;
+            this.filterDisplayValue = this.translate.instant('alias.filter-type-shift-search-query-description',
+            translationValues
+            );
+          }
+          else if (this.filter.type === AliasFilterType.deviceSearchQuery) {
             const deviceTypesQuoted = [];
             this.filter.deviceTypes.forEach((filterDeviceType) => {
               deviceTypesQuoted.push(`'${filterDeviceType}'`);

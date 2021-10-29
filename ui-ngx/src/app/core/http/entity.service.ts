@@ -550,6 +550,8 @@ export class EntityService {
           return true;
         case AliasFilterType.assetType:
           return entityTypes.indexOf(EntityType.ASSET)  > -1 ? true : false;
+        case AliasFilterType.shiftAreas:
+          return entityTypes.indexOf(EntityType.SHIFTS) > -1 ? true  : false;
         case AliasFilterType.deviceType:
           return entityTypes.indexOf(EntityType.DEVICE)  > -1 ? true : false;
         case AliasFilterType.edgeType:
@@ -615,6 +617,8 @@ export class EntityService {
         return true;
       case AliasFilterType.assetType:
         return entityType === EntityType.ASSET;
+      case AliasFilterType.shiftAreas:
+        return entityType == EntityType.SHIFTS;
       case AliasFilterType.deviceType:
         return entityType === EntityType.DEVICE;
       case AliasFilterType.edgeType:
@@ -903,6 +907,9 @@ export class EntityService {
         }
         return of(result);
       case AliasFilterType.assetType:
+        result.entityFilter = deepClone(filter);
+        return of(result);
+      case AliasFilterType.shiftAreas:
         result.entityFilter = deepClone(filter);
         return of(result);
       case AliasFilterType.deviceType:

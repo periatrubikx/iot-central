@@ -10,7 +10,7 @@ import { EntityType, entityTypeResources,entityTypeTranslations } from '@app/sha
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, take, tap } from 'rxjs/operators';
-import { checkBoxCell, DateEntityTableColumn, EntityTableColumn, EntityTableConfig } from '../../models/entity/entities-table-config.models';
+import { CellActionDescriptor, checkBoxCell, DateEntityTableColumn, EntityTableColumn, EntityTableConfig } from '../../models/entity/entities-table-config.models';
 import { ShiftComponent } from './shift.component';
 import { Authority } from '@app/shared/models/authority.enum';
 import { CustomerService } from '@app/core/http/customer.service';
@@ -20,6 +20,8 @@ import { Customer } from '@app/shared/models/customer.model';
 import { TranslateService } from '@ngx-translate/core';
 import { ShiftTableHeaderComponent } from './shift-table-header/shift-table-header.component';
 import { ShiftService } from '@app/core/http/shift.service';
+import { HomeDialogsService } from '../../dialogs/home-dialogs.service';
+import { BroadcastService } from '@app/core/services/broadcast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +29,15 @@ import { ShiftService } from '@app/core/http/shift.service';
 export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<ShiftInfo>> {
 
   private readonly config: EntityTableConfig<ShiftInfo> = new EntityTableConfig<ShiftInfo>();
-
-
-
+  
   private customerId:string;
 
   constructor(private store:Store<AppState>,
                 private customerService: CustomerService,
                 private translate: TranslateService,
                 private datePipe: DatePipe,
+                private homeDialogs: HomeDialogsService,
+                private broadcast: BroadcastService,
                 private shiftService : ShiftService
                 ){
 
@@ -45,7 +47,7 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     this.config.entityResources = entityTypeResources.get(EntityType.SHIFTS)
 
     this.config.detailsReadonly = () => (this.config.componentsData.shiftScope === 'customer' || this.config.componentsData.shiftScope === 'customer_user');
-    this.config.headerComponent = ShiftTableHeaderComponent
+    this.config.headerComponent = ShiftTableHeaderComponent;
   }
 
 
@@ -97,14 +99,22 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
 
         this.config.columns = this.configureColumns(this.config.componentsData.shiftScope);
         this.configureEntityFuncations(this.config.componentsData.shiftScope);
-
+        this.config.cellActionDescriptors= this.configureCellActions(this.config.componentsData.shiftScope)
         this.config.addEnabled = !(this.config.componentsData.shiftScope === 'customer_user' || this.config.componentsData.shiftScope === 'customer');
         this.config.entitiesDeleteEnabled = this.config.componentsData.shiftScope === 'tenant';
         this.config.deleteEnabled = () => this.config.componentsData.shiftScope === 'tenant';
-
         return this.config;
       })
     );
+  }
+
+  importShifts($event : Event){
+    this.homeDialogs.importEntities(EntityType.SHIFTS).subscribe((res)=>{
+      if(res){
+        this.broadcast.broadcast('shiftSaved');
+        this.config.table.updateData();
+      }
+    })
   }
 
   configureEntityFuncations(shiftScope:string):void{
@@ -116,6 +126,41 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
       this.config.entitiesFetchFunction = pageLink =>
        this.shiftService.getCustomerShiftInfos(this.customerId,pageLink,this.config.componentsData.shiftsType);
     }
+  }
+
+  configureCellActions(shiftScope:string):Array<CellActionDescriptor<ShiftInfo>>{
+    const actions : Array<CellActionDescriptor<ShiftInfo>> = [];
+    if(shiftScope == 'tenant'){
+      actions.push(
+        {
+          name:this.translate.instant('device.manage-credentials'),
+          icon:'security',
+          isEnabled: () => true,
+          onAction: ($event, entity) => ''
+        }
+      )
+    }
+    if(shiftScope == 'customer'){
+      actions.push(
+        {
+          name:this.translate.instant('device.manage-credentials'),
+          icon:'security',
+          isEnabled: () => true,
+          onAction: ($event, entity) => ''
+        }
+      )
+    }
+    if(shiftScope == 'customer_user'){
+      actions.push(
+        {
+          name:this.translate.instant('device.manage-credentials'),
+          icon:'security',
+          isEnabled: () => true,
+          onAction: ($event, entity) => ''
+        }
+      )
+    }
+   return actions;
   }
 
 }

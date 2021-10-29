@@ -127,7 +127,7 @@ export const entityTypeTranslations = new Map<EntityType | AliasEntityType, Enti
       {
         type:'entity.type-shift',
         typePlural:'entity.type-shifts',
-        list:'entity.list-of-shift',
+        list:'entity.list-of-shifts',
         nameStartsWith:'entity.user-name-starts-with',
         details:'shift.shift-details',
         add:'shift.add',

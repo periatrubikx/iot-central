@@ -140,6 +140,11 @@ export class EntityFilterComponent implements ControlValueAccessor, OnInit {
           assetNameFilter: [filter ? filter.assetNameFilter : '', []],
         });
         break;
+      case AliasFilterType.shiftAreas:
+        this.filterFormGroup = this.fb.group({
+          shiftAreas:[filter ? filter.shiftAreas : null ,[Validators.required]],
+          shiftAreasNameFilter:[filter ? filter.shiftAreaNameFilter : '',[]]
+        })
       case AliasFilterType.deviceType:
         this.filterFormGroup = this.fb.group({
           deviceType: [filter ? filter.deviceType : null, [Validators.required]],
@@ -163,6 +168,7 @@ export class EntityFilterComponent implements ControlValueAccessor, OnInit {
         break;
       case AliasFilterType.relationsQuery:
       case AliasFilterType.assetSearchQuery:
+      case AliasFilterType.shiftAreasSearchQuery:
       case AliasFilterType.deviceSearchQuery:
       case AliasFilterType.edgeSearchQuery:
       case AliasFilterType.entityViewSearchQuery:
@@ -188,7 +194,11 @@ export class EntityFilterComponent implements ControlValueAccessor, OnInit {
           if (type === AliasFilterType.assetSearchQuery) {
             this.filterFormGroup.addControl('assetTypes',
               this.fb.control(filter ? filter.assetTypes : [], [Validators.required]));
-          } else if (type === AliasFilterType.deviceSearchQuery) {
+          } else if(type === AliasFilterType.shiftAreasSearchQuery){
+            this.filterFormGroup.addControl('shiftAreas',
+              this.fb.control(filter?filter.shiftAreas : [] ,[Validators.required]));
+          }
+          else if (type === AliasFilterType.deviceSearchQuery) {
             this.filterFormGroup.addControl('deviceTypes',
               this.fb.control(filter ? filter.deviceTypes : [], [Validators.required]));
           } else if (type === AliasFilterType.edgeSearchQuery) {

@@ -26,12 +26,14 @@ export enum AliasFilterType {
   entityType = 'entityType',
   stateEntity = 'stateEntity',
   assetType = 'assetType',
+  shiftAreas = "ShiftArea",
   deviceType = 'deviceType',
   edgeType = 'edgeType',
   entityViewType = 'entityViewType',
   apiUsageState = 'apiUsageState',
   relationsQuery = 'relationsQuery',
   assetSearchQuery = 'assetSearchQuery',
+  shiftAreasSearchQuery='shiftAreaSearchQuery',
   deviceSearchQuery = 'deviceSearchQuery',
   edgeSearchQuery = 'edgeSearchQuery',
   entityViewSearchQuery = 'entityViewSearchQuery'
@@ -50,12 +52,14 @@ export const aliasFilterTypeTranslationMap = new Map<AliasFilterType, string>(
     [ AliasFilterType.entityType, 'alias.filter-type-entity-type' ],
     [ AliasFilterType.stateEntity, 'alias.filter-type-state-entity' ],
     [ AliasFilterType.assetType, 'alias.filter-type-asset-type' ],
+    [ AliasFilterType.shiftAreas,'alias.filter-type-shift-area'],
     [ AliasFilterType.deviceType, 'alias.filter-type-device-type' ],
     [ AliasFilterType.edgeType, 'alias.filter-type-edge-type' ],
     [ AliasFilterType.entityViewType, 'alias.filter-type-entity-view-type' ],
     [ AliasFilterType.apiUsageState, 'alias.filter-type-apiUsageState' ],
     [ AliasFilterType.relationsQuery, 'alias.filter-type-relations-query' ],
     [ AliasFilterType.assetSearchQuery, 'alias.filter-type-asset-search-query' ],
+    [ AliasFilterType.shiftAreasSearchQuery,'alias.filter-type-shift-search-query'],
     [ AliasFilterType.deviceSearchQuery, 'alias.filter-type-device-search-query' ],
     [ AliasFilterType.edgeSearchQuery, 'alias.filter-type-edge-search-query' ],
     [ AliasFilterType.entityViewSearchQuery, 'alias.filter-type-entity-view-search-query' ]
@@ -88,6 +92,11 @@ export interface StateEntityFilter {
 export interface AssetTypeFilter {
   assetType?: string;
   assetNameFilter?: string;
+}
+
+export interface ShiftAreasFilter {
+  shiftAreasType?:string;
+  shiftAreaNameFilter?:string;
 }
 
 export interface DeviceTypeFilter {
@@ -136,6 +145,10 @@ export interface AssetSearchQueryFilter extends EntitySearchQueryFilter {
   assetTypes?: string[];
 }
 
+export interface ShiftAreasSearchQueryFilter extends EntityViewSearchQueryFilter{
+  shiftAreas?:string[];
+}
+
 export interface DeviceSearchQueryFilter extends EntitySearchQueryFilter {
   deviceTypes?: string[];
 }
@@ -155,11 +168,13 @@ export type EntityFilters =
   EntityTypeFilter &
   StateEntityFilter &
   AssetTypeFilter &
+  ShiftAreasFilter&
   DeviceTypeFilter &
   EdgeTypeFilter &
   EntityViewFilter &
   RelationsQueryFilter &
   AssetSearchQueryFilter &
+  ShiftAreasSearchQueryFilter &
   DeviceSearchQueryFilter &
   EntityViewSearchQueryFilter &
   EntitySearchQueryFilter &

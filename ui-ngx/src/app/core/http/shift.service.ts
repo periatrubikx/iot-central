@@ -21,7 +21,7 @@ export class ShiftService {
   }
 
 
-  public getShiftArea(config?:RequestConfig):Observable<Array<EntitySubtype>>{
+  public getShiftAreas(config?:RequestConfig):Observable<Array<EntitySubtype>>{
     return this.http.get<Array<EntitySubtype>>('/api/shift/areaInfos', defaultHttpOptionsFromConfig(config));
   }
 
