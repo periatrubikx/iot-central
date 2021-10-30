@@ -7,4 +7,6 @@ import org.thingsboard.server.common.data.page.PageLink;
 
 public interface ShiftService {
     PageData<Shift> findShiftsByTenantId(TenantId tenantId, PageLink pageLink);
+
+    Shift saveShift(Shift shift);
 }

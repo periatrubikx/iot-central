@@ -27,4 +27,9 @@ public class ShiftServiceImpl implements ShiftService{
 
         return shiftPageData;
     }
+
+    @Override
+    public Shift saveShift(Shift shift) {
+        return null;
+    }
 }
