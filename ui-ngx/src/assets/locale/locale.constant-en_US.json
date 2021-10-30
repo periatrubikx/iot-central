@@ -466,7 +466,7 @@
         "endTime":"End Time",
         "areas": "Area name",
         "select-shift-type": "Select area",
-        "shift-type": "Shift type",
+        "shift-type": "Shift area",
         "shift-type-required": "Shift type is required.",
         "enter-shift-type": "Enter Shift type",
         "no-shift-types-matching": "No shift types matching '{{entitySubtype}}' were found.",
@@ -478,7 +478,9 @@
         "end-date": "End date",
         "end-ts": "End time",
         "make-public": "Make shift public",
-        "list-of-shifts": "{ count, plural, 1 {One shift} other {List of # shifts} }"
+        "list-of-shifts": "{ count, plural, 1 {One shift} other {List of # shifts} }",
+        "any-asset": "Any shift",
+        "name-starts-with": "Shift name expression"
     },
     "attribute": {
         "attributes": "Attributes",

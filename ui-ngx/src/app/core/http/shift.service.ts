@@ -31,8 +31,14 @@ export class ShiftService {
       defaultHttpOptionsFromConfig(config))
   }
 
-  public saveShift(asset: Shift, config?: RequestConfig): Observable<Shift> {
-    return this.http.post<Shift>('/api/shift', asset, defaultHttpOptionsFromConfig(config));
+  public saveShift(shift: Shift, config?: RequestConfig): Observable<ShiftInfo> {
+    return this.http.post<ShiftInfo>('/api/shift', shift, defaultHttpOptionsFromConfig(config));
   }
+
+
+  public getShiftInfo(shiftId: string, config?: RequestConfig): Observable<ShiftInfo> {
+    return this.http.get<ShiftInfo>(`/api/shift/info/${shiftId}`, defaultHttpOptionsFromConfig(config));
+  }
+
 
 }

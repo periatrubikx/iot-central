@@ -93,7 +93,7 @@ import { RuleChainMetaData, RuleChainType } from '@shared/models/rule-chain.mode
 import { WidgetService } from '@core/http/widget.service';
 import { DeviceProfileService } from '@core/http/device-profile.service';
 import { ShiftService } from './shift.service';
-import { Shift } from '@app/shared/models/shift.models';
+import { Shift, ShiftImportEntityData } from '@app/shared/models/shift.models';
 
 @Injectable({
   providedIn: 'root'
@@ -1075,6 +1075,16 @@ export class EntityService {
           }
         };
         saveEntityObservable = this.assetService.saveAsset(asset, config);
+        break;
+      case EntityType.SHIFTS:
+        const shiftEntitityData : ShiftImportEntityData = entityData as unknown as ShiftImportEntityData;
+        const shift : Shift = {
+          name:shiftEntitityData.name,
+          areaName:shiftEntitityData.areaName,
+          startTimeMs:shiftEntitityData.startTimeMs,
+          endTimeMs:shiftEntitityData.endTimeMs,
+        }
+        saveEntityObservable = this.shiftService.saveShift(shift,config)
         break;
       case EntityType.EDGE:
         const edgeEntityData: EdgeImportEntityData = entityData as EdgeImportEntityData;

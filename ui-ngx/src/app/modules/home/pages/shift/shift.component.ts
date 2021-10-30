@@ -52,11 +52,6 @@ export class ShiftComponent extends EntityComponent<ShiftInfo> {
         areaName: [entity ? entity.areaName : null, [Validators.required]],
         startTimeMs: [entity ? entity.startTimeMs : null],
         endTimeMs: [entity ? entity.endTimeMs : null],
-        additionalInfo: this.fb.group(
-          {
-            description: [entity && entity.additionalInfo ? entity.additionalInfo.description : ''],
-          }
-        )
       }
     );
   }

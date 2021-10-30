@@ -45,7 +45,13 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     this.config.entityComponent= ShiftComponent;
     this.config.entityTranslations = entityTypeTranslations.get(EntityType.SHIFTS);
     this.config.entityResources = entityTypeResources.get(EntityType.SHIFTS)
-
+    this.config.saveEntity = shift =>{
+      return this.shiftService.saveShift(shift).pipe(
+        tap(()=>{
+          this.broadcast.broadcast('shiftSaved');
+        })
+      )
+    }
     this.config.detailsReadonly = () => (this.config.componentsData.shiftScope === 'customer' || this.config.componentsData.shiftScope === 'customer_user');
     this.config.headerComponent = ShiftTableHeaderComponent;
   }
@@ -73,6 +79,7 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     const routeParams = route.params;
     this.config.componentsData={
       shiftScope:route.data.shiftsType,
+      shiftArea:''
     };
     this.customerId = routeParams.customerId;
     return this.store.pipe(select(selectAuthUser), take(1)).pipe(

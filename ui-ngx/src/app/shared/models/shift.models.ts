@@ -18,18 +18,11 @@
 import { EntityId } from '@shared/models/id/entity-id';
 import { HasUUID } from '@shared/models/id/has-uuid';
 import { ShiftId } from './id/shift-id';
-import { CustomerId, TenantId } from './public-api';
+import { AttributeData, CustomerId, TenantId } from './public-api';
 import { EntitySearchQuery } from '@shared/models/relation.models';
-
+import { BaseData } from '@shared/models/base-data';
 
 export declare type HasId = EntityId | HasUUID;
-
-export interface BaseData<T extends HasId> {
-  createdTime?: number;
-  id?: T;
-  name?: string;
-  label?: string;
-}
 
 export interface Shift extends BaseData<ShiftId>{
     tenantId?:TenantId;
@@ -38,17 +31,35 @@ export interface Shift extends BaseData<ShiftId>{
     areaName:string;
     startTimeMs: number;
     endTimeMs: number;
-    additionalInfo?:any;
 }
 
+export interface ImportEntityData{
+  name:string;
+  areaName:string;
+  startTimeMs: number;
+  endTimeMs: number;
+  credential: {
+    accessToken?: string;
+    x509?: string;
+  };
+  attributes: {
+    server: AttributeData[],
+    shared: AttributeData[]
+  };
+  timeseries: AttributeData[];
+}
 
+export interface ShiftImportEntityData extends ImportEntityData {
+  secret: string;
+  routingKey: string;
+  cloudEndpoint: string;
+}
 
 export interface ShiftInfo extends Shift{
     customerTitle : string;
     customerIsPublic:boolean
 }
 
-
 export interface ShiftSearchQuery extends EntitySearchQuery {
-  shiftTypes: Array<string>;
+  shiftType: Array<string>;
 }
