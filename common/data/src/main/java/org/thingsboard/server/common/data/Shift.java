@@ -1,13 +1,18 @@
 package org.thingsboard.server.common.data;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.thingsboard.server.common.data.id.AssetId;
 import org.thingsboard.server.common.data.id.CustomerId;
+import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.validation.NoXss;
 
 import java.util.Date;
+import java.util.Optional;
 
-public class Shift extends BaseData implements HasName, HasTenantId, HasCustomerId{
+@ApiModel
+public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, HasCustomerId{
 
     private TenantId tenantId;
     private CustomerId customerId;
@@ -20,6 +25,42 @@ public class Shift extends BaseData implements HasName, HasTenantId, HasCustomer
     @NoXss
     private Date endTime;
 
+
+    public Shift() {
+        super();
+    }
+
+    public Shift(ShiftId id){
+        super(id);
+    }
+
+    @ApiModelProperty(position = 1, value = "JSON object with the asset Id. " +
+            "Specify this field to update the asset. " +
+            "Referencing non-existing asset Id will cause error. " +
+            "Omit this field to create new asset.")
+    @Override
+    public ShiftId getId() {
+        return super.getId();
+    }
+
+    public Shift(Shift shift) {
+        super(shift);
+        this.tenantId = shift.getTenantId();
+        this.customerId = shift.getCustomerId();
+        this.name = shift.getName();
+        this.areaName = shift.getAreaName();
+        this.startTime = shift.getStartTime();
+        this.endTime = shift.getEndTime();
+    }
+
+    public void update(Shift shift) {
+        this.tenantId = shift.getTenantId();
+        this.customerId = shift.getCustomerId();
+        this.name = shift.getName();
+        this.areaName = shift.getAreaName();
+        this.startTime = shift.getStartTime();
+        this.endTime = shift.getEndTime();
+    }
 
     @ApiModelProperty(position = 2, value = "Timestamp of the device creation, in milliseconds", example = "1609459200000", readOnly = true)
     @Override

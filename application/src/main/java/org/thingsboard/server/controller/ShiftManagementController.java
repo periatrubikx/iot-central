@@ -20,14 +20,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.Customer;
 import org.thingsboard.server.common.data.EntityType;
 import org.thingsboard.server.common.data.Shift;
+import org.thingsboard.server.common.data.asset.Asset;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
+import org.thingsboard.server.common.data.exception.ThingsboardErrorCode;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.EdgeId;
@@ -36,16 +40,19 @@ import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.common.data.plugin.ComponentLifecycleEvent;
 import org.thingsboard.server.queue.util.TbCoreComponent;
+import org.thingsboard.server.service.security.model.SecurityUser;
 import org.thingsboard.server.service.security.permission.Operation;
 import org.thingsboard.server.service.security.permission.Resource;
 
 import java.util.List;
 
 import static org.thingsboard.server.controller.ControllerConstants.*;
+import static org.thingsboard.server.dao.asset.BaseAssetService.TB_SERVICE_QUEUE;
 
 @RestController
 @TbCoreComponent
 @RequestMapping("/api")
+@Slf4j
 public class ShiftManagementController extends BaseController {
 
     @ApiOperation(value = "Get Shifts (getShifts)",
@@ -70,6 +77,46 @@ public class ShiftManagementController extends BaseController {
             return checkNotNull(shiftService.findShiftsByTenantId(tenantId, pageLink));
         } catch (Exception e) {
             throw handleException(e);
+        }
+    }
+
+    @ApiOperation(value = "Create Or Update Shift (saveShift)",
+            notes = "Creates or Updates the Shift. When creating shift, platform generates Shift Id as [time-based UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_1_(date-time_and_MAC_address) " +
+                    "The newly created Shift id will be present in the response. " +
+                    "Specify existing Shift id to update the asset. " +
+                    "Referencing non-existing Shift Id will cause 'Not Found' error." + TENANT_OR_CUSTOMER_AUTHORITY_PARAGRAPH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/shift", method = RequestMethod.POST)
+    @ResponseBody
+    public Shift saveShift(@ApiParam(value = "A JSON value representing the asset.") @RequestBody Shift shift) throws ThingsboardException {
+        try {
+            shift.setTenantId(getCurrentUser().getTenantId());
+
+            checkEntity(shift.getId(), shift, Resource.ASSET);
+
+            Shift savedShiftAsset = checkNotNull(shiftService.saveShift(shift));
+
+            onAssetCreatedOrUpdated(savedShiftAsset, shift.getId() != null, getCurrentUser());
+
+            return savedShiftAsset;
+        } catch (Exception e) {
+            logEntityAction(emptyId(EntityType.SHIFT), shift,
+                    null, shift.getId() == null ? ActionType.ADDED : ActionType.UPDATED, e);
+            throw handleException(e);
+        }
+    }
+
+    private void onAssetCreatedOrUpdated(Shift shift, boolean updated, SecurityUser user) {
+        try {
+            logEntityAction(user, shift.getId(), shift,
+                    shift.getCustomerId(),
+                    updated ? ActionType.UPDATED : ActionType.ADDED, null);
+        } catch (ThingsboardException e) {
+            log.error("Failed to log entity action", e);
+        }
+
+        if (updated) {
+            sendEntityNotificationMsg(shift.getTenantId(), shift.getId(), EdgeEventActionType.UPDATED);
         }
     }
 }
