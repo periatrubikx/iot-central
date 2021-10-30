@@ -37,9 +37,9 @@ public class ShiftId extends UUIDBased implements EntityId {
         return new ShiftId(UUID.fromString(assetId));
     }
 
-    @ApiModelProperty(position = 2, required = true, value = "string", example = "ASSET", allowableValues = "ASSET")
+    @ApiModelProperty(position = 2, required = true, value = "string", example = "SHIFT", allowableValues = "SHIFT")
     @Override
     public EntityType getEntityType() {
-        return EntityType.ASSET;
+        return EntityType.SHIFT;
     }
 }
