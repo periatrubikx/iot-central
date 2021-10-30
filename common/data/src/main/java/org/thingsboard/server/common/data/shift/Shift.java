@@ -23,9 +23,9 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
     @NoXss
     private String areaName;
     @NoXss
-    private Date startTime;
+    private Long startTime;
     @NoXss
-    private Date endTime;
+    private Long endTime;
 
 
     public Shift() {
@@ -108,20 +108,20 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
     }
 
     @ApiModelProperty(position = 7, required = true, value = "Start time for the shift", example = "Date time")
-    public Date getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Long startTime) {
         this.startTime = startTime;
     }
 
     @ApiModelProperty(position = 8, required = true, value = "End time", example = "Date time")
-    public Date getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
 }

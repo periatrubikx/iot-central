@@ -2,14 +2,10 @@ package org.thingsboard.server.dao.shift;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.thingsboard.server.common.data.Shift;
-import org.thingsboard.server.common.data.ShiftArea;
+import org.thingsboard.server.common.data.shift.ShiftArea;
 import org.thingsboard.server.common.data.id.TenantId;
-import org.thingsboard.server.common.data.page.PageData;
-import org.thingsboard.server.common.data.page.PageLink;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
