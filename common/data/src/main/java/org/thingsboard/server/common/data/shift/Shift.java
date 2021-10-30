@@ -11,8 +11,6 @@ import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.validation.NoXss;
 
-import java.util.Date;
-
 @ApiModel
 public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, HasCustomerId {
 
@@ -23,9 +21,9 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
     @NoXss
     private String areaName;
     @NoXss
-    private Long startTime;
+    private Long startTimeMs;
     @NoXss
-    private Long endTime;
+    private Long endTimeMs;
 
 
     public Shift() {
@@ -51,8 +49,8 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
         this.customerId = shift.getCustomerId();
         this.name = shift.getName();
         this.areaName = shift.getAreaName();
-        this.startTime = shift.getStartTime();
-        this.endTime = shift.getEndTime();
+        this.startTimeMs = shift.getStartTimeMs();
+        this.endTimeMs = shift.getEndTimeMs();
     }
 
     public void update(Shift shift) {
@@ -60,8 +58,8 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
         this.customerId = shift.getCustomerId();
         this.name = shift.getName();
         this.areaName = shift.getAreaName();
-        this.startTime = shift.getStartTime();
-        this.endTime = shift.getEndTime();
+        this.startTimeMs = shift.getStartTimeMs();
+        this.endTimeMs = shift.getEndTimeMs();
     }
 
     @ApiModelProperty(position = 2, value = "Timestamp of the device creation, in milliseconds", example = "1609459200000", readOnly = true)
@@ -108,20 +106,20 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
     }
 
     @ApiModelProperty(position = 7, required = true, value = "Start time for the shift", example = "Date time")
-    public Long getStartTime() {
-        return startTime;
+    public Long getStartTimeMs() {
+        return startTimeMs;
     }
 
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
+    public void setStartTimeMs(Long startTimeMs) {
+        this.startTimeMs = startTimeMs;
     }
 
     @ApiModelProperty(position = 8, required = true, value = "End time", example = "Date time")
-    public Long getEndTime() {
-        return endTime;
+    public Long getEndTimeMs() {
+        return endTimeMs;
     }
 
-    public void setEndTime(Long endTime) {
-        this.endTime = endTime;
+    public void setEndTimeMs(Long endTimeMs) {
+        this.endTimeMs = endTimeMs;
     }
 }

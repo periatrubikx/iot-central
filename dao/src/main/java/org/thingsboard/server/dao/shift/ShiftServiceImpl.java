@@ -31,8 +31,8 @@ public class ShiftServiceImpl implements ShiftService{
         shift.setTenantId(tenantId);
         shift.setName("A-Shift");
         shift.setAreaName("Packaging");
-        shift.setStartTime(new Date().getTime());
-        shift.setEndTime(new Date().getTime());
+        shift.setStartTimeMs(new Date().getTime());
+        shift.setEndTimeMs(new Date().getTime());
         shifts.add(shift);
 
         Shift shift1 = new Shift();
@@ -40,8 +40,8 @@ public class ShiftServiceImpl implements ShiftService{
         shift1.setTenantId(tenantId);
         shift1.setName("B-Shift");
         shift1.setAreaName("Packaging");
-        shift1.setStartTime(new Date().getTime());
-        shift1.setEndTime(new Date().getTime());
+        shift1.setStartTimeMs(new Date().getTime());
+        shift1.setEndTimeMs(new Date().getTime());
         shifts.add(shift1);
 
         Shift shift2 = new Shift();
@@ -49,8 +49,8 @@ public class ShiftServiceImpl implements ShiftService{
         shift2.setTenantId(tenantId);
         shift2.setName("C-Shift");
         shift2.setAreaName("Packaging");
-        shift2.setStartTime(new Date().getTime());
-        shift2.setEndTime(new Date().getTime());
+        shift2.setStartTimeMs(new Date().getTime());
+        shift2.setEndTimeMs(new Date().getTime());
         shifts.add(shift2);
 
 
@@ -59,13 +59,20 @@ public class ShiftServiceImpl implements ShiftService{
         return shiftPageData;
     }
 
-    @CacheEvict(cacheNames = SHIFT_CACHE, key = "{#shift.tenantId, #shift.name}")
+//    @CacheEvict(cacheNames = SHIFT_CACHE, key = "{#shift.tenantId, #shift.name}")
     @Override
     public Shift saveShift(Shift shift) {
         log.trace("Executing saveShift [{}]", shift);
         Shift savedShift = null;
         try {
-            savedShift = shiftDao.save(shift.getTenantId(), shift);
+//            savedShift = shiftDao.save(shift.getTenantId(), shift);
+            savedShift = new Shift();
+            savedShift.setId(new ShiftId(UUID.randomUUID()));
+            savedShift.setTenantId(shift.getTenantId());
+            savedShift.setName(shift.getName());
+            savedShift.setAreaName(shift.getAreaName());
+            savedShift.setStartTimeMs(shift.getStartTimeMs());
+            savedShift.setEndTimeMs(shift.getEndTimeMs());
         } catch (Exception t) {
 //            ConstraintViolationException e = extractConstraintViolationException(t).orElse(null);
 //            if (e != null && e.getConstraintName() != null && e.getConstraintName().equalsIgnoreCase("asset_name_unq_key")) {
