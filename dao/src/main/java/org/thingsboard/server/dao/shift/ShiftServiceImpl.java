@@ -23,6 +23,24 @@ public class ShiftServiceImpl implements ShiftService{
         shift.setStartTime(new Date());
         shift.setEndTime(new Date());
         shifts.add(shift);
+
+        Shift shift1 = new Shift();
+        shift1.setTenantId(tenantId);
+        shift1.setName("B-Shift");
+        shift1.setAreaName("Packaging");
+        shift1.setStartTime(new Date());
+        shift1.setEndTime(new Date());
+        shifts.add(shift1);
+
+        Shift shift2 = new Shift();
+        shift2.setTenantId(tenantId);
+        shift2.setName("C-Shift");
+        shift2.setAreaName("Packaging");
+        shift2.setStartTime(new Date());
+        shift2.setEndTime(new Date());
+        shifts.add(shift2);
+
+
         PageData<Shift> shiftPageData = new PageData<>(shifts, 1, 1, false);
 
         return shiftPageData;
