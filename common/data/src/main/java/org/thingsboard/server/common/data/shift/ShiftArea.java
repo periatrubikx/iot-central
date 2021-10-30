@@ -1,13 +1,17 @@
-package org.thingsboard.server.common.data;
+package org.thingsboard.server.common.data.shift;
 
 import io.swagger.annotations.ApiModelProperty;
+import org.thingsboard.server.common.data.BaseData;
+import org.thingsboard.server.common.data.HasCustomerId;
+import org.thingsboard.server.common.data.HasName;
+import org.thingsboard.server.common.data.HasTenantId;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.validation.NoXss;
 
 import java.util.Date;
 
-public class ShiftArea extends BaseData implements HasName, HasTenantId, HasCustomerId{
+public class ShiftArea extends BaseData implements HasName, HasTenantId, HasCustomerId {
 
     private TenantId tenantId;
     private CustomerId customerId;
