@@ -56,6 +56,9 @@ export class ShiftComponent extends EntityComponent<ShiftInfo> {
     );
   }
   updateForm(entity: ShiftInfo) {
-    throw new Error('Method not implemented.');
+    this.entityForm.patchValue({name:entity.name});
+    this.entityForm.patchValue({areaName:entity.areaName});
+    this.entityForm.patchValue({startTimeMs : entity.startTimeMs});
+    this.entityForm.patchValue({endTimeMs : entity.endTimeMs})
   }
 }

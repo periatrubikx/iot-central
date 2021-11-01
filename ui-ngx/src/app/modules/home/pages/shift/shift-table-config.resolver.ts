@@ -45,9 +45,7 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     this.config.entityComponent= ShiftComponent;
     this.config.entityTranslations = entityTypeTranslations.get(EntityType.SHIFTS);
     this.config.entityResources = entityTypeResources.get(EntityType.SHIFTS);
-
-    
-    this.config.deleteEntityTitle = shift => this.translate.instant('shift.delete-shift-title',{shiftName:shift.name});
+    this.config.deleteEntityTitle = shift => this.translate.instant('shift.delete-shift-title', {shiftName: shift.name});
     this.config.deleteEntityContent=()=> this.translate.instant('shift.delete-shift-text');
     this.config.deleteEntityTitle = count => this.translate.instant('shift.delete-shifts-title',{count});
     this.config.deleteEntitiesContent = () => this.translate.instant('shift.delete-shifts-text');
