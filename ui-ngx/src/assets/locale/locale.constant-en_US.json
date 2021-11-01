@@ -479,8 +479,14 @@
         "end-ts": "End time",
         "make-public": "Make shift public",
         "list-of-shifts": "{ count, plural, 1 {One shift} other {List of # shifts} }",
-        "any-asset": "Any shift",
-        "name-starts-with": "Shift name expression"
+        "any-shift": "Any shift",
+        "delete-shift": "Delete Shifts",
+        "name-starts-with": "Shift name expression",
+        "delete-shift-title": "Are you sure you want to delete the shift '{{shiftName}}'?",
+        "delete-shift-text": "Be careful, after the confirmation the shift and all related data will become unrecoverable.",
+        "delete-shifts-title": "Are you sure you want to delete { count, plural, 1 {1 shift} other {# shifts} }?",
+        "delete-shifts-action-title": "Delete { count, plural, 1 {1 shift} other {# shifts} }",
+        "delete-shifts-text": "Be careful, after the confirmation all selected shifts will be removed and all related data will become unrecoverable."
     },
     "attribute": {
         "attributes": "Attributes",

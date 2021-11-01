@@ -44,7 +44,15 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     this.config.entityType = EntityType.SHIFTS;
     this.config.entityComponent= ShiftComponent;
     this.config.entityTranslations = entityTypeTranslations.get(EntityType.SHIFTS);
-    this.config.entityResources = entityTypeResources.get(EntityType.SHIFTS)
+    this.config.entityResources = entityTypeResources.get(EntityType.SHIFTS);
+
+    
+    this.config.deleteEntityTitle = shift => this.translate.instant('shift.delete-shift-title',{shiftName:shift.name});
+    this.config.deleteEntityContent=()=> this.translate.instant('shift.delete-shift-text');
+    this.config.deleteEntityTitle = count => this.translate.instant('shift.delete-shifts-title',{count});
+    this.config.deleteEntitiesContent = () => this.translate.instant('shift.delete-shifts-text');
+
+    this.config.loadEntity =id => this.shiftService.getShiftInfo(id.id);
     this.config.saveEntity = shift =>{
       return this.shiftService.saveShift(shift).pipe(
         tap(()=>{
@@ -62,8 +70,8 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
       new DateEntityTableColumn<ShiftInfo>('createdTime', 'common.created-time', this.datePipe, '150px'),
       new EntityTableColumn<ShiftInfo>('name', 'shift.name', '25%'),
       new EntityTableColumn<ShiftInfo>('areaName', 'shift.areaName', '25%'),
-      new EntityTableColumn<ShiftInfo>('startTime', 'shift.startTime', '25%'),
-      new EntityTableColumn<ShiftInfo>('endTime','shift.endTime','25%')
+      new EntityTableColumn<ShiftInfo>('startTimeMs', 'shift.startTime', '25%'),
+      new EntityTableColumn<ShiftInfo>('endTimeMs','shift.endTime','25%')
     ];
     if (shiftScope === 'tenant') {
       columns.push(
@@ -72,8 +80,6 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     }
     return columns;
   }
-
-
 
   resolve(route: ActivatedRouteSnapshot): Observable<EntityTableConfig<ShiftInfo>> {
     const routeParams = route.params;
@@ -125,10 +131,13 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
   }
 
   configureEntityFuncations(shiftScope:string):void{
+    
     if(shiftScope === 'tenant'){
       this.config.entitiesFetchFunction = pageLink =>
       this.shiftService.getTenantShiftInfos(pageLink,this.config.componentsData.shiftsType);
+      this.config.deleteEntity = id => this.shiftService.deleteShift(id.id);
     }
+    // else if(shiftScope === 'customer' || shiftScope == 'customer_user'){}
     else{
       this.config.entitiesFetchFunction = pageLink =>
        this.shiftService.getCustomerShiftInfos(this.customerId,pageLink,this.config.componentsData.shiftsType);

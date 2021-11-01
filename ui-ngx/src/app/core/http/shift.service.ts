@@ -40,5 +40,8 @@ export class ShiftService {
     return this.http.get<ShiftInfo>(`/api/shift/info/${shiftId}`, defaultHttpOptionsFromConfig(config));
   }
 
+  public deleteShift(shiftId: string, config?: RequestConfig) {
+    return this.http.delete(`/api/shift/${shiftId}`, defaultHttpOptionsFromConfig(config));
+  }
 
 }

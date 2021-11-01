@@ -155,6 +155,7 @@ import { MarkedOptionsService } from '@shared/components/marked-options.service'
 import { TbPopoverService } from '@shared/components/popover.service';
 import { HELP_MARKDOWN_COMPONENT_TOKEN, SHARED_MODULE_TOKEN } from '@shared/components/tokens';
 import { TbMarkdownComponent } from '@shared/components/markdown.component';
+import { TimepickerComponent } from './components/time/timepicker/timepicker.component';
 
 export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService) {
   return markedOptionsService;
@@ -268,7 +269,8 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     OtaPackageAutocompleteComponent,
     WidgetsBundleSearchComponent,
     CopyButtonComponent,
-    TogglePasswordComponent
+    TogglePasswordComponent,
+    TimepickerComponent
   ],
   imports: [
     CommonModule,
@@ -458,7 +460,8 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     OtaPackageAutocompleteComponent,
     WidgetsBundleSearchComponent,
     CopyButtonComponent,
-    TogglePasswordComponent
+    TogglePasswordComponent,
+    TimepickerComponent
   ]
 })
 export class SharedModule { }

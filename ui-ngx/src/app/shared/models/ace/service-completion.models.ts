@@ -392,6 +392,15 @@ export const serviceCompletions: TbEditorCompletions = {
         ],
         return: observableReturnType(shiftInfoHref)
       },
+      deleteShift: {
+        description: 'Delete shift by id',
+        meta: 'function',
+        args: [
+          {name: 'shiftId', type: 'string', description: 'Id of the shift'},
+          requestConfigArg
+        ],
+        return: observableVoid()
+      },
     }
   },
   assetService: {

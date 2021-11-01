@@ -64,6 +64,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TbAnchorComponent } from '@shared/components/tb-anchor.component';
 import { isDefined, isUndefined } from '@core/utils';
 import { HasUUID } from '@shared/models/id/has-uuid';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'tb-entities-table',
@@ -404,6 +405,7 @@ export class EntitiesTableComponent extends PageComponent implements AfterViewIn
   }
 
   deleteEntities($event: Event, entities: BaseData<HasId>[]) {
+    
     if ($event) {
       $event.stopPropagation();
     }
@@ -414,6 +416,7 @@ export class EntitiesTableComponent extends PageComponent implements AfterViewIn
       this.translate.instant('action.yes'),
       true
     ).subscribe((result) => {
+      
       if (result) {
         const tasks: Observable<HasUUID>[] = [];
         entities.forEach((entity) => {
@@ -535,8 +538,20 @@ export class EntitiesTableComponent extends PageComponent implements AfterViewIn
       const index = row * this.entitiesTableConfig.columns.length + col;
       let res = this.cellContentCache[index];
       if (isUndefined(res)) {
-        res = this.domSanitizer.bypassSecurityTrustHtml(column.cellContentFunction(entity, column.key));
-        this.cellContentCache[index] = res;
+        if(Object.keys(entity).includes('areaName')){
+          if(column.key == 'startTimeMs'){
+            const datePipe = new DatePipe('en-US');
+            const formattedStartDateTime = datePipe.transform(entity['startTimeMs'], 'h:mm a');
+            entity['startTimeMs'] = formattedStartDateTime;
+          }
+          else if(column.key == 'endTimeMs'){
+            const datePipe = new DatePipe('en-US');
+            const formattedEndDateTime = datePipe.transform(entity['endTimeMs'], 'h:mm a');
+            entity['endTimeMs'] = formattedEndDateTime;
+          }
+        }
+          res = this.domSanitizer.bypassSecurityTrustHtml(column.cellContentFunction(entity, column.key));
+          this.cellContentCache[index] = res;
       }
       return res;
     } else {
