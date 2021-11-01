@@ -18,18 +18,16 @@ import static org.thingsboard.server.dao.model.ModelConstants.ASSET_COLUMN_FAMIL
 @Table(name = "shift")
 public class ShiftEntity extends AbstractShiftEntity<Shift> {
 
-    @Override
-    public String getSearchTextSource() {
-        return null;
+    public ShiftEntity() {
+        super();
     }
 
-    @Override
-    public void setSearchText(String searchText) {
-
+    public ShiftEntity(Shift shift){
+        super(shift);
     }
 
     @Override
     public Shift toData() {
-        return null;
+        return super.toShift();
     }
 }
