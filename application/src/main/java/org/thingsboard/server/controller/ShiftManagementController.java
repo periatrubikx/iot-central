@@ -18,10 +18,15 @@ package org.thingsboard.server.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.EntityType;
+import org.thingsboard.server.common.data.asset.Asset;
+import org.thingsboard.server.common.data.id.AssetId;
+import org.thingsboard.server.common.data.id.EdgeId;
+import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
@@ -31,15 +36,21 @@ import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.queue.util.TbCoreComponent;
 import org.thingsboard.server.service.security.model.SecurityUser;
+import org.thingsboard.server.service.security.permission.Operation;
 import org.thingsboard.server.service.security.permission.Resource;
 
+import java.util.List;
+
 import static org.thingsboard.server.controller.ControllerConstants.*;
+import static org.thingsboard.server.dao.service.Validator.validateId;
 
 @RestController
 @TbCoreComponent
 @RequestMapping("/api")
 @Slf4j
 public class ShiftManagementController extends BaseController {
+
+    public static final String SHIFT_ID = "shiftId";
 
     @ApiOperation(value = "Get Shifts (getShifts)",
             notes = "Returns a page of shifts. " +
@@ -105,4 +116,42 @@ public class ShiftManagementController extends BaseController {
             sendEntityNotificationMsg(shift.getTenantId(), shift.getId(), EdgeEventActionType.UPDATED);
         }
     }
+
+    @ApiOperation(value = "Delete shift (deleteShift)",
+            notes = "Deletes the shift. Referencing non-existing shift Id will cause an error." + TENANT_OR_CUSTOMER_AUTHORITY_PARAGRAPH)
+    @PreAuthorize("hasAuthority('TENANT_ADMIN')")
+    @RequestMapping(value = "/shift/{shiftId}", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteShift(@ApiParam(value = ASSET_ID_PARAM_DESCRIPTION) @PathVariable(SHIFT_ID) String strShiftId) throws ThingsboardException {
+        checkParameter(SHIFT_ID, strShiftId);
+        try {
+            ShiftId shiftId = new ShiftId(toUUID(strShiftId));
+//            Shift shift = checkShiftId(shiftId, Operation.DELETE);
+
+            shiftService.deleteShift(getTenantId(), shiftId);
+
+//            logEntityAction(shiftId, shift,
+//                    shift.getCustomerId(),
+//                    ActionType.DELETED, null, strShiftId);
+
+        } catch (Exception e) {
+            logEntityAction(emptyId(EntityType.ASSET),
+                    null,
+                    null,
+                    ActionType.DELETED, e, strShiftId);
+            throw handleException(e);
+        }
+    }
+
+//    Asset checkShiftId(ShiftId shiftId, Operation operation) throws ThingsboardException {
+//        try {
+//            validateId(shiftId, "Incorrect shiftId " + shiftId);
+//            Asset asset = shiftService.findAssetById(getCurrentUser().getTenantId(), shiftId);
+//            checkNotNull(asset);
+//            accessControlService.checkPermission(getCurrentUser(), Resource.ASSET, operation, shiftId, asset);
+//            return asset;
+//        } catch (Exception e) {
+//            throw handleException(e, false);
+//        }
+//    }
 }

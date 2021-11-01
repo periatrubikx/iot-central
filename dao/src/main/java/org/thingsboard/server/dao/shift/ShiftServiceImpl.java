@@ -52,4 +52,9 @@ public class ShiftServiceImpl extends AbstractEntityService implements ShiftServ
         }
         return savedShift;
     }
+
+    @Override
+    public void deleteShift(TenantId tenantId, ShiftId shiftId) {
+        shiftDao.removeById(tenantId, shiftId.getId());
+    }
 }
