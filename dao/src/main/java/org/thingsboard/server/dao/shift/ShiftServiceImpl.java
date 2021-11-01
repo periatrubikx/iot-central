@@ -9,6 +9,7 @@ import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
+import org.thingsboard.server.common.data.shift.ShiftInfo;
 import org.thingsboard.server.dao.entity.AbstractEntityService;
 
 import java.util.ArrayList;
@@ -56,5 +57,12 @@ public class ShiftServiceImpl extends AbstractEntityService implements ShiftServ
     @Override
     public void deleteShift(TenantId tenantId, ShiftId shiftId) {
         shiftDao.removeById(tenantId, shiftId.getId());
+    }
+
+    @Override
+    public Shift findAssetInfoById(TenantId tenantId, ShiftId shiftId) {
+//        log.trace("Executing findAssetInfoById [{}]", assetId);
+//        validateId(assetId, INCORRECT_ASSET_ID + assetId);
+        return shiftDao.findAssetInfoById(tenantId, shiftId.getId());
     }
 }

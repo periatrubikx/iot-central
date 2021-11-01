@@ -9,6 +9,7 @@ import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.common.data.id.TenantId;
+import org.thingsboard.server.common.data.shift.ShiftInfo;
 import org.thingsboard.server.dao.DaoUtil;
 import org.thingsboard.server.dao.model.sql.ShiftEntity;
 import org.thingsboard.server.dao.shift.ShiftDao;
@@ -38,5 +39,10 @@ public class JpaShiftDao extends JpaAbstractSearchTextDao<ShiftEntity, Shift> im
     public PageData<Shift> findShiftsByTennantId(UUID tenantId, PageLink pageLink) {
         Page<ShiftEntity> byTenantId = shiftRepository.findByTenantId(tenantId, Objects.toString(pageLink.getTextSearch(), ""), DaoUtil.toPageable(pageLink));
         return DaoUtil.toPageData(byTenantId);
+    }
+
+    @Override
+    public Shift findAssetInfoById(TenantId tenantId, UUID shiftId) {
+        return DaoUtil.getData(shiftRepository.findAssetInfoById(shiftId));
     }
 }

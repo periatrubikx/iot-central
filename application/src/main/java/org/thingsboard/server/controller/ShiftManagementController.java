@@ -24,6 +24,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.EntityType;
 import org.thingsboard.server.common.data.asset.Asset;
+import org.thingsboard.server.common.data.asset.AssetInfo;
 import org.thingsboard.server.common.data.id.AssetId;
 import org.thingsboard.server.common.data.id.EdgeId;
 import org.thingsboard.server.common.data.id.ShiftId;
@@ -34,6 +35,7 @@ import org.thingsboard.server.common.data.exception.ThingsboardException;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
+import org.thingsboard.server.common.data.shift.ShiftInfo;
 import org.thingsboard.server.queue.util.TbCoreComponent;
 import org.thingsboard.server.service.security.model.SecurityUser;
 import org.thingsboard.server.service.security.permission.Operation;
@@ -51,6 +53,38 @@ import static org.thingsboard.server.dao.service.Validator.validateId;
 public class ShiftManagementController extends BaseController {
 
     public static final String SHIFT_ID = "shiftId";
+
+    @ApiOperation(value = "Get Shift Info (getShiftInfoById)",
+            notes = "Fetch the Shift Info object based on the provided Shift Id. " +
+                    "If the user has the authority of 'Tenant Administrator', the server checks that the asset is owned by the same tenant. " +
+                    "If the user has the authority of 'Customer User', the server checks that the asset is assigned to the same customer. "
+                    + TENANT_OR_CUSTOMER_AUTHORITY_PARAGRAPH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/shift/info/{shiftId}", method = RequestMethod.GET)
+    @ResponseBody
+    public Shift getShiftInfoById(@ApiParam(value = ASSET_ID_PARAM_DESCRIPTION)
+                                      @PathVariable(SHIFT_ID) String strAssetId) throws ThingsboardException {
+        checkParameter(SHIFT_ID, strAssetId);
+        try {
+            ShiftId shiftId = new ShiftId(toUUID(strAssetId));
+            return checkShiftInfoId(shiftId, Operation.READ);
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+
+    Shift checkShiftInfoId(ShiftId shiftId, Operation operation) throws ThingsboardException {
+        try {
+//            validateId(assetId, "Incorrect assetId " + assetId);
+            Shift shift = shiftService.findAssetInfoById(getCurrentUser().getTenantId(), shiftId);
+            checkNotNull(shift);
+//            accessControlService.checkPermission(getCurrentUser(), Resource.ASSET, operation, assetId, asset);
+            return shift;
+        } catch (Exception e) {
+//            throw handleException(e, false);
+            throw handleException(e);
+        }
+    }
 
     @ApiOperation(value = "Get Shifts (getShifts)",
             notes = "Returns a page of shifts. " +
