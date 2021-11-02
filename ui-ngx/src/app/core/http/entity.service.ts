@@ -1112,9 +1112,10 @@ export class EntityService {
     let result;
     let additionalInfo;
     switch (entityType) {
+      case EntityType.SHIFTS:
       case EntityType.ASSET:
       case EntityType.DEVICE:
-        result = entity as (Device | Asset);
+        result = entity as (Device | Asset| Shift);
         additionalInfo = result.additionalInfo || {};
         if (result.label !== entityData.label ||
           result.type !== entityData.type ||
@@ -1134,6 +1135,8 @@ export class EntityService {
             case EntityType.ASSET:
               tasks.push(this.assetService.saveAsset(result, config));
               break;
+            case EntityType.SHIFTS:
+              tasks.push(this.shiftService.saveShift(result,config));
           }
         }
         tasks.push(this.saveEntityData(entity.id, entityData, config));
