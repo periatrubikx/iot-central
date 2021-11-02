@@ -33,8 +33,8 @@ public class ShiftId extends UUIDBased implements EntityId {
         super(id);
     }
 
-    public static ShiftId fromString(String assetId) {
-        return new ShiftId(UUID.fromString(assetId));
+    public static ShiftId fromString(String shiftId) {
+        return new ShiftId(UUID.fromString(shiftId));
     }
 
     @ApiModelProperty(position = 2, required = true, value = "string", example = "SHIFT", allowableValues = "SHIFT")

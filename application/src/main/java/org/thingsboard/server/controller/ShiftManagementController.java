@@ -114,7 +114,7 @@ public class ShiftManagementController extends BaseController {
     @ApiOperation(value = "Create Or Update Shift (saveShift)",
             notes = "Creates or Updates the Shift. When creating shift, platform generates Shift Id as [time-based UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_1_(date-time_and_MAC_address) " +
                     "The newly created Shift id will be present in the response. " +
-                    "Specify existing Shift id to update the asset. " +
+                    "Specify existing Shift id to update the shift. " +
                     "Referencing non-existing Shift Id will cause 'Not Found' error." + TENANT_OR_CUSTOMER_AUTHORITY_PARAGRAPH, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     @RequestMapping(value = "/shift", method = RequestMethod.POST)

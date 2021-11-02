@@ -50,3 +50,35 @@ When deploying the application behind Nginx, some services are failing. Add this
 
 #Entities and their significance
 https://thingsboard.io/docs/user-guide/entities-and-relations/
+
+
+
+#1. Creating Shift Management Screen
+
+## Menu & Routing
+
+Adding a menu item
+1. Add an entry to the menu.service.file
+2. shift.module.ts & shift-routing.module.ts - This to manage routing of the shift screen
+when the "shift menu" action is called.
+   
+## Table Header Component
+1. Drop Down functionality - ![img.png](img.png) - This is a dynmaic componnet that is used accorss all other screens
+such as Assets, Devices etc..
+   
+         a. update entity-subtype-select.component.ts to provide shift area information.
+
+## Table Header Action
+
+![img_1.png](img_1.png)
+   1. Add action - Create shift-table-config.resolver.ts file and following code is the action
+      ![img_3.png](img_3.png)
+      
+   2. Form code in shift.component.ts 
+
+## Table
+   1. shift-routing.module.ts - import shift-table-config.resolver.ts
+   2. All table definitions are in shift-table-config.resolver.ts
+
+## Name Mappings for Keys used in the screens
+   1. Names and description of fields etc - local.constant-en_us.json

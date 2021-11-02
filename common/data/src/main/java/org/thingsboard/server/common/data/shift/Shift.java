@@ -2,16 +2,19 @@ package org.thingsboard.server.common.data.shift;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.EqualsAndHashCode;
 import org.thingsboard.server.common.data.BaseData;
 import org.thingsboard.server.common.data.HasCustomerId;
 import org.thingsboard.server.common.data.HasName;
 import org.thingsboard.server.common.data.HasTenantId;
+import org.thingsboard.server.common.data.id.AssetId;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.validation.NoXss;
 
 @ApiModel
+@EqualsAndHashCode(callSuper = true)
 public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, HasCustomerId {
 
     private TenantId tenantId;
@@ -34,15 +37,6 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
         super(id);
     }
 
-    @ApiModelProperty(position = 1, value = "JSON object with the asset Id. " +
-            "Specify this field to update the asset. " +
-            "Referencing non-existing asset Id will cause error. " +
-            "Omit this field to create new asset.")
-    @Override
-    public ShiftId getId() {
-        return super.getId();
-    }
-
     public Shift(Shift shift) {
         super(shift);
         this.tenantId = shift.getTenantId();
@@ -60,6 +54,15 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
         this.areaName = shift.getAreaName();
         this.startTimeMs = shift.getStartTimeMs();
         this.endTimeMs = shift.getEndTimeMs();
+    }
+
+    @ApiModelProperty(position = 1, value = "JSON object with the asset Id. " +
+            "Specify this field to update the asset. " +
+            "Referencing non-existing asset Id will cause error. " +
+            "Omit this field to create new asset.")
+    @Override
+    public ShiftId getId() {
+        return super.getId();
     }
 
     @ApiModelProperty(position = 2, value = "Timestamp of the device creation, in milliseconds", example = "1609459200000", readOnly = true)
@@ -121,5 +124,28 @@ public class Shift extends BaseData<ShiftId> implements HasName, HasTenantId, Ha
 
     public void setEndTimeMs(Long endTimeMs) {
         this.endTimeMs = endTimeMs;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Shift [tenantId=");
+        builder.append(tenantId);
+        builder.append(", customerId=");
+        builder.append(customerId);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", areaName=");
+        builder.append(areaName);
+        builder.append(", startTime=");
+        builder.append(startTimeMs);
+        builder.append(", endTime=");
+        builder.append(endTimeMs);
+        builder.append(", createdTime=");
+        builder.append(createdTime);
+        builder.append(", id=");
+        builder.append(id);
+        builder.append("]");
+        return builder.toString();
     }
 }
