@@ -15,8 +15,9 @@
     limitations under the License.
 
 -->
-
-<tb-entity-subtype-select [showLabel]="true" [entityType]="entityType.SHIFTS" 
-[ngModel]="entitiesTableConfigValue.componentsData.shiftType"
-(ngModelChange)="shiftTypeChanged($event)"
-></tb-entity-subtype-select>
+<tb-entity-subtype-select
+  [showLabel]="true"
+  [entityType]="entityType.SHIFTS"
+  [ngModel]="entitiesTableConfig.componentsData.shiftAreas"
+  (ngModelChange)="shiftTypeChanged($event)">
+</tb-entity-subtype-select>

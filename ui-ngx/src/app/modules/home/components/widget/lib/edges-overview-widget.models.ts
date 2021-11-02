@@ -64,6 +64,9 @@ export function textForEdgeGroupsType(translate: TranslateService, entityType: E
     case EntityType.DEVICE:
       textForEdgeGroupsType = 'device.devices';
       break;
+    case EntityType.SHIFTS:
+      textForEdgeGroupsType = 'shift.shifts';
+      break;
     case EntityType.ASSET:
       textForEdgeGroupsType = 'asset.assets';
       break;

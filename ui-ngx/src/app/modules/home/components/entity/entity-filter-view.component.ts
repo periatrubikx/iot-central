@@ -209,7 +209,6 @@ export class EntityFilterViewComponent implements ControlValueAccessor {
           } else {
             relationTypeText = anyRelationText;
           }
-
           const translationValues: any = {
             relationType: relationTypeText,
             direction: directionText,
