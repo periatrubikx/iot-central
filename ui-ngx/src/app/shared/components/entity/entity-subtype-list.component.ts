@@ -32,6 +32,7 @@ import { EntityViewService } from '@core/http/entity-view.service';
 import { BroadcastService } from '@core/services/broadcast.service';
 import { COMMA, ENTER, SEMICOLON } from '@angular/cdk/keycodes';
 import { ShiftService } from '@app/core/http/shift.service';
+import { DownloadCodesConfigurationService } from '@app/core/http/download-codes-configuration.service';
 
 @Component({
   selector: 'tb-entity-subtype-list',
@@ -101,6 +102,7 @@ export class EntitySubTypeListComponent implements ControlValueAccessor, OnInit,
               private edgeService: EdgeService,
               private entityViewService: EntityViewService,
               private shiftService : ShiftService,
+              private downloadCodesConfigurationService : DownloadCodesConfigurationService,
               private fb: FormBuilder) {
     this.entitySubtypeListFormGroup = this.fb.group({
       entitySubtypeList: [this.entitySubtypeList, this.required ? [Validators.required] : []],
@@ -143,6 +145,16 @@ export class EntitySubTypeListComponent implements ControlValueAccessor, OnInit,
           this.entitySubtypes = null;
         })
         break;
+      case EntityType.DOWNLOAD_CODES_CONFIGURATION:
+          this.placeholder = this.required ? this.translate.instant('downloadCodesConfiguration.enter-download-codes-configuration-type')
+            : this.translate.instant('downloadCodesConfiguration.any-download-codes-configuration');
+          this.secondaryPlaceholder = '+' + this.translate.instant('downloadCodesConfiguration.download-codes-configuration-type');
+          this.noSubtypesMathingText = 'downloadCodesConfiguration.no-download-codes-configuration-types-matching';
+          this.subtypeListEmptyText = 'downloadCodesConfiguration.download-codes-configuration-type-list-empty';
+          this.broadcastSubscription = this.broadcast.on('shiftSaved',()=>{
+            this.entitySubtypes = null;
+          })
+          break;
       case EntityType.DEVICE:
         this.placeholder = this.required ? this.translate.instant('device.enter-device-type')
           : this.translate.instant('device.any-device');
@@ -282,6 +294,9 @@ export class EntitySubTypeListComponent implements ControlValueAccessor, OnInit,
         case EntityType.SHIFTS:
           subTypesObservable = this.shiftService.getShiftAreas({ignoreLoading:true});
           break;
+        case EntityType.DOWNLOAD_CODES_CONFIGURATION:
+            subTypesObservable = this.downloadCodesConfigurationService.getDownloadCodesConfigurationType({ignoreLoading:true});
+            break;
         case EntityType.DEVICE:
           subTypesObservable = this.deviceService.getDeviceTypes({ignoreLoading: true});
           break;

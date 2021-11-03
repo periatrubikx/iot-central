@@ -37,7 +37,8 @@ export enum EntityType {
   TB_RESOURCE = 'TB_RESOURCE',
   OTA_PACKAGE = 'OTA_PACKAGE',
   RPC = 'RPC',
-  SHIFTS = 'SHIFTS'
+  SHIFTS = 'SHIFTS',
+  DOWNLOAD_CODES_CONFIGURATION = "DOWNLOAD_CODES_CONFIGURATION"
 }
 
 export enum AliasEntityType {
@@ -134,6 +135,20 @@ export const entityTypeTranslations = new Map<EntityType | AliasEntityType, Enti
         noEntities:'shift.no-shifts-text',
         search:'shift.search',
         selectedEntities:'shift.selected-shift'
+      }
+    ],
+    [
+      EntityType.DOWNLOAD_CODES_CONFIGURATION,
+      {
+        type:'entity.type-download-codes-configuration',
+        typePlural:'entity.type-download-codes-configurations',
+        list:'entity.list-of-download-codes-configs',
+        nameStartsWith:'entity.user-name-starts-with',
+        details:'downloadCodesConfiguration.download-codes-configurations-details',
+        add:'downloadCodesConfiguration.add',
+        noEntities:'downloadCodesConfiguration.no-download-codes-configurations-text',
+        search:'downloadCodesConfiguration.search',
+        selectedEntities:'downloadCodesConfiguration.selected-download-codes-configuration'
       }
     ],
     [
@@ -373,6 +388,12 @@ export const entityTypeResources = new Map<EntityType, EntityTypeResource<BaseDa
       EntityType.SHIFTS,
       {
         helpLinkId: 'shifts'
+      }
+    ],
+    [
+      EntityType.DOWNLOAD_CODES_CONFIGURATION,
+      {
+        helpLinkId: 'downloadCodesConfigurations'
       }
     ],
     [
