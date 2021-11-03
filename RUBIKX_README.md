@@ -82,3 +82,6 @@ such as Assets, Devices etc..
 
 ## Name Mappings for Keys used in the screens
    1. Names and description of fields etc - local.constant-en_us.json
+
+## Updating Thingsboard base class files
+
