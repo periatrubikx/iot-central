@@ -403,6 +403,49 @@ export const serviceCompletions: TbEditorCompletions = {
       },
     }
   },
+  downloadCodesConfigurationService:{
+    description:'Download Codes Configuration Service API<br>',
+    meta:'service',
+    type:'',
+    children:{
+      getTenantDownloadCodesConfigurationInfos:{
+        description:'Get tenant Download Codes Configurations',
+        meta:'function',
+        args:[
+          pageLinkArg,
+          {name:'type',type:'string',optional:true,description:'Download Codes Configuration types'},
+          requestConfigArg
+        ],
+        return : observableArrayReturnType(shiftInfoHref)
+      },
+      getDownloadCodesConfigurationType: {
+        description: 'Get all available Download Codes Configurations type',
+        meta: 'function',
+        args: [
+          requestConfigArg
+        ],
+        return: observableArrayReturnType('<a href="https://github.com/thingsboard/thingsboard/blob/13e6b10b7ab830e64d31b99614a9d95a1a25928a/ui-ngx/src/app/shared/models/entity-type.models.ts#L295">EntitySubtype</a>')
+      },
+      saveDownloadCodesConfiguration: {
+        description: 'Save shift',
+        meta: 'function',
+        args: [
+          {name: 'downloadCodesConfiguration', type: shiftInfoHref, description: 'shift object to save'},
+          requestConfigArg
+        ],
+        return: observableReturnType(shiftInfoHref)
+      },
+      deleteDownloadCodesConfiguration: {
+        description: 'Delete Download Codes Configuration by id',
+        meta: 'function',
+        args: [
+          {name: 'downloadCodesConfigurationId', type: 'string', description: 'Id of the Download Codes Configuration'},
+          requestConfigArg
+        ],
+        return: observableVoid()
+      },
+    }
+  },
   assetService: {
     description: 'Asset Service API<br>' +
       'See <a href="https://github.com/thingsboard/thingsboard/blob/13e6b10b7ab830e64d31b99614a9d95a1a25928a/ui-ngx/src/app/core/http/asset.service.ts#L29">AssetService</a> for API reference.',

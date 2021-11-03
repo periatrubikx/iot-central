@@ -302,6 +302,13 @@ export class MenuService {
         path: '/shift',
         icon:'transfer_within_a_station'
       },
+      {
+        id: guid(),
+        name: 'downloadCodesConfiguration.downloadCodesConfigurations',
+        type: 'link',
+        path: '/downloadCodesConfiguration',
+        icon:'settings_applications'
+      },
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
@@ -489,6 +496,16 @@ export class MenuService {
             path: '/shift'
           }
         ]
+      },
+      {
+        name: 'downloadCodesConfiguration.management',
+        places: [
+          {
+            name: 'downloadCodesConfiguration.downloadCodesConfigurations',
+            icon: 'settings_applications',
+            path: '/downloadCodesConfiguration'
+          }
+        ]
       }
     );
     if (authState.edgesSupportEnabled) {
@@ -599,7 +616,13 @@ export class MenuService {
         path: '/shift',
         icon:'transfer_within_a_station'
       },
-
+      {
+        id: guid(),
+        name: 'downloadCodesConfiguration.downloadCodesConfiguration',
+        type: 'link',
+        path: '/downloadCodesConfiguration',
+        icon:'settings_applications'
+      },
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
@@ -671,6 +694,16 @@ export class MenuService {
             name: 'shift.shift',
             icon:'transfer_within_a_station',
             path: '/shift'
+          }
+        ]
+      },
+      {
+        name: 'downloadCodesConfiguration.management',
+        places: [
+          {
+            name: 'downloadCodesConfiguration.downloadCodesConfiguration',
+            icon:'settings_applications',
+            path: '/downloadCodesConfiguration'
           }
         ]
       }

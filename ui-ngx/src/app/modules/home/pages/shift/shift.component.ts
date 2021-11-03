@@ -34,8 +34,8 @@ export class ShiftComponent extends EntityComponent<ShiftInfo> {
     }
 
   ngOnInit(): void {
-    this.shiftScope = this.entitiesTableConfigValue.componentsData.shiftScope;
-    super.ngOnInit();
+      this.shiftScope = this.entitiesTableConfigValue.componentsData.shiftScope;
+      super.ngOnInit();
     this.maxStartTimeMs = this.entityForm.get('endTimeMs').valueChanges;
     this.minEndTimeMs = this.entityForm.get('startTimeMs').valueChanges;
   }

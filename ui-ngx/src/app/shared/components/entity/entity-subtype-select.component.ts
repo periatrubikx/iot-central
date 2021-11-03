@@ -28,6 +28,7 @@ import { AssetService } from '@core/http/asset.service';
 import { EdgeService } from '@core/http/edge.service';
 import { EntityViewService } from '@core/http/entity-view.service';
 import { ShiftService } from '@app/core/http/shift.service';
+import { DownloadCodesConfigurationService } from '@app/core/http/download-codes-configuration.service';
 
 @Component({
   selector: 'tb-entity-subtype-select',
@@ -83,6 +84,7 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
               private shiftService : ShiftService,
               private edgeService: EdgeService,
               private entityViewService: EntityViewService,
+               private downloadCodesConfigurationService : DownloadCodesConfigurationService,
               private fb: FormBuilder) {
     this.subTypeFormGroup = this.fb.group({
       subType: ['']
@@ -114,6 +116,14 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
           this.subTypesOptionsSubject.next('');
         })
         break;
+      case EntityType.DOWNLOAD_CODES_CONFIGURATION:
+          this.entitySubtypeTitle = 'downloadCodesConfiguration.download-codes-configuration-type';
+          this.entitySubtypeRequiredText='downloadCodesConfiguration.download-codes-configuration-type-required';
+          this.broadcastSubscription = this.broadcast.on('downloadCodesConfigurationSaved',()=>{
+            this.subTypes =null;
+            this.subTypesOptionsSubject.next('');
+          })
+          break;
       case EntityType.DEVICE:
         this.entitySubtypeTitle = 'device.device-type';
         this.entitySubtypeRequiredText = 'device.device-type-required';
@@ -226,6 +236,9 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
           break;
         case EntityType.SHIFTS:
           this.subTypes = this.shiftService.getShiftAreas({ignoreLoading:true})
+          break;
+        case EntityType.DOWNLOAD_CODES_CONFIGURATION:
+          this.subTypes = this.downloadCodesConfigurationService.getDownloadCodesConfigurationType({ignoreLoading:true})
           break;
         case EntityType.DEVICE:
           this.subTypes = this.deviceService.getDeviceTypes({ignoreLoading: true});
