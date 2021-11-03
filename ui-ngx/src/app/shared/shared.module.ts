@@ -156,6 +156,7 @@ import { TbPopoverService } from '@shared/components/popover.service';
 import { HELP_MARKDOWN_COMPONENT_TOKEN, SHARED_MODULE_TOKEN } from '@shared/components/tokens';
 import { TbMarkdownComponent } from '@shared/components/markdown.component';
 import { TimepickerComponent } from './components/time/timepicker/timepicker.component';
+import { ProtobufContentComponent } from './components/protobuf-content.component';
 
 export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService) {
   return markedOptionsService;
@@ -271,6 +272,8 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     CopyButtonComponent,
     TogglePasswordComponent,
     TimepickerComponent
+    TogglePasswordComponent,
+    ProtobufContentComponent
   ],
   imports: [
     CommonModule,
@@ -462,6 +465,8 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     CopyButtonComponent,
     TogglePasswordComponent,
     TimepickerComponent
+    TogglePasswordComponent,
+    ProtobufContentComponent
   ]
 })
 export class SharedModule { }
