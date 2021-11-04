@@ -94,7 +94,7 @@ import { WidgetService } from '@core/http/widget.service';
 import { DeviceProfileService } from '@core/http/device-profile.service';
 import { ShiftService } from './shift.service';
 import { Shift, ShiftImportEntityData } from '@app/shared/models/shift.models';
-import { DownloadCodesConfigurationService } from './download-codes-configuration.service';
+import { DowntimeCodesConfigurationService } from './downtime-codes-configuration.service';
 
 @Injectable({
   providedIn: 'root'
@@ -120,7 +120,7 @@ export class EntityService {
     private deviceProfileService: DeviceProfileService,
     private utils: UtilsService,
     private shiftService : ShiftService,
-    private downloadCoedCongifgurationService : DownloadCodesConfigurationService
+    private downtimeCoedCongifgurationService : DowntimeCodesConfigurationService
   ) { }
 
   private getEntityObservable(entityType: EntityType, entityId: string,
@@ -326,12 +326,12 @@ export class EntityService {
           entitiesObservable = this.shiftService.getTenantShiftInfos(pageLink,subType,config)
         }
         break;
-      case EntityType.DOWNLOAD_CODES_CONFIGURATION:
+      case EntityType.DOWNTIME_CODES_CONFIGURATION:
           pageLink.sortOrder.property = 'name';
           if(authUser.authority == Authority.CUSTOMER_USER){
-            entitiesObservable = this.downloadCoedCongifgurationService.getCustomerDownloadCodesConfigurationInfos(customerId,pageLink,subType,config);
+            entitiesObservable = this.downtimeCoedCongifgurationService.getCustomerDowntimeCodesConfigurationInfos(customerId,pageLink,subType,config);
           } else {
-            entitiesObservable = this.downloadCoedCongifgurationService.getTenantDownloadCodesConfigurationInfos(pageLink,subType,config)
+            entitiesObservable = this.downtimeCoedCongifgurationService.getTenantDowntimeCodesConfigurationInfos(pageLink,subType,config)
           }
           break;
       case EntityType.EDGE:

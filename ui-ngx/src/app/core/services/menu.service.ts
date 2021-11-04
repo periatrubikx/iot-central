@@ -304,9 +304,9 @@ export class MenuService {
       },
       {
         id: guid(),
-        name: 'downloadCodesConfiguration.downloadCodesConfigurations',
+        name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
         type: 'link',
-        path: '/downloadCodesConfiguration',
+        path: '/downtimeCodesConfiguration',
         icon:'settings_applications'
       },
     );
@@ -498,12 +498,12 @@ export class MenuService {
         ]
       },
       {
-        name: 'downloadCodesConfiguration.management',
+        name: 'downtimeCodesConfiguration.management',
         places: [
           {
-            name: 'downloadCodesConfiguration.downloadCodesConfigurations',
+            name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
             icon: 'settings_applications',
-            path: '/downloadCodesConfiguration'
+            path: '/downtimeCodesConfiguration'
           }
         ]
       }
@@ -618,9 +618,9 @@ export class MenuService {
       },
       {
         id: guid(),
-        name: 'downloadCodesConfiguration.downloadCodesConfiguration',
+        name: 'downtimeCodesConfiguration.downtimeCodesConfiguration',
         type: 'link',
-        path: '/downloadCodesConfiguration',
+        path: '/downtimeCodesConfiguration',
         icon:'settings_applications'
       },
     );
@@ -698,12 +698,12 @@ export class MenuService {
         ]
       },
       {
-        name: 'downloadCodesConfiguration.management',
+        name: 'downtimeCodesConfiguration.management',
         places: [
           {
-            name: 'downloadCodesConfiguration.downloadCodesConfiguration',
+            name: 'downtimeCodesConfiguration.downtimeCodesConfiguration',
             icon:'settings_applications',
-            path: '/downloadCodesConfiguration'
+            path: '/downtimeCodesConfiguration'
           }
         ]
       }

@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Authority } from '@app/shared/models/authority.enum';
 import { EntitiesTableComponent } from '../../components/entity/entities-table.component';
-import { DownloadCodesConfigTableConfigResolver } from './download-codes-table-config.resolver';
+import { DowntimeCodesConfigTableConfigResolver } from './downtime-codes-table-config.resolver';
 
 const routes: Routes = [
   {
-    path:'downloadCodesConfiguration',
+    path:'downtimeCodesConfiguration',
     component:EntitiesTableComponent,
     data:{
       auth:[Authority.TENANT_ADMIN,Authority.CUSTOMER_USER],
-      title:'downloadCodesConfiguration.downloadCodesConfiguration',
-      downloadCodesConfigurationsType:'downloadCodesConfiguration',
+      title:'downtimeCodesConfiguration.downtimeCodesConfiguration',
+      downtimeCodesConfigurationsType:'downtimeCodesConfiguration',
       breadcrumb:{
-        label:'downloadCodesConfiguration.downloadCodesConfiguration',
+        label:'downtimeCodesConfiguration.downtimeCodesConfiguration',
         icon:'settings_applications'
       }
     },
     resolve:{
-      entitiesTableConfig:DownloadCodesConfigTableConfigResolver
+      entitiesTableConfig:DowntimeCodesConfigTableConfigResolver
     }
   }
 ];
@@ -27,7 +27,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers:[
-    DownloadCodesConfigTableConfigResolver
+    DowntimeCodesConfigTableConfigResolver
   ]
 })
-export class DownloadCodesConfigRoutingModule { }
+export class DowntimeCodesConfigRoutingModule { }

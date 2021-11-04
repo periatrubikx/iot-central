@@ -38,7 +38,7 @@ export enum EntityType {
   OTA_PACKAGE = 'OTA_PACKAGE',
   RPC = 'RPC',
   SHIFTS = 'SHIFTS',
-  DOWNLOAD_CODES_CONFIGURATION = "DOWNLOAD_CODES_CONFIGURATION"
+  DOWNTIME_CODES_CONFIGURATION = "DOWNTIME_CODES_CONFIGURATION"
 }
 
 export enum AliasEntityType {
@@ -138,17 +138,17 @@ export const entityTypeTranslations = new Map<EntityType | AliasEntityType, Enti
       }
     ],
     [
-      EntityType.DOWNLOAD_CODES_CONFIGURATION,
+      EntityType.DOWNTIME_CODES_CONFIGURATION,
       {
-        type:'entity.type-download-codes-configuration',
-        typePlural:'entity.type-download-codes-configurations',
-        list:'entity.list-of-download-codes-configs',
+        type:'entity.type-downtime-codes-configuration',
+        typePlural:'entity.type-downtime-codes-configurations',
+        list:'entity.list-of-downtime-codes-configs',
         nameStartsWith:'entity.user-name-starts-with',
-        details:'downloadCodesConfiguration.download-codes-configurations-details',
-        add:'downloadCodesConfiguration.add',
-        noEntities:'downloadCodesConfiguration.no-download-codes-configurations-text',
-        search:'downloadCodesConfiguration.search',
-        selectedEntities:'downloadCodesConfiguration.selected-download-codes-configuration'
+        details:'downtimeCodesConfiguration.downtime-codes-configurations-details',
+        add:'downtimeCodesConfiguration.add',
+        noEntities:'downtimeCodesConfiguration.no-downtime-codes-configurations-text',
+        search:'downtimeCodesConfiguration.search',
+        selectedEntities:'downtimeCodesConfiguration.selected-downtime-codes-configuration'
       }
     ],
     [
@@ -391,9 +391,9 @@ export const entityTypeResources = new Map<EntityType, EntityTypeResource<BaseDa
       }
     ],
     [
-      EntityType.DOWNLOAD_CODES_CONFIGURATION,
+      EntityType.DOWNTIME_CODES_CONFIGURATION,
       {
-        helpLinkId: 'downloadCodesConfigurations'
+        helpLinkId: 'downtimeCodesConfigurations'
       }
     ],
     [

@@ -28,7 +28,7 @@ import { AssetService } from '@core/http/asset.service';
 import { EdgeService } from '@core/http/edge.service';
 import { EntityViewService } from '@core/http/entity-view.service';
 import { ShiftService } from '@app/core/http/shift.service';
-import { DownloadCodesConfigurationService } from '@app/core/http/download-codes-configuration.service';
+import { DowntimeCodesConfigurationService } from '@app/core/http/downtime-codes-configuration.service';
 
 @Component({
   selector: 'tb-entity-subtype-select',
@@ -84,7 +84,7 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
               private shiftService : ShiftService,
               private edgeService: EdgeService,
               private entityViewService: EntityViewService,
-               private downloadCodesConfigurationService : DownloadCodesConfigurationService,
+               private downtimeCodesConfigurationService : DowntimeCodesConfigurationService,
               private fb: FormBuilder) {
     this.subTypeFormGroup = this.fb.group({
       subType: ['']
@@ -116,10 +116,10 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
           this.subTypesOptionsSubject.next('');
         })
         break;
-      case EntityType.DOWNLOAD_CODES_CONFIGURATION:
-          this.entitySubtypeTitle = 'downloadCodesConfiguration.download-codes-configuration-type';
-          this.entitySubtypeRequiredText='downloadCodesConfiguration.download-codes-configuration-type-required';
-          this.broadcastSubscription = this.broadcast.on('downloadCodesConfigurationSaved',()=>{
+      case EntityType.DOWNTIME_CODES_CONFIGURATION:
+          this.entitySubtypeTitle = 'downtimeCodesConfiguration.downtime-codes-configuration-type';
+          this.entitySubtypeRequiredText='downtimeCodesConfiguration.downtime-codes-configuration-type-required';
+          this.broadcastSubscription = this.broadcast.on('downtimeCodesConfigurationSaved',()=>{
             this.subTypes =null;
             this.subTypesOptionsSubject.next('');
           })
@@ -237,8 +237,8 @@ export class EntitySubTypeSelectComponent implements ControlValueAccessor, OnIni
         case EntityType.SHIFTS:
           this.subTypes = this.shiftService.getShiftAreas({ignoreLoading:true})
           break;
-        case EntityType.DOWNLOAD_CODES_CONFIGURATION:
-          this.subTypes = this.downloadCodesConfigurationService.getDownloadCodesConfigurationType({ignoreLoading:true})
+        case EntityType.DOWNTIME_CODES_CONFIGURATION:
+          this.subTypes = this.downtimeCodesConfigurationService.getDowntimeCodesConfigurationType({ignoreLoading:true})
           break;
         case EntityType.DEVICE:
           this.subTypes = this.deviceService.getDeviceTypes({ignoreLoading: true});

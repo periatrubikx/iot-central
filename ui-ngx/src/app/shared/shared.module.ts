@@ -271,7 +271,7 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     WidgetsBundleSearchComponent,
     CopyButtonComponent,
     TogglePasswordComponent,
-    TimepickerComponent
+    TimepickerComponent,
     TogglePasswordComponent,
     ProtobufContentComponent
   ],
@@ -464,7 +464,7 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     WidgetsBundleSearchComponent,
     CopyButtonComponent,
     TogglePasswordComponent,
-    TimepickerComponent
+    TimepickerComponent,
     TogglePasswordComponent,
     ProtobufContentComponent
   ]

@@ -16,14 +16,14 @@
 
 import { EntityId } from '@shared/models/id/entity-id';
 import { HasUUID } from '@shared/models/id/has-uuid';
-import { DownloadCodesConfigurationId } from './id/download-codes-configuration'
+import { DowntimeCodesConfigurationId } from './id/downtime-codes-configuration'
 import { AttributeData, CustomerId, TenantId } from './public-api';
 import { EntitySearchQuery } from '@shared/models/relation.models';
 import { BaseData } from '@shared/models/base-data';
 
 export declare type HasId = EntityId | HasUUID;
 
-export interface DownloadCodesConfiguration extends BaseData<DownloadCodesConfigurationId>{
+export interface DowntimeCodesConfiguration extends BaseData<DowntimeCodesConfigurationId>{
     tenantId?:TenantId;
     customerId?:CustomerId;
     level1:string;
@@ -48,18 +48,18 @@ export interface ImportEntityData{
       timeseries: AttributeData[];
 }
 
-export interface DownloadCodesConfigurationImportEntityData extends ImportEntityData{
+export interface DowntimeCodesConfigurationImportEntityData extends ImportEntityData{
     secret: string;
     routingKey: string;
     cloudEndpoint: string;
 }
 
 
-export interface DownloadCodesConfigurationInfo extends DownloadCodesConfiguration{
+export interface DowntimeCodesConfigurationInfo extends DowntimeCodesConfiguration{
     customerTitle : string;
     customerIsPublic:boolean
 }
 
-export interface DownloadCodesConfigurationSearchQuery extends EntitySearchQuery {
-    DownloadCodesConfigurationType: Array<string>;
+export interface DowntimeCodesConfigurationSearchQuery extends EntitySearchQuery {
+    DowntimeCodesConfigurationType: Array<string>;
 }

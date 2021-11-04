@@ -39,7 +39,7 @@ import { OtaUpdateModule } from '@home/pages/ota-update/ota-update.module';
 import { NodeRedModule } from '@home/pages/node-red/node-red.module';
 import { DigitalTwinModule } from '@home/pages/digital-twin/digital-twin.module';
 import { ShiftModule } from './shift/shift.module';
-import { DownloadCodesConfigModule } from './download-codes-configuration/download-codes-config.module';
+import { DowntimeCodesConfigModule } from './downtime-codes-configuration/downtime-codes-config.module';
 
 @NgModule({
   exports: [
@@ -62,7 +62,7 @@ import { DownloadCodesConfigModule } from './download-codes-configuration/downlo
     OtaUpdateModule,
     UserModule,
     ShiftModule,
-    DownloadCodesConfigModule
+    DowntimeCodesConfigModule
   ],
   providers: [
     {

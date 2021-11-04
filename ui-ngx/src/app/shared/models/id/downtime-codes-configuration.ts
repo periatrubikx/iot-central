@@ -18,8 +18,8 @@
 import { EntityId } from './entity-id';
 import { EntityType } from '@shared/models/entity-type.models';
 
-export class DownloadCodesConfigurationId implements EntityId {
-  entityType = EntityType.DOWNLOAD_CODES_CONFIGURATION;
+export class DowntimeCodesConfigurationId implements EntityId {
+  entityType = EntityType.DOWNTIME_CODES_CONFIGURATION;
   id: string;
   constructor(id: string) {
     this.id = id;

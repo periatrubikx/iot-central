@@ -1,43 +1,43 @@
 <form [formGroup]="entityForm">
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
       <mat-form-field class="mat-block">
-        <mat-label translate>downloadCodesConfiguration.level1</mat-label>
+        <mat-label translate>downtimeCodesConfiguration.level1</mat-label>
         <input matInput formControlName="level1" required autocomplete="off">
         <mat-error *ngIf="entityForm.get('level1').hasError('required')">
-          {{ 'downloadCodesConfiguration.level1-required' | translate }}
+          {{ 'downtimeCodesConfiguration.level1-required' | translate }}
         </mat-error>
       </mat-form-field>
     </fieldset>
 
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
       <mat-form-field class="mat-block">
-        <mat-label translate>downloadCodesConfiguration.level2</mat-label>
+        <mat-label translate>downtimeCodesConfiguration.level2</mat-label>
         <input matInput formControlName="level2" required autocomplete="off">
         <mat-error *ngIf="entityForm.get('level2').hasError('required')">
-          {{ 'downloadCodesConfiguration.level2-required' | translate }}
+          {{ 'downtimeCodesConfiguration.level2-required' | translate }}
         </mat-error>
       </mat-form-field>
     </fieldset>
 
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
         <mat-form-field class="mat-block">
-          <mat-label translate>downloadCodesConfiguration.level3</mat-label>
+          <mat-label translate>downtimeCodesConfiguration.level3</mat-label>
           <input matInput formControlName="level3" required autocomplete="off">
           <mat-error *ngIf="entityForm.get('level3').hasError('required')">
-            {{ 'downloadCodesConfiguration.level3-required' | translate }}
+            {{ 'downtimeCodesConfiguration.level3-required' | translate }}
           </mat-error>
         </mat-form-field>
       </fieldset>
 
       <fieldset [disabled]="(isLoading$ | async) || !isEdit">
         <mat-form-field class="mat-block">
-          <mat-label translate>downloadCodesConfiguration.code</mat-label>
+          <mat-label translate>downtimeCodesConfiguration.code</mat-label>
           <input matInput formControlName="code" required autocomplete="off">
           <mat-error *ngIf="entityForm.get('code').hasError('required')">
-            {{ 'downloadCodesConfiguration.code-required' | translate }}
+            {{ 'downtimeCodesConfiguration.code-required' | translate }}
           </mat-error>
         </mat-form-field>
       </fieldset>
 
-    
+
   </form>

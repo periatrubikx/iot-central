@@ -38,7 +38,7 @@ import { AssetService } from '@core/http/asset.service';
 import { EntityViewService } from '@core/http/entity-view.service';
 import { EdgeService } from '@core/http/edge.service';
 import { ShiftService } from '@app/core/http/shift.service';
-import { DownloadCodesConfigurationService } from '@app/core/http/download-codes-configuration.service';
+import { DowntimeCodesConfigurationService } from '@app/core/http/downtime-codes-configuration.service';
 
 @Component({
   selector: 'tb-entity-subtype-autocomplete',
@@ -97,7 +97,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
               private edgeService: EdgeService,
               private entityViewService: EntityViewService,
               private shiftService : ShiftService,
-              private downloadCodesConfigurationService : DownloadCodesConfigurationService,
+              private downtimeCodesConfigurationService : DowntimeCodesConfigurationService,
               private fb: FormBuilder) {
     this.subTypeFormGroup = this.fb.group({
       subType: [null]
@@ -130,11 +130,11 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
           this.subTypes = null;
         })
         break;
-      case EntityType.DOWNLOAD_CODES_CONFIGURATION:
-          this.selectEntitySubtypeText = 'downloadCodesConfiguration.select-download-codes-configuration-type';
-          this.entitySubtypeText = 'downloadCodesConfiguration.download-codes-configuration-type';
-          this.entitySubtypeRequiredText = 'downloadCodesConfiguration.download-codes-configuration-type-required';
-          this.broadcastSubscription = this.broadcast.on('downloadCodesConfigurationSaved',()=>{
+      case EntityType.DOWNTIME_CODES_CONFIGURATION:
+          this.selectEntitySubtypeText = 'downtimeCodesConfiguration.select-downtime-codes-configuration-type';
+          this.entitySubtypeText = 'downtimeCodesConfiguration.downtime-codes-configuration-type';
+          this.entitySubtypeRequiredText = 'downtimeCodesConfiguration.downtime-codes-configuration-type-required';
+          this.broadcastSubscription = this.broadcast.on('downtimeCodesConfigurationSaved',()=>{
             this.subTypes = null;
           })
           break;
@@ -243,8 +243,8 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
         case EntityType.SHIFTS:
           subTypesObservable = this.shiftService.getShiftAreas({ignoreLoading:true});
           break;
-        case EntityType.DOWNLOAD_CODES_CONFIGURATION:
-          subTypesObservable = this.downloadCodesConfigurationService.getDownloadCodesConfigurationType({ignoreLoading:true});
+        case EntityType.DOWNTIME_CODES_CONFIGURATION:
+          subTypesObservable = this.downtimeCodesConfigurationService.getDowntimeCodesConfigurationType({ignoreLoading:true});
           break;
         case EntityType.DEVICE:
           subTypesObservable = this.deviceService.getDeviceTypes({ignoreLoading: true});
