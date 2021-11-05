@@ -41,7 +41,7 @@ public class JpaDowntimeCodesDao extends JpaAbstractSearchTextDao<DowntimeCodeEn
     }
 
     @Override
-    public DowntimeCode findAssetInfoById(TenantId tenantId, UUID downtimeCodeId) {
+    public DowntimeCode findDowntimeCodeInfoById(TenantId tenantId, UUID downtimeCodeId) {
         return DaoUtil.getData(downtimeCodesRepository.findDowntimeCodeInfoById(downtimeCodeId));
     }
 }

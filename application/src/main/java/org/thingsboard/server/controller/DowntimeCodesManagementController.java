@@ -22,12 +22,14 @@ import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.common.data.shift.ShiftArea;
 import org.thingsboard.server.queue.util.TbCoreComponent;
 import org.thingsboard.server.service.security.model.SecurityUser;
+import org.thingsboard.server.service.security.permission.Operation;
 import org.thingsboard.server.service.security.permission.Resource;
 
 import java.util.*;
 
 import static org.thingsboard.server.controller.ControllerConstants.*;
 import static org.thingsboard.server.controller.ControllerConstants.SORT_ORDER_ALLOWABLE_VALUES;
+import static org.thingsboard.server.dao.service.Validator.validateId;
 
 @RestController
 @TbCoreComponent
@@ -132,13 +134,13 @@ public class DowntimeCodesManagementController extends BaseController {
         checkParameter(DOWNTIME_CODE_ID, strDowntimeCodeId);
         try {
             DowntimeCodeId downtimeCodeId = new DowntimeCodeId(toUUID(strDowntimeCodeId));
-//            Shift shift = checkShiftId(shiftId, Operation.DELETE);
+            DowntimeCode downtimeCode = checkDowntimeCodeId(downtimeCodeId, Operation.DELETE);
 
             downtimeCodesService.deleteDowntimeCode(getTenantId(), downtimeCodeId);
 
-//            logEntityAction(shiftId, shift,
-//                    shift.getCustomerId(),
-//                    ActionType.DELETED, null, strDowntimeCodeId);
+            logEntityAction(downtimeCodeId, downtimeCode,
+                    downtimeCode.getCustomerId(),
+                    ActionType.DELETED, null, strDowntimeCodeId);
 
         } catch (Exception e) {
             logEntityAction(emptyId(EntityType.ASSET),
@@ -149,16 +151,15 @@ public class DowntimeCodesManagementController extends BaseController {
         }
     }
 
-//    Asset checkShiftId(ShiftId shiftId, Operation operation) throws ThingsboardException {
-//        try {
-//            validateId(shiftId, "Incorrect shiftId " + shiftId);
-//            Asset asset = shiftService.findAssetById(getCurrentUser().getTenantId(), shiftId);
-//            checkNotNull(asset);
-//            accessControlService.checkPermission(getCurrentUser(), Resource.ASSET, operation, shiftId, asset);
-//            return asset;
-//        } catch (Exception e) {
-//            throw handleException(e, false);
-//        }
-//    }
-
+    DowntimeCode checkDowntimeCodeId(DowntimeCodeId downtimeCodeId, Operation operation) throws ThingsboardException {
+        try {
+            validateId(downtimeCodeId, "Incorrect downtimeCodeId " + downtimeCodeId);
+            DowntimeCode downtimeCode = downtimeCodesService.findDowntimeCodeById(getCurrentUser().getTenantId(), downtimeCodeId);
+            checkNotNull(downtimeCode);
+            accessControlService.checkPermission(getCurrentUser(), Resource.DOWNTIME_CODE, operation, downtimeCodeId, downtimeCode);
+            return downtimeCode;
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
 }

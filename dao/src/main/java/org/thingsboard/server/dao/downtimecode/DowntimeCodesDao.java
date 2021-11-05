@@ -14,5 +14,5 @@ public interface DowntimeCodesDao extends Dao<DowntimeCode> {
 
     PageData<DowntimeCode> findDowntimeCodesByTenantId(UUID id, PageLink pageLink);
 
-    DowntimeCode findAssetInfoById(TenantId tenantId, UUID id);
+    DowntimeCode findDowntimeCodeInfoById(TenantId tenantId, UUID id);
 }

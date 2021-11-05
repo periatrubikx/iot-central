@@ -51,6 +51,6 @@ public class DowntimeCodesServiceImpl extends AbstractEntityService implements D
     public DowntimeCode findDowntimeCodeById(TenantId tenantId, DowntimeCodeId downtimeCodeId) {
         log.trace("Executing findAssetInfoById [{}]", downtimeCodeId);
         validateId(downtimeCodeId, INCORRECT_DOWNTIME_CODE_ID + downtimeCodeId);
-        return findDowntimeCodeById(tenantId, downtimeCodeId);
+        return downtimeCodesDao.findDowntimeCodeInfoById(tenantId, downtimeCodeId.getId());
     }
 }
