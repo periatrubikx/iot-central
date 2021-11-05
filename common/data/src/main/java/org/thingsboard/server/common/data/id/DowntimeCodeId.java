@@ -11,7 +11,6 @@ import java.util.UUID;
 @ApiModel
 public class DowntimeCodeId extends UUIDBased implements EntityId {
 
-
     @JsonCreator
     public DowntimeCodeId(@JsonProperty("id") UUID id) {
         super(id);

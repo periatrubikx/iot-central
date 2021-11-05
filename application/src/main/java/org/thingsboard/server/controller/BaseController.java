@@ -100,6 +100,7 @@ import org.thingsboard.server.dao.device.ClaimDevicesService;
 import org.thingsboard.server.dao.device.DeviceCredentialsService;
 import org.thingsboard.server.dao.device.DeviceProfileService;
 import org.thingsboard.server.dao.device.DeviceService;
+import org.thingsboard.server.dao.downtimecode.DowntimeCodesService;
 import org.thingsboard.server.dao.edge.EdgeService;
 import org.thingsboard.server.dao.entityview.EntityViewService;
 import org.thingsboard.server.dao.exception.DataValidationException;
@@ -286,6 +287,9 @@ public abstract class BaseController {
 
     @Autowired
     protected ShiftAreaService shiftAreaService;
+
+    @Autowired
+    protected DowntimeCodesService downtimeCodesService;
 
     @Value("${server.log_controller_error_stack_trace}")
     @Getter

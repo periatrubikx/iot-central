@@ -41,7 +41,8 @@ public enum Resource {
     OTA_PACKAGE(EntityType.OTA_PACKAGE),
     EDGE(EntityType.EDGE),
     RPC(EntityType.RPC),
-    SHIFT(EntityType.SHIFT);
+    SHIFT(EntityType.SHIFT),
+    DOWNTIME_CODE(EntityType.DOWNTIME_CODE);
 
     private final EntityType entityType;
 

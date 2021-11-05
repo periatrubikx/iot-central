@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
 import org.thingsboard.server.common.data.BaseData;
 import org.thingsboard.server.common.data.HasCustomerId;
+import org.thingsboard.server.common.data.HasName;
 import org.thingsboard.server.common.data.HasTenantId;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.DowntimeCodeId;
@@ -13,7 +14,7 @@ import org.thingsboard.server.common.data.validation.NoXss;
 
 @ApiModel
 @EqualsAndHashCode(callSuper = true)
-public class DowntimeCode extends BaseData<DowntimeCodeId>  implements HasTenantId, HasCustomerId {
+public class DowntimeCode extends BaseData<DowntimeCodeId> implements HasName, HasTenantId, HasCustomerId {
 
     private TenantId tenantId;
     private CustomerId customerId;
@@ -72,7 +73,7 @@ public class DowntimeCode extends BaseData<DowntimeCodeId>  implements HasTenant
         this.customerId = customerId;
     }
 
-    @ApiModelProperty(position = 5, required = true, value = "Level 1", example = "Level 1")
+    @ApiModelProperty(position = 5, required = true, value = "Level 1", example = "Planned Downtime")
     public String getLevel1() {
         return level1;
     }
@@ -81,7 +82,7 @@ public class DowntimeCode extends BaseData<DowntimeCodeId>  implements HasTenant
         this.level1 = level1;
     }
 
-    @ApiModelProperty(position = 6, required = true, value = "Level 2", example = "Level 2")
+    @ApiModelProperty(position = 6, required = true, value = "Level 2", example = "Generic Stop")
     public String getLevel2() {
         return level2;
     }
@@ -90,7 +91,7 @@ public class DowntimeCode extends BaseData<DowntimeCodeId>  implements HasTenant
         this.level2 = level2;
     }
 
-    @ApiModelProperty(position = 7, required = true, value = "Level 3", example = "Level 3")
+    @ApiModelProperty(position = 7, required = true, value = "Level 3", example = "Lunch Break")
     public String getLevel3() {
         return level3;
     }
@@ -99,12 +100,40 @@ public class DowntimeCode extends BaseData<DowntimeCodeId>  implements HasTenant
         this.level3 = level3;
     }
 
-    @ApiModelProperty(position = 8, required = true, value = "Code", example = "Code")
+    @ApiModelProperty(position = 8, required = true, value = "Code", example = "1001")
     public Integer getCode() {
         return code;
     }
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("DowntimeCode [downtimeCodeId=");
+        builder.append(tenantId);
+        builder.append(", customerId=");
+        builder.append(customerId);
+        builder.append(", level1=");
+        builder.append(level1);
+        builder.append(", level2=");
+        builder.append(level2);
+        builder.append(", level3=");
+        builder.append(level3);
+        builder.append(", code=");
+        builder.append(code);
+        builder.append(", createdTime=");
+        builder.append(createdTime);
+        builder.append(", id=");
+        builder.append(id);
+        builder.append("]");
+        return builder.toString();
+    }
+
+    @Override
+    public String getName() {
+        return code.toString();
     }
 }

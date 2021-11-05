@@ -42,7 +42,8 @@ public class CustomerUserPermissions extends AbstractPermissions {
         put(Resource.WIDGET_TYPE, widgetsPermissionChecker);
         put(Resource.EDGE, customerEntityPermissionChecker);
         put(Resource.RPC, rpcPermissionChecker);
-        put(Resource.SHIFT, rpcPermissionChecker);
+        put(Resource.SHIFT, customerEntityPermissionChecker);
+        put(Resource.DOWNTIME_CODE, customerEntityPermissionChecker);
     }
 
     private static final PermissionChecker customerEntityPermissionChecker =

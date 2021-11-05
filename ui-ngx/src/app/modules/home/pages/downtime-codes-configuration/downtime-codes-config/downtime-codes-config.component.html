@@ -12,8 +12,8 @@
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
       <mat-form-field class="mat-block">
         <mat-label translate>downtimeCodesConfiguration.level2</mat-label>
-        <input matInput formControlName="level2" required autocomplete="off">
-        <mat-error *ngIf="entityForm.get('level2').hasError('required')">
+        <input matInput formControlName="level2" autocomplete="off">
+        <mat-error *ngIf="entityForm.get('level2')">
           {{ 'downtimeCodesConfiguration.level2-required' | translate }}
         </mat-error>
       </mat-form-field>
@@ -22,8 +22,8 @@
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
         <mat-form-field class="mat-block">
           <mat-label translate>downtimeCodesConfiguration.level3</mat-label>
-          <input matInput formControlName="level3" required autocomplete="off">
-          <mat-error *ngIf="entityForm.get('level3').hasError('required')">
+          <input matInput formControlName="level3" autocomplete="off">
+          <mat-error *ngIf="entityForm.get('level3')">
             {{ 'downtimeCodesConfiguration.level3-required' | translate }}
           </mat-error>
         </mat-form-field>

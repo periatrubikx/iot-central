@@ -1,6 +1,7 @@
 package org.thingsboard.server.dao.shift;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,14 @@ import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.common.data.shift.ShiftInfo;
 import org.thingsboard.server.dao.entity.AbstractEntityService;
+import org.thingsboard.server.dao.exception.DataValidationException;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
 import static org.thingsboard.server.common.data.CacheConstants.SHIFT_CACHE;
+import static org.thingsboard.server.dao.asset.BaseAssetService.INCORRECT_ASSET_ID;
 import static org.thingsboard.server.dao.service.Validator.validateId;
 import static org.thingsboard.server.dao.service.Validator.validatePageLink;
 
@@ -24,6 +27,7 @@ import static org.thingsboard.server.dao.service.Validator.validatePageLink;
 @Slf4j
 public class ShiftServiceImpl extends AbstractEntityService implements ShiftService{
     public static final String INCORRECT_TENANT_ID = "Incorrect tenantId ";
+    public static final String INCORRECT_SHIFT_ID = "Incorrect shiftId ";
 
     @Autowired
     ShiftDao shiftDao;
@@ -44,12 +48,7 @@ public class ShiftServiceImpl extends AbstractEntityService implements ShiftServ
         try {
             savedShift = shiftDao.save(shift.getTenantId(), shift);
         } catch (Exception t) {
-//            ConstraintViolationException e = extractConstraintViolationException(t).orElse(null);
-//            if (e != null && e.getConstraintName() != null && e.getConstraintName().equalsIgnoreCase("asset_name_unq_key")) {
-//                throw new DataValidationException("Asset with such name already exists!");
-//            } else {
-//                throw t;
-//            }
+          t.printStackTrace();
         }
         return savedShift;
     }
@@ -61,8 +60,8 @@ public class ShiftServiceImpl extends AbstractEntityService implements ShiftServ
 
     @Override
     public Shift findAssetInfoById(TenantId tenantId, ShiftId shiftId) {
-//        log.trace("Executing findAssetInfoById [{}]", assetId);
-//        validateId(assetId, INCORRECT_ASSET_ID + assetId);
+        log.trace("Executing findAssetInfoById [{}]", shiftId);
+        validateId(shiftId, INCORRECT_SHIFT_ID + shiftId);
         return shiftDao.findAssetInfoById(tenantId, shiftId.getId());
     }
 }
