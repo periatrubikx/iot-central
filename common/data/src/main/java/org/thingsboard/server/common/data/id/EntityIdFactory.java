@@ -77,6 +77,10 @@ public class EntityIdFactory {
                 return new EdgeId(uuid);
             case RPC:
                 return new RpcId(uuid);
+            case SHIFT:
+                return new ShiftId(uuid);
+            case DOWNTIME_CODE:
+                return new DowntimeCodeId(uuid);
         }
         throw new IllegalArgumentException("EntityType " + type + " is not supported!");
     }
