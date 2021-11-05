@@ -39,6 +39,25 @@ public class DowntimeCodesManagementController extends BaseController {
 
     public static final String DOWNTIME_CODE_ID = "downtimeCodeId";
 
+    @ApiOperation(value = "Get DowntimeCode Info (getDowntimeCodeInfoById)",
+            notes = "Fetch the DowntimeCode Info object based on the provided DowntimeCode Id. " +
+                    "If the user has the authority of 'Tenant Administrator', the server checks that the asset is owned by the same tenant. " +
+                    "If the user has the authority of 'Customer User', the server checks that the asset is assigned to the same customer. "
+                    + TENANT_OR_CUSTOMER_AUTHORITY_PARAGRAPH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @RequestMapping(value = "/downtimeCodesConfig/info/{downtimeCodeId}", method = RequestMethod.GET)
+    @ResponseBody
+    public DowntimeCode getDowntimeCodeInfoById(@ApiParam(value = ASSET_ID_PARAM_DESCRIPTION)
+                                  @PathVariable(DOWNTIME_CODE_ID) String strDowntimeCodeId) throws ThingsboardException {
+        checkParameter(DOWNTIME_CODE_ID, strDowntimeCodeId);
+        try {
+            DowntimeCodeId downtimeCodeId = new DowntimeCodeId(toUUID(strDowntimeCodeId));
+            return checkDowntimeCodeId(downtimeCodeId, Operation.READ);
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+
     @ApiOperation(value = "Get Types (getTypes)",
             notes = "Returns a list of types.", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
