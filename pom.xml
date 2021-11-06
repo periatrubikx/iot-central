@@ -83,7 +83,7 @@
         <rabbitmq.version>4.8.0</rabbitmq.version>
         <surfire.version>2.19.1</surfire.version>
         <jar-plugin.version>3.0.2</jar-plugin.version>
-        <springfox-swagger.version>3.0.3</springfox-swagger.version>
+        <springfox-swagger.version>3.0.4</springfox-swagger.version>
         <swagger-annotations.version>1.6.3</swagger-annotations.version>
         <spatial4j.version>0.7</spatial4j.version>
         <jts.version>1.15.0</jts.version>
@@ -121,7 +121,7 @@
         <awaitility.version>4.1.0</awaitility.version>
         <cassandra-unit.version>4.3.1.0</cassandra-unit.version>
         <dbunit.version>2.7.2</dbunit.version>
-        <hsqldb.version>2.6.0</hsqldb.version>
+        <hsqldb.version>2.6.1</hsqldb.version>
         <java-websocket.version>1.5.2</java-websocket.version>
         <jupiter.version>5.6.3</jupiter.version> <!-- keep the same version as spring-boot-starter-test depend on jupiter-->
         <json-path.version>2.6.0</json-path.version>
@@ -188,8 +188,16 @@
                                                 <directory>src/main/resources</directory>
                                                 <excludes>
                                                     <exclude>logback.xml</exclude>
+                                                    <exclude>${pkg.name}.yml</exclude>
                                                 </excludes>
                                                 <filtering>false</filtering>
+                                            </resource>
+                                            <resource>
+                                                <directory>src/main/resources</directory>
+                                                <includes>
+                                                    <include>${pkg.name}.yml</include>
+                                                </includes>
+                                                <filtering>true</filtering>
                                             </resource>
                                         </resources>
                                     </configuration>
@@ -264,8 +272,16 @@
                                                 <directory>src/main/resources</directory>
                                                 <excludes>
                                                     <exclude>logback.xml</exclude>
+                                                    <exclude>${pkg.name}.yml</exclude>
                                                 </excludes>
                                                 <filtering>false</filtering>
+                                            </resource>
+                                            <resource>
+                                                <directory>src/main/resources</directory>
+                                                <includes>
+                                                    <include>${pkg.name}.yml</include>
+                                                </includes>
+                                                <filtering>true</filtering>
                                             </resource>
                                             <resource>
                                                 <directory>src/main/conf</directory>
