@@ -15,7 +15,7 @@
 ///
 
 import { AfterViewInit, Component, ElementRef, forwardRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Observable, of, Subscription, throwError } from 'rxjs';
 import {
   catchError,
@@ -60,9 +60,11 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
   entityType: EntityType;
 
   private requiredValue: boolean;
+
   get required(): boolean {
     return this.requiredValue;
   }
+
   @Input()
   set required(value: boolean) {
     this.requiredValue = coerceBooleanProperty(value);
@@ -76,6 +78,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
   selectEntitySubtypeText: string;
   entitySubtypeText: string;
   entitySubtypeRequiredText: string;
+  entitySubtypeMaxLength: string;
 
   filteredSubTypes: Observable<Array<string>>;
 
@@ -100,7 +103,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
               private downtimeCodesConfigurationService : DowntimeCodesConfigurationService,
               private fb: FormBuilder) {
     this.subTypeFormGroup = this.fb.group({
-      subType: [null]
+      subType: [null, Validators.maxLength(255)]
     });
   }
 
@@ -118,6 +121,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
         this.selectEntitySubtypeText = 'asset.select-asset-type';
         this.entitySubtypeText = 'asset.asset-type';
         this.entitySubtypeRequiredText = 'asset.asset-type-required';
+        this.entitySubtypeMaxLength = 'asset.asset-type-max-length';
         this.broadcastSubscription = this.broadcast.on('assetSaved', () => {
           this.subTypes = null;
         });
@@ -142,6 +146,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
         this.selectEntitySubtypeText = 'device.select-device-type';
         this.entitySubtypeText = 'device.device-type';
         this.entitySubtypeRequiredText = 'device.device-type-required';
+        this.entitySubtypeMaxLength = 'device.device-type-max-length';
         this.broadcastSubscription = this.broadcast.on('deviceSaved', () => {
           this.subTypes = null;
         });
@@ -150,6 +155,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
         this.selectEntitySubtypeText = 'edge.select-edge-type';
         this.entitySubtypeText = 'edge.edge-type';
         this.entitySubtypeRequiredText = 'edge.edge-type-required';
+        this.entitySubtypeMaxLength = 'edge.type-max-length';
         this.broadcastSubscription = this.broadcast.on('edgeSaved', () => {
           this.subTypes = null;
         });
@@ -158,6 +164,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
         this.selectEntitySubtypeText = 'entity-view.select-entity-view-type';
         this.entitySubtypeText = 'entity-view.entity-view-type';
         this.entitySubtypeRequiredText = 'entity-view.entity-view-type-required';
+        this.entitySubtypeMaxLength = 'entity-view.type-max-length'
         this.broadcastSubscription = this.broadcast.on('entityViewSaved', () => {
           this.subTypes = null;
         });
@@ -169,7 +176,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
         debounceTime(150),
         distinctUntilChanged(),
         tap(value => {
-            this.updateView(value);
+          this.updateView(value);
         }),
         // startWith<string | EntitySubtype>(''),
         map(value => value ? value : ''),
@@ -223,7 +230,7 @@ export class EntitySubTypeAutocompleteComponent implements ControlValueAccessor,
   fetchSubTypes(searchText?: string, strictMatch: boolean = false): Observable<Array<string>> {
     this.searchText = searchText;
     return this.getSubTypes().pipe(
-      map(subTypes => subTypes.filter( subType => {
+      map(subTypes => subTypes.filter(subType => {
         if (strictMatch) {
           return searchText ? subType === searchText : false;
         } else {
