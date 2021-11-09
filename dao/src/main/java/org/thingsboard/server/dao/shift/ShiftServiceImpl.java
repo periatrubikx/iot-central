@@ -5,6 +5,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.thingsboard.server.common.data.id.DowntimeCodeId;
 import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -63,5 +64,12 @@ public class ShiftServiceImpl extends AbstractEntityService implements ShiftServ
         log.trace("Executing findAssetInfoById [{}]", shiftId);
         validateId(shiftId, INCORRECT_SHIFT_ID + shiftId);
         return shiftDao.findAssetInfoById(tenantId, shiftId.getId());
+    }
+
+    @Override
+    public Shift findShiftById(TenantId tenantId, ShiftId shiftId) {
+        log.trace("Executing findShiftById [{}]", shiftId);
+        validateId(shiftId, INCORRECT_SHIFT_ID + shiftId);
+        return shiftDao.findById(tenantId, shiftId.getId());
     }
 }

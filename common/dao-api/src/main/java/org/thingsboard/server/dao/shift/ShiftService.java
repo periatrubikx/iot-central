@@ -1,5 +1,6 @@
 package org.thingsboard.server.dao.shift;
 
+import org.thingsboard.server.common.data.id.DowntimeCodeId;
 import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -15,4 +16,6 @@ public interface ShiftService {
     void deleteShift(TenantId tenantId, ShiftId shiftId);
 
     Shift findAssetInfoById(TenantId tenantId, ShiftId shiftId);
+
+    Shift findShiftById(TenantId tenantId, ShiftId shiftId);
 }

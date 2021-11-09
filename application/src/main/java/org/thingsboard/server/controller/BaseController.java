@@ -52,32 +52,14 @@ import org.thingsboard.server.common.data.alarm.AlarmInfo;
 import org.thingsboard.server.common.data.asset.Asset;
 import org.thingsboard.server.common.data.asset.AssetInfo;
 import org.thingsboard.server.common.data.audit.ActionType;
+import org.thingsboard.server.common.data.downtimecode.DowntimeCode;
 import org.thingsboard.server.common.data.edge.Edge;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
 import org.thingsboard.server.common.data.edge.EdgeEventType;
 import org.thingsboard.server.common.data.edge.EdgeInfo;
 import org.thingsboard.server.common.data.exception.ThingsboardErrorCode;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
-import org.thingsboard.server.common.data.id.AlarmId;
-import org.thingsboard.server.common.data.id.AssetId;
-import org.thingsboard.server.common.data.id.CustomerId;
-import org.thingsboard.server.common.data.id.DashboardId;
-import org.thingsboard.server.common.data.id.DeviceId;
-import org.thingsboard.server.common.data.id.DeviceProfileId;
-import org.thingsboard.server.common.data.id.EdgeId;
-import org.thingsboard.server.common.data.id.EntityId;
-import org.thingsboard.server.common.data.id.EntityIdFactory;
-import org.thingsboard.server.common.data.id.EntityViewId;
-import org.thingsboard.server.common.data.id.OtaPackageId;
-import org.thingsboard.server.common.data.id.RpcId;
-import org.thingsboard.server.common.data.id.RuleChainId;
-import org.thingsboard.server.common.data.id.RuleNodeId;
-import org.thingsboard.server.common.data.id.TbResourceId;
-import org.thingsboard.server.common.data.id.TenantId;
-import org.thingsboard.server.common.data.id.TenantProfileId;
-import org.thingsboard.server.common.data.id.UserId;
-import org.thingsboard.server.common.data.id.WidgetTypeId;
-import org.thingsboard.server.common.data.id.WidgetsBundleId;
+import org.thingsboard.server.common.data.id.*;
 import org.thingsboard.server.common.data.page.PageDataIterableByTenantIdEntityId;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.common.data.page.SortOrder;
@@ -89,6 +71,7 @@ import org.thingsboard.server.common.data.rpc.Rpc;
 import org.thingsboard.server.common.data.rule.RuleChain;
 import org.thingsboard.server.common.data.rule.RuleChainType;
 import org.thingsboard.server.common.data.rule.RuleNode;
+import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.common.data.widget.WidgetTypeDetails;
 import org.thingsboard.server.common.data.widget.WidgetsBundle;
 import org.thingsboard.server.dao.asset.AssetService;
@@ -536,6 +519,12 @@ public abstract class BaseController {
                 case OTA_PACKAGE:
                     checkOtaPackageId(new OtaPackageId(entityId.getId()), operation);
                     return;
+                case SHIFT:
+                    checkShiftId(new ShiftId(entityId.getId()), operation);
+                    return;
+                case DOWNTIME_CODE:
+                    checkDowntimeCodeId(new DowntimeCodeId(entityId.getId()), operation);
+                    return;
                 default:
                     throw new IllegalArgumentException("Unsupported entity type: " + entityId.getEntityType());
             }
@@ -937,6 +926,30 @@ public abstract class BaseController {
             return MediaType.parseMediaType(contentType);
         } catch (Exception e) {
             return MediaType.APPLICATION_OCTET_STREAM;
+        }
+    }
+
+    DowntimeCode checkDowntimeCodeId(DowntimeCodeId downtimeCodeId, Operation operation) throws ThingsboardException {
+        try {
+            validateId(downtimeCodeId, "Incorrect assetId " + downtimeCodeId);
+            DowntimeCode downtimeCode = downtimeCodesService.findDowntimeCodeById(getCurrentUser().getTenantId(), downtimeCodeId);
+            checkNotNull(downtimeCode, "Asset with id [" + downtimeCodeId + "] is not found");
+            accessControlService.checkPermission(getCurrentUser(), Resource.DOWNTIME_CODE, operation, downtimeCodeId, downtimeCode);
+            return downtimeCode;
+        } catch (Exception e) {
+            throw handleException(e, false);
+        }
+    }
+
+    Shift checkShiftId(ShiftId shiftId, Operation operation) throws ThingsboardException {
+        try {
+            validateId(shiftId, "Incorrect assetId " + shiftId);
+            Shift shift = shiftService.findShiftById(getCurrentUser().getTenantId(), shiftId);
+            checkNotNull(shift, "Asset with id [" + shiftId + "] is not found");
+            accessControlService.checkPermission(getCurrentUser(), Resource.SHIFT, operation, shiftId, shift);
+            return shift;
+        } catch (Exception e) {
+            throw handleException(e, false);
         }
     }
 }
