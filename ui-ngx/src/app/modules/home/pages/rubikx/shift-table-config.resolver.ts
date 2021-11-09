@@ -11,7 +11,6 @@ import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, take, tap } from 'rxjs/operators';
 import { CellActionDescriptor, checkBoxCell, DateEntityTableColumn, EntityTableColumn, EntityTableConfig } from '../../models/entity/entities-table-config.models';
-import { ShiftComponent } from './shift.component';
 import { Authority } from '@app/shared/models/authority.enum';
 import { CustomerService } from '@app/core/http/customer.service';
 import { selectAuthUser } from '@app/core/auth/auth.selectors';
@@ -22,6 +21,7 @@ import { ShiftTableHeaderComponent } from './shift-table-header/shift-table-head
 import { ShiftService } from '@app/core/http/shift.service';
 import { HomeDialogsService } from '../../dialogs/home-dialogs.service';
 import { BroadcastService } from '@app/core/services/broadcast.service';
+import { ShiftComponent } from './shift.component';
 
 @Injectable({
   providedIn: 'root'

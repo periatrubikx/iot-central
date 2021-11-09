@@ -39,7 +39,7 @@ import {
   RuleNodeComponentsResolver,
   TooltipsterResolver
 } from '@home/pages/rulechain/rulechain-routing.module';
-import { ShiftTableConfigResolver } from '../shift/shift-table-config.resolver';
+import { ShiftTableConfigResolver } from '../rubikx/shift-table-config.resolver';
 
 const routes: Routes = [
   {
@@ -77,21 +77,21 @@ const routes: Routes = [
           entitiesTableConfig: AssetsTableConfigResolver
         }
       },
-      {
-        path: ':edgeId/shifts',
-        component: EntitiesTableComponent,
-        data: {
-          auth: [Authority.TENANT_ADMIN, Authority.CUSTOMER_USER],
-          shiftsType: 'edge',
-          breadcrumb: {
-            label: 'edge.shifts',
-            icon: 'domain'
-          }
-        },
-        resolve: {
-          entitiesTableConfig: ShiftTableConfigResolver
-        }
-      },
+      // {
+      //   path: ':edgeId/shifts',
+      //   component: EntitiesTableComponent,
+      //   data: {
+      //     auth: [Authority.TENANT_ADMIN, Authority.CUSTOMER_USER],
+      //     shiftsType: 'edge',
+      //     breadcrumb: {
+      //       label: 'edge.shifts',
+      //       icon: 'domain'
+      //     }
+      //   },
+      //   resolve: {
+      //     entitiesTableConfig: ShiftTableConfigResolver
+      //   }
+      // },
       {
         path: ':edgeId/devices',
         component: EntitiesTableComponent,

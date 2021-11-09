@@ -462,6 +462,9 @@
         "unassign-assets-from-edge-text": "After the confirmation all selected assets will be unassigned and won't be accessible by the edge.",
         "selected-assets": "{ count, plural, 1 {1 asset} other {# assets} } selected"
     },
+    "rubikx":{
+        "rubikx-management":"Rubikx Management"
+    },
     "shift":{
         "shift": "Shift",
         "shifts": "Shifts",

@@ -10,7 +10,7 @@ import { CellActionDescriptor, DateEntityTableColumn, EntityTableColumn, EntityT
 import { HomeDialogsService } from '../../dialogs/home-dialogs.service';
 import { BroadcastService } from '@app/core/services/broadcast.service';
 import { TranslateService } from '@ngx-translate/core';
-import { DowntimeCodesConfigComponent } from "./downtime-codes-config/downtime-codes-config.component";
+import { DowntimeCodesConfigComponent } from "./downtime-codes-config.component";
 import { DowntimeCodesConfigTableHeaderComponent } from "./downtime-codes-config-table-header/downtime-codes-config-table-header.component";
 import { DatePipe } from "@angular/common";
 import { map, mergeMap, take, tap } from "rxjs/operators";

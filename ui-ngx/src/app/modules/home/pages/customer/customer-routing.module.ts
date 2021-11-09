@@ -28,7 +28,7 @@ import { DashboardPageComponent } from '@home/components/dashboard-page/dashboar
 import { BreadCrumbConfig } from '@shared/components/breadcrumb';
 import { dashboardBreadcumbLabelFunction, DashboardResolver } from '@home/pages/dashboard/dashboard-routing.module';
 import { EdgesTableConfigResolver } from '@home/pages/edge/edges-table-config.resolver';
-import { ShiftTableConfigResolver } from '../shift/shift-table-config.resolver';
+import { ShiftTableConfigResolver } from '../rubikx/shift-table-config.resolver';
 
 const routes: Routes = [
   {

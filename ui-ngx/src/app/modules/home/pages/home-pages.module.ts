@@ -36,10 +36,7 @@ import { DeviceProfileModule } from './device-profile/device-profile.module';
 import { ApiUsageModule } from '@home/pages/api-usage/api-usage.module';
 import { EdgeModule } from '@home/pages/edge/edge.module';
 import { OtaUpdateModule } from '@home/pages/ota-update/ota-update.module';
-import { NodeRedModule } from '@home/pages/node-red/node-red.module';
-import { DigitalTwinModule } from '@home/pages/digital-twin/digital-twin.module';
-import { ShiftModule } from './shift/shift.module';
-import { DowntimeCodesConfigModule } from './downtime-codes-configuration/downtime-codes-config.module';
+import { RubikxModule } from './rubikx/rubikx.module';
 
 @NgModule({
   exports: [
@@ -61,8 +58,7 @@ import { DowntimeCodesConfigModule } from './downtime-codes-configuration/downti
     ApiUsageModule,
     OtaUpdateModule,
     UserModule,
-    ShiftModule,
-    DowntimeCodesConfigModule
+    RubikxModule
   ],
   providers: [
     {

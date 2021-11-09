@@ -297,18 +297,28 @@ export class MenuService {
       },
       {
         id: guid(),
-        name: 'shift.shifts',
-        type: 'link',
-        path: '/shift',
-        icon:'transfer_within_a_station'
-      },
-      {
-        id: guid(),
-        name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
-        type: 'link',
-        path: '/downtimeCodesConfiguration',
-        icon:'settings_applications'
-      },
+        name: 'rubikx.rubikx-management',
+        type: 'toggle',
+        path: '/rubikx',
+        height: '80px',
+        icon: 'settings',
+        pages: [
+          {
+            id: guid(),
+            name: 'shift.shifts',
+            type: 'link',
+            path: '/rubikx/shift',
+            icon:'transfer_within_a_station'
+          },
+          {
+            id: guid(),
+            name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
+            type: 'link',
+            path: '/rubikx/downtimeCodesConfiguration',
+            icon:'settings_applications'
+          }
+        ]
+      }, 
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
@@ -398,7 +408,7 @@ export class MenuService {
             icon: 'folder'
           }
         ]
-      }
+      },
     );
     return sections;
   }
@@ -488,22 +498,17 @@ export class MenuService {
         ]
       },
       {
-        name: 'shift.management',
+        name: 'rubikx.rubikx-management',
         places: [
           {
-            name: 'shift.shifts',
+            name: 'rubikx.shifts',
             icon: 'transfer_within_a_station',
-            path: '/shift'
-          }
-        ]
-      },
-      {
-        name: 'downtimeCodesConfiguration.management',
-        places: [
+            path: '/rubikx/shift'
+          },
           {
-            name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
+            name: 'rubikx.downtimeCodesConfigurations',
             icon: 'settings_applications',
-            path: '/downtimeCodesConfiguration'
+            path: '/rubikx/downtimeCodesConfiguration'
           }
         ]
       }
@@ -572,7 +577,8 @@ export class MenuService {
             path: '/settings/resources-library'
           }
         ]
-      }
+      },
+      
     );
     return homeSections;
   }
@@ -611,18 +617,28 @@ export class MenuService {
       },
       {
         id: guid(),
-        name: 'shift.shift',
-        type: 'link',
-        path: '/shift',
-        icon:'transfer_within_a_station'
-      },
-      {
-        id: guid(),
-        name: 'downtimeCodesConfiguration.downtimeCodesConfiguration',
-        type: 'link',
-        path: '/downtimeCodesConfiguration',
-        icon:'settings_applications'
-      },
+        name: 'rubikx.rubikx-management',
+        type: 'toggle',
+        path: '/rubikx',
+        height: '40px',
+        icon: 'settings',
+        pages: [
+          {
+            id: guid(),
+            name: 'shift.shifts',
+            type: 'link',
+            path: '/rubikx/shift',
+            icon:'transfer_within_a_station'
+          },
+          {
+            id: guid(),
+            name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
+            type: 'link',
+            path: '/rubikx/downtimeCodesConfiguration',
+            icon:'settings_applications'
+          }
+        ]
+      }
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
@@ -688,22 +704,17 @@ export class MenuService {
         ]
       },
       {
-        name: 'shift.management',
+        name: 'rubikx.rubikx-management',
         places: [
           {
-            name: 'shift.shift',
-            icon:'transfer_within_a_station',
-            path: '/shift'
-          }
-        ]
-      },
-      {
-        name: 'downtimeCodesConfiguration.management',
-        places: [
+            name: 'rubikx.shifts',
+            icon: 'transfer_within_a_station',
+            path: '/rubikx/shift'
+          },
           {
-            name: 'downtimeCodesConfiguration.downtimeCodesConfiguration',
-            icon:'settings_applications',
-            path: '/downtimeCodesConfiguration'
+            name: 'rubikx.downtimeCodesConfigurations',
+            icon: 'settings_applications',
+            path: '/rubikx/downtimeCodesConfiguration'
           }
         ]
       }
