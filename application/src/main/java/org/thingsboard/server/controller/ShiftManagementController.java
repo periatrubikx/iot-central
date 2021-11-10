@@ -22,15 +22,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.thingsboard.server.common.data.Customer;
 import org.thingsboard.server.common.data.EntityType;
+import org.thingsboard.server.common.data.asset.Asset;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
+import org.thingsboard.server.common.data.id.AssetId;
+import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.common.data.shift.Shift;
+import org.thingsboard.server.dao.exception.IncorrectParameterException;
+import org.thingsboard.server.dao.model.ModelConstants;
 import org.thingsboard.server.queue.util.TbCoreComponent;
 import org.thingsboard.server.service.security.model.SecurityUser;
 import org.thingsboard.server.service.security.permission.Operation;
@@ -170,11 +176,83 @@ public class ShiftManagementController extends BaseController {
     Shift checkShiftId(ShiftId shiftId, Operation operation) throws ThingsboardException {
         try {
             validateId(shiftId, "Incorrect shiftId " + shiftId);
-            Shift asset = shiftService.findShiftById(getCurrentUser().getTenantId(), shiftId);
-            checkNotNull(asset);
-            accessControlService.checkPermission(getCurrentUser(), Resource.ASSET, operation, shiftId, asset);
-            return asset;
+            Shift shift = shiftService.findShiftById(getCurrentUser().getTenantId(), shiftId);
+            checkNotNull(shift);
+            accessControlService.checkPermission(getCurrentUser(), Resource.SHIFT, operation, shiftId, shift);
+            return shift;
         } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+
+    @ApiOperation(value = "Assign shift to customer (assignShiftToCustomer)",
+            notes = "Creates assignment of the asset to customer. Customer will be able to query asset afterwards." + TENANT_AUTHORITY_PARAGRAPH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('TENANT_ADMIN')")
+    @RequestMapping(value = "/customer/{customerId}/shift/{shiftId}", method = RequestMethod.POST)
+    @ResponseBody
+    public Shift assignShiftToCustomer(@ApiParam(value = CUSTOMER_ID_PARAM_DESCRIPTION) @PathVariable("customerId") String strCustomerId,
+                                       @ApiParam(value = ASSET_ID_PARAM_DESCRIPTION) @PathVariable(SHIFT_ID) String strShiftId) throws ThingsboardException {
+        checkParameter("shiftId", strShiftId);
+        checkParameter(SHIFT_ID, strShiftId);
+        try {
+            CustomerId customerId = new CustomerId(toUUID(strCustomerId));
+            Customer customer = checkCustomerId(customerId, Operation.READ);
+
+            ShiftId shiftId = new ShiftId(toUUID(strShiftId));
+            checkShiftId(shiftId, Operation.ASSIGN_TO_CUSTOMER);
+
+            Shift shift = checkNotNull(shiftService.assignShiftToCustomer(getTenantId(), shiftId, customerId));
+
+            logEntityAction(shiftId, shift,
+                    shift.getCustomerId(),
+                    ActionType.ASSIGNED_TO_CUSTOMER, null, strShiftId, strCustomerId, customer.getName());
+
+            sendEntityAssignToCustomerNotificationMsg(shift.getTenantId(), shift.getId(),
+                    customerId, EdgeEventActionType.ASSIGNED_TO_CUSTOMER);
+
+            return shift;
+        } catch (Exception e) {
+
+            logEntityAction(emptyId(EntityType.ASSET), null,
+                    null,
+                    ActionType.ASSIGNED_TO_CUSTOMER, e, strShiftId, strCustomerId);
+
+            throw handleException(e);
+        }
+    }
+
+    @ApiOperation(value = "Unassign shift from customer (unassignShiftFromCustomer)",
+            notes = "Clears assignment of the shift to customer. Customer will not be able to query asset afterwards." + TENANT_AUTHORITY_PARAGRAPH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('TENANT_ADMIN')")
+    @RequestMapping(value = "/customer/shift/{shiftId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Shift unassignShiftFromCustomer(@ApiParam(value = ASSET_ID_PARAM_DESCRIPTION) @PathVariable(SHIFT_ID) String strShiftId) throws ThingsboardException {
+        checkParameter(SHIFT_ID, strShiftId);
+        try {
+            ShiftId shiftId = new ShiftId(toUUID(strShiftId));
+            Shift shift = checkShiftId(shiftId, Operation.UNASSIGN_FROM_CUSTOMER);
+            if (shift.getCustomerId() == null || shift.getCustomerId().getId().equals(ModelConstants.NULL_UUID)) {
+                throw new IncorrectParameterException("Asset isn't assigned to any customer!");
+            }
+
+            Customer customer = checkCustomerId(shift.getCustomerId(), Operation.READ);
+
+            Shift savedShift = checkNotNull(shiftService.unassignAssetFromCustomer(getTenantId(), shiftId));
+
+            logEntityAction(shiftId, shift,
+                    shift.getCustomerId(),
+                    ActionType.UNASSIGNED_FROM_CUSTOMER, null, strShiftId, customer.getId().toString(), customer.getName());
+
+            sendEntityAssignToCustomerNotificationMsg(savedShift.getTenantId(), savedShift.getId(),
+                    customer.getId(), EdgeEventActionType.UNASSIGNED_FROM_CUSTOMER);
+
+            return savedShift;
+        } catch (Exception e) {
+
+            logEntityAction(emptyId(EntityType.ASSET), null,
+                    null,
+                    ActionType.UNASSIGNED_FROM_CUSTOMER, e, strShiftId);
+
             throw handleException(e);
         }
     }
