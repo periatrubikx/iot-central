@@ -23,25 +23,18 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.EntityType;
-import org.thingsboard.server.common.data.asset.Asset;
-import org.thingsboard.server.common.data.asset.AssetInfo;
-import org.thingsboard.server.common.data.id.AssetId;
-import org.thingsboard.server.common.data.id.EdgeId;
-import org.thingsboard.server.common.data.id.ShiftId;
-import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
+import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
-import org.thingsboard.server.common.data.shift.ShiftInfo;
+import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.queue.util.TbCoreComponent;
 import org.thingsboard.server.service.security.model.SecurityUser;
 import org.thingsboard.server.service.security.permission.Operation;
 import org.thingsboard.server.service.security.permission.Resource;
-
-import java.util.List;
 
 import static org.thingsboard.server.controller.ControllerConstants.*;
 import static org.thingsboard.server.dao.service.Validator.validateId;
@@ -75,13 +68,12 @@ public class ShiftManagementController extends BaseController {
 
     Shift checkShiftInfoId(ShiftId shiftId, Operation operation) throws ThingsboardException {
         try {
-//            validateId(assetId, "Incorrect assetId " + assetId);
+            validateId(shiftId, "Incorrect assetId " + shiftId);
             Shift shift = shiftService.findAssetInfoById(getCurrentUser().getTenantId(), shiftId);
             checkNotNull(shift);
-//            accessControlService.checkPermission(getCurrentUser(), Resource.ASSET, operation, assetId, asset);
+            accessControlService.checkPermission(getCurrentUser(), Resource.ASSET, operation, shiftId, shift);
             return shift;
         } catch (Exception e) {
-//            throw handleException(e, false);
             throw handleException(e);
         }
     }
@@ -160,13 +152,11 @@ public class ShiftManagementController extends BaseController {
         checkParameter(SHIFT_ID, strShiftId);
         try {
             ShiftId shiftId = new ShiftId(toUUID(strShiftId));
-//            Shift shift = checkShiftId(shiftId, Operation.DELETE);
-
+            Shift shift = checkShiftId(shiftId, Operation.DELETE);
             shiftService.deleteShift(getTenantId(), shiftId);
-
-//            logEntityAction(shiftId, shift,
-//                    shift.getCustomerId(),
-//                    ActionType.DELETED, null, strShiftId);
+            logEntityAction(shiftId, shift,
+                    shift.getCustomerId(),
+                    ActionType.DELETED, null, strShiftId);
 
         } catch (Exception e) {
             logEntityAction(emptyId(EntityType.ASSET),
@@ -177,15 +167,15 @@ public class ShiftManagementController extends BaseController {
         }
     }
 
-//    Asset checkShiftId(ShiftId shiftId, Operation operation) throws ThingsboardException {
-//        try {
-//            validateId(shiftId, "Incorrect shiftId " + shiftId);
-//            Asset asset = shiftService.findAssetById(getCurrentUser().getTenantId(), shiftId);
-//            checkNotNull(asset);
-//            accessControlService.checkPermission(getCurrentUser(), Resource.ASSET, operation, shiftId, asset);
-//            return asset;
-//        } catch (Exception e) {
-//            throw handleException(e, false);
-//        }
-//    }
+    Shift checkShiftId(ShiftId shiftId, Operation operation) throws ThingsboardException {
+        try {
+            validateId(shiftId, "Incorrect shiftId " + shiftId);
+            Shift asset = shiftService.findShiftById(getCurrentUser().getTenantId(), shiftId);
+            checkNotNull(asset);
+            accessControlService.checkPermission(getCurrentUser(), Resource.ASSET, operation, shiftId, asset);
+            return asset;
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
 }

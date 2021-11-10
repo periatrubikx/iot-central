@@ -463,7 +463,7 @@
         "selected-assets": "{ count, plural, 1 {1 asset} other {# assets} } selected"
     },
     "rubikx":{
-        "rubikx-management":"Rubikx Management"
+        "rubikx-management":"RubikX Management"
     },
     "shift":{
         "shift": "Shift",

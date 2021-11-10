@@ -14,21 +14,19 @@ import org.thingsboard.server.common.data.downtimecode.DowntimeCodeType;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
 import org.thingsboard.server.common.data.id.DowntimeCodeId;
-import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
-import org.thingsboard.server.common.data.shift.Shift;
-import org.thingsboard.server.common.data.shift.ShiftArea;
 import org.thingsboard.server.queue.util.TbCoreComponent;
 import org.thingsboard.server.service.security.model.SecurityUser;
 import org.thingsboard.server.service.security.permission.Operation;
 import org.thingsboard.server.service.security.permission.Resource;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import static org.thingsboard.server.controller.ControllerConstants.*;
-import static org.thingsboard.server.controller.ControllerConstants.SORT_ORDER_ALLOWABLE_VALUES;
 import static org.thingsboard.server.dao.service.Validator.validateId;
 
 @RestController
@@ -114,14 +112,9 @@ public class DowntimeCodesManagementController extends BaseController {
     public DowntimeCode saveDowntimeCode(@ApiParam(value = "A JSON value representing the asset.") @RequestBody DowntimeCode downtimeCode) throws ThingsboardException {
         try {
             downtimeCode.setTenantId(getCurrentUser().getTenantId());
-            //TODO: get it from the object. Wasn't getting passed by the UI
-            downtimeCode.getCreatedTime();
             checkEntity(downtimeCode.getId(), downtimeCode, Resource.DOWNTIME_CODE);
-
             DowntimeCode savedDowntimeCode = checkNotNull(downtimeCodesService.saveDowntimeCode(downtimeCode));
-
             onDowntimeCodeCreatedOrUpdated(savedDowntimeCode, downtimeCode.getId() != null, getCurrentUser());
-
             return savedDowntimeCode;
         } catch (Exception e) {
             logEntityAction(emptyId(EntityType.DOWNTIME_CODE), downtimeCode,
