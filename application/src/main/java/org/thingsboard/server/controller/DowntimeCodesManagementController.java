@@ -7,16 +7,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.thingsboard.server.common.data.Customer;
 import org.thingsboard.server.common.data.EntityType;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.downtimecode.DowntimeCode;
 import org.thingsboard.server.common.data.downtimecode.DowntimeCodeType;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
+import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.DowntimeCodeId;
+import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
+import org.thingsboard.server.common.data.shift.Shift;
+import org.thingsboard.server.dao.exception.IncorrectParameterException;
+import org.thingsboard.server.dao.model.ModelConstants;
 import org.thingsboard.server.queue.util.TbCoreComponent;
 import org.thingsboard.server.service.security.model.SecurityUser;
 import org.thingsboard.server.service.security.permission.Operation;
@@ -171,6 +177,78 @@ public class DowntimeCodesManagementController extends BaseController {
             accessControlService.checkPermission(getCurrentUser(), Resource.DOWNTIME_CODE, operation, downtimeCodeId, downtimeCode);
             return downtimeCode;
         } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+
+    @ApiOperation(value = "Assign downtimecode to customer (assignDowntimeCodeToCustomer)",
+            notes = "Creates assignment of the downtimecode to customer. Customer will be able to query downtimecode afterwards." + TENANT_AUTHORITY_PARAGRAPH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('TENANT_ADMIN')")
+    @RequestMapping(value = "/customer/{customerId}/downtimeCode/{downtimeCodeId}", method = RequestMethod.POST)
+    @ResponseBody
+    public DowntimeCode assignDowntimeCodeToCustomer(@ApiParam(value = CUSTOMER_ID_PARAM_DESCRIPTION) @PathVariable("customerId") String strCustomerId,
+                                       @ApiParam(value = DOWNTIME_CODE_ID_PARAM_DESCRIPTION) @PathVariable(DOWNTIME_CODE_ID) String strDowntimeCodeId) throws ThingsboardException {
+        checkParameter("shiftId", strDowntimeCodeId);
+        checkParameter(DOWNTIME_CODE_ID, strDowntimeCodeId);
+        try {
+            CustomerId customerId = new CustomerId(toUUID(strCustomerId));
+            Customer customer = checkCustomerId(customerId, Operation.READ);
+
+            DowntimeCodeId downtimeCodeId = new DowntimeCodeId(toUUID(strDowntimeCodeId));
+            checkDowntimeCodeId(downtimeCodeId, Operation.ASSIGN_TO_CUSTOMER);
+
+            DowntimeCode downtimeCode = checkNotNull(downtimeCodesService.assignDowntimeCodeToCustomer(getTenantId(), downtimeCodeId, customerId));
+
+            logEntityAction(downtimeCodeId, downtimeCode,
+                    downtimeCode.getCustomerId(),
+                    ActionType.ASSIGNED_TO_CUSTOMER, null, strDowntimeCodeId, strCustomerId, customer.getName());
+
+            sendEntityAssignToCustomerNotificationMsg(downtimeCode.getTenantId(), downtimeCode.getId(),
+                    customerId, EdgeEventActionType.ASSIGNED_TO_CUSTOMER);
+
+            return downtimeCode;
+        } catch (Exception e) {
+
+            logEntityAction(emptyId(EntityType.DOWNTIME_CODE), null,
+                    null,
+                    ActionType.ASSIGNED_TO_CUSTOMER, e, strDowntimeCodeId, strCustomerId);
+
+            throw handleException(e);
+        }
+    }
+
+    @ApiOperation(value = "Unassign downtimecode from customer (unassignDowntimeCodeFromCustomer)",
+            notes = "Clears assignment of the shift to customer. Customer will not be able to query asset afterwards." + TENANT_AUTHORITY_PARAGRAPH, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('TENANT_ADMIN')")
+    @RequestMapping(value = "/customer/downtimeCode/{downtimeCodeId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public DowntimeCode unassignDowntimeCodeFromCustomer(@ApiParam(value = DOWNTIME_CODE_ID_PARAM_DESCRIPTION) @PathVariable(DOWNTIME_CODE_ID) String strdowntimeCodeId) throws ThingsboardException {
+        checkParameter(DOWNTIME_CODE_ID, strdowntimeCodeId);
+        try {
+            DowntimeCodeId downtimeCodeId = new DowntimeCodeId(toUUID(strdowntimeCodeId));
+            DowntimeCode downtimeCode = checkDowntimeCodeId(downtimeCodeId, Operation.UNASSIGN_FROM_CUSTOMER);
+            if (downtimeCode.getCustomerId() == null || downtimeCode.getCustomerId().getId().equals(ModelConstants.NULL_UUID)) {
+                throw new IncorrectParameterException("Asset isn't assigned to any customer!");
+            }
+
+            Customer customer = checkCustomerId(downtimeCode.getCustomerId(), Operation.READ);
+
+            DowntimeCode savedDowntimeCode = checkNotNull(downtimeCodesService.unassignAssetFromCustomer(getTenantId(), downtimeCodeId));
+
+            logEntityAction(downtimeCodeId, downtimeCode,
+                    downtimeCode.getCustomerId(),
+                    ActionType.UNASSIGNED_FROM_CUSTOMER, null, strdowntimeCodeId, customer.getId().toString(), customer.getName());
+
+            sendEntityAssignToCustomerNotificationMsg(savedDowntimeCode.getTenantId(), savedDowntimeCode.getId(),
+                    customer.getId(), EdgeEventActionType.UNASSIGNED_FROM_CUSTOMER);
+
+            return savedDowntimeCode;
+        } catch (Exception e) {
+
+            logEntityAction(emptyId(EntityType.DOWNTIME_CODE), null,
+                    null,
+                    ActionType.UNASSIGNED_FROM_CUSTOMER, e, strdowntimeCodeId);
+
             throw handleException(e);
         }
     }

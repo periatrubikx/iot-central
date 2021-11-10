@@ -1,6 +1,7 @@
 package org.thingsboard.server.dao.downtimecode;
 
 import org.thingsboard.server.common.data.downtimecode.DowntimeCode;
+import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.DowntimeCodeId;
 import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -16,4 +17,8 @@ public interface DowntimeCodesService {
     void deleteDowntimeCode(TenantId tenantId, DowntimeCodeId downtimeCodeId);
 
     DowntimeCode findDowntimeCodeById(TenantId tenantId, DowntimeCodeId downtimeCodeId);
+
+    DowntimeCode assignDowntimeCodeToCustomer(TenantId tenantId, DowntimeCodeId downtimeCodeId, CustomerId customerId);
+
+    DowntimeCode unassignAssetFromCustomer(TenantId tenantId, DowntimeCodeId downtimeCodeId);
 }

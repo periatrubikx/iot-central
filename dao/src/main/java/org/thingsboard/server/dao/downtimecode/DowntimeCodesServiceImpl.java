@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thingsboard.server.common.data.downtimecode.DowntimeCode;
+import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.DowntimeCodeId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
+import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.dao.entity.AbstractEntityService;
 
 import static org.thingsboard.server.dao.service.Validator.validateId;
@@ -52,5 +54,19 @@ public class DowntimeCodesServiceImpl extends AbstractEntityService implements D
         log.trace("Executing findAssetInfoById [{}]", downtimeCodeId);
         validateId(downtimeCodeId, INCORRECT_DOWNTIME_CODE_ID + downtimeCodeId);
         return downtimeCodesDao.findDowntimeCodeInfoById(tenantId, downtimeCodeId.getId());
+    }
+
+    @Override
+    public DowntimeCode assignDowntimeCodeToCustomer(TenantId tenantId, DowntimeCodeId downtimeCodeId, CustomerId customerId) {
+        DowntimeCode downtimeCode = findDowntimeCodeById(tenantId, downtimeCodeId);
+        downtimeCode.setCustomerId(customerId);
+        return saveDowntimeCode(downtimeCode);
+    }
+
+    @Override
+    public DowntimeCode unassignAssetFromCustomer(TenantId tenantId, DowntimeCodeId downtimeCodeId) {
+        DowntimeCode downtimeCode = findDowntimeCodeById(tenantId, downtimeCodeId);
+        downtimeCode.setCustomerId(null);
+        return saveDowntimeCode(downtimeCode);
     }
 }

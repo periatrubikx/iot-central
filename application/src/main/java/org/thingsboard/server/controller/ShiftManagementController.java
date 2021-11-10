@@ -191,7 +191,7 @@ public class ShiftManagementController extends BaseController {
     @RequestMapping(value = "/customer/{customerId}/shift/{shiftId}", method = RequestMethod.POST)
     @ResponseBody
     public Shift assignShiftToCustomer(@ApiParam(value = CUSTOMER_ID_PARAM_DESCRIPTION) @PathVariable("customerId") String strCustomerId,
-                                       @ApiParam(value = ASSET_ID_PARAM_DESCRIPTION) @PathVariable(SHIFT_ID) String strShiftId) throws ThingsboardException {
+                                       @ApiParam(value = SHIFT_ID_PARAM_DESCRIPTION) @PathVariable(SHIFT_ID) String strShiftId) throws ThingsboardException {
         checkParameter("shiftId", strShiftId);
         checkParameter(SHIFT_ID, strShiftId);
         try {
@@ -226,7 +226,7 @@ public class ShiftManagementController extends BaseController {
     @PreAuthorize("hasAuthority('TENANT_ADMIN')")
     @RequestMapping(value = "/customer/shift/{shiftId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Shift unassignShiftFromCustomer(@ApiParam(value = ASSET_ID_PARAM_DESCRIPTION) @PathVariable(SHIFT_ID) String strShiftId) throws ThingsboardException {
+    public Shift unassignShiftFromCustomer(@ApiParam(value = SHIFT_ID_PARAM_DESCRIPTION) @PathVariable(SHIFT_ID) String strShiftId) throws ThingsboardException {
         checkParameter(SHIFT_ID, strShiftId);
         try {
             ShiftId shiftId = new ShiftId(toUUID(strShiftId));
