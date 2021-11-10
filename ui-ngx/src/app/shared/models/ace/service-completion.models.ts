@@ -401,6 +401,15 @@ export const serviceCompletions: TbEditorCompletions = {
         ],
         return: observableVoid()
       },
+      unassignShiftFromCustomer: {
+        description: 'Unassign shift from any customer',
+        meta: 'function',
+        args: [
+          {name: 'shiftId', type: 'string', description: 'Id of the shift'},
+          requestConfigArg
+        ],
+        return: observableVoid()
+      },
     }
   },
   downtimeCodesConfigurationService:{
@@ -434,6 +443,16 @@ export const serviceCompletions: TbEditorCompletions = {
           requestConfigArg
         ],
         return: observableReturnType(shiftInfoHref)
+      },
+      assignShiftToCustomer: {
+        description: 'Assign shift to specific customer',
+        meta: 'function',
+        args: [
+          {name: 'customerId', type: 'string', description: 'Id of the customer'},
+          {name: 'shiftId', type: 'string', description: 'Id of the shift'},
+          requestConfigArg
+        ],
+        return: observableReturnType(assetHref)
       },
       deleteDowntimeCodesConfiguration: {
         description: 'Delete Downtime Codes Configuration by id',

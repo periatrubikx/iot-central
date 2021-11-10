@@ -29,6 +29,7 @@ import { EntityViewService } from '@core/http/entity-view.service';
 import { DialogComponent } from '@shared/components/dialog.component';
 import { Router } from '@angular/router';
 import { EdgeService } from '@core/http/edge.service';
+import { ShiftService } from '@app/core/http/shift.service';
 
 export interface AssignToCustomerDialogData {
   entityIds: Array<EntityId>;
@@ -59,6 +60,7 @@ export class AssignToCustomerDialogComponent extends
               private deviceService: DeviceService,
               private assetService: AssetService,
               private edgeService: EdgeService,
+              private shiftService : ShiftService,
               private entityViewService: EntityViewService,
               @SkipSelf() private errorStateMatcher: ErrorStateMatcher,
               public dialogRef: MatDialogRef<AssignToCustomerDialogComponent, boolean>,
@@ -78,6 +80,10 @@ export class AssignToCustomerDialogComponent extends
       case EntityType.ASSET:
         this.assignToCustomerTitle = 'asset.assign-asset-to-customer';
         this.assignToCustomerText = 'asset.assign-to-customer-text';
+        break;
+      case EntityType.SHIFTS:
+        this.assignToCustomerTitle = 'shift.assign-shift-to-customer';
+        this.assignToCustomerText = 'shift.assign-to-customer-text';
         break;
       case EntityType.EDGE:
         this.assignToCustomerTitle = 'edge.assign-edge-to-customer';
@@ -122,6 +128,8 @@ export class AssignToCustomerDialogComponent extends
         return this.deviceService.assignDeviceToCustomer(customerId, entityId);
       case EntityType.ASSET:
         return this.assetService.assignAssetToCustomer(customerId, entityId);
+      case EntityType.SHIFTS:
+        return this.shiftService.assignShiftToCustomer(customerId,entityId);
       case EntityType.EDGE:
         return this.edgeService.assignEdgeToCustomer(customerId, entityId);
       case EntityType.ENTITY_VIEW:

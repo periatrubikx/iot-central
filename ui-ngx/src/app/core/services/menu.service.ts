@@ -295,30 +295,7 @@ export class MenuService {
         path: '/entityViews',
         icon: 'view_quilt'
       },
-      {
-        id: guid(),
-        name: 'rubikx.rubikx-management',
-        type: 'toggle',
-        path: '/rubikx',
-        height: '80px',
-        icon: 'settings',
-        pages: [
-          {
-            id: guid(),
-            name: 'shift.shifts',
-            type: 'link',
-            path: '/rubikx/shift',
-            icon:'transfer_within_a_station'
-          },
-          {
-            id: guid(),
-            name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
-            type: 'link',
-            path: '/rubikx/downtimeCodesConfiguration',
-            icon:'settings_applications'
-          }
-        ]
-      }, 
+      
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
@@ -370,6 +347,30 @@ export class MenuService {
         path: '/digital-twin',
         icon: '3d_rotation'
       },
+      {
+        id: guid(),
+        name: 'rubikx.rubikx-management',
+        type: 'toggle',
+        path: '/rubikx',
+        height: '80px',
+        icon: 'settings',
+        pages: [
+          {
+            id: guid(),
+            name: 'shift.shifts',
+            type: 'link',
+            path: '/rubikx/shift',
+            icon:'transfer_within_a_station'
+          },
+          {
+            id: guid(),
+            name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
+            type: 'link',
+            path: '/rubikx/downtimeCodesConfiguration',
+            icon:'settings_applications'
+          }
+        ]
+      }, 
       {
         id: guid(),
         name: 'audit-log.audit-logs',
@@ -467,6 +468,21 @@ export class MenuService {
         ]
       },
       {
+        name: 'rubikx.rubikx-management',
+        places: [
+          {
+            name: 'rubikx.shifts',
+            icon: 'transfer_within_a_station',
+            path: '/rubikx/shift'
+          },
+          {
+            name: 'rubikx.downtimeCodesConfigurations',
+            icon: 'settings_applications',
+            path: '/rubikx/downtimeCodesConfiguration'
+          }
+        ]
+      },
+      {
         name: 'device.management',
         places: [
           {
@@ -497,21 +513,6 @@ export class MenuService {
           }
         ]
       },
-      {
-        name: 'rubikx.rubikx-management',
-        places: [
-          {
-            name: 'rubikx.shifts',
-            icon: 'transfer_within_a_station',
-            path: '/rubikx/shift'
-          },
-          {
-            name: 'rubikx.downtimeCodesConfigurations',
-            icon: 'settings_applications',
-            path: '/rubikx/downtimeCodesConfiguration'
-          }
-        ]
-      }
     );
     if (authState.edgesSupportEnabled) {
       homeSections.push(
@@ -615,30 +616,7 @@ export class MenuService {
         path: '/entityViews',
         icon: 'view_quilt'
       },
-      {
-        id: guid(),
-        name: 'rubikx.rubikx-management',
-        type: 'toggle',
-        path: '/rubikx',
-        height: '40px',
-        icon: 'settings',
-        pages: [
-          {
-            id: guid(),
-            name: 'shift.shifts',
-            type: 'link',
-            path: '/rubikx/shift',
-            icon:'transfer_within_a_station'
-          },
-          {
-            id: guid(),
-            name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
-            type: 'link',
-            path: '/rubikx/downtimeCodesConfiguration',
-            icon:'settings_applications'
-          }
-        ]
-      }
+
     );
     if (authState.edgesSupportEnabled) {
       sections.push(
@@ -665,6 +643,30 @@ export class MenuService {
         type: 'link',
         path: '/digital-twin',
         icon: '3d_rotation'
+      },
+      {
+        id: guid(),
+        name: 'rubikx.rubikx-management',
+        type: 'toggle',
+        path: '/rubikx',
+        height: '40px',
+        icon: 'settings',
+        pages: [
+          {
+            id: guid(),
+            name: 'shift.shifts',
+            type: 'link',
+            path: '/rubikx/shift',
+            icon:'transfer_within_a_station'
+          },
+          {
+            id: guid(),
+            name: 'downtimeCodesConfiguration.downtimeCodesConfigurations',
+            type: 'link',
+            path: '/rubikx/downtimeCodesConfiguration',
+            icon:'settings_applications'
+          }
+        ]
       }
     );
     return sections;
@@ -703,21 +705,6 @@ export class MenuService {
           }
         ]
       },
-      {
-        name: 'rubikx.rubikx-management',
-        places: [
-          {
-            name: 'rubikx.shifts',
-            icon: 'transfer_within_a_station',
-            path: '/rubikx/shift'
-          },
-          {
-            name: 'rubikx.downtimeCodesConfigurations',
-            icon: 'settings_applications',
-            path: '/rubikx/downtimeCodesConfiguration'
-          }
-        ]
-      }
     );
     if (authState.edgesSupportEnabled) {
       homeSections.push(
@@ -751,6 +738,21 @@ export class MenuService {
             name: 'digital-twin.digital-twin',
             path: '/digital-twin',
             icon: '3d_rotation'
+          }
+        ]
+      },
+      {
+        name: 'rubikx.rubikx-management',
+        places: [
+          {
+            name: 'rubikx.shifts',
+            icon: 'transfer_within_a_station',
+            path: '/rubikx/shift'
+          },
+          {
+            name: 'rubikx.downtimeCodesConfigurations',
+            icon: 'settings_applications',
+            path: '/rubikx/downtimeCodesConfiguration'
           }
         ]
       }

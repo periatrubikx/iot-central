@@ -8,7 +8,7 @@ import { AppState } from '@app/core/core.state';
 import { ShiftInfo } from '@app/shared/models/shift.models';
 import { EntityType, entityTypeResources,entityTypeTranslations } from '@app/shared/public-api';
 import { select, Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap, take, tap } from 'rxjs/operators';
 import { CellActionDescriptor, checkBoxCell, DateEntityTableColumn, EntityTableColumn, EntityTableConfig } from '../../models/entity/entities-table-config.models';
 import { Authority } from '@app/shared/models/authority.enum';
@@ -22,6 +22,12 @@ import { ShiftService } from '@app/core/http/shift.service';
 import { HomeDialogsService } from '../../dialogs/home-dialogs.service';
 import { BroadcastService } from '@app/core/services/broadcast.service';
 import { ShiftComponent } from './shift.component';
+import { ShiftId } from '@app/shared/models/id/shift-id';
+import { AssignToCustomerDialogComponent, AssignToCustomerDialogData } from '../../dialogs/assign-to-customer-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NULL_UUID } from '@shared/models/id/has-uuid';
+import { EntityAction } from '../../models/entity/entity-component.models';
+import { DialogService } from '@app/core/services/dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +44,9 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
                 private datePipe: DatePipe,
                 private homeDialogs: HomeDialogsService,
                 private broadcast: BroadcastService,
-                private shiftService : ShiftService
+                private shiftService : ShiftService,
+                private dialogService: DialogService,
+                private dialog: MatDialog
                 ){
 
     this.config.entityType = EntityType.SHIFTS;
@@ -59,6 +67,7 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
         })
       )
     }
+    this.config.onEntityAction = action => this.onAssetAction(action);
     this.config.detailsReadonly = () => (this.config.componentsData.shiftScope === 'customer' || this.config.componentsData.shiftScope === 'customer_user');
     this.config.headerComponent = ShiftTableHeaderComponent;
   }
@@ -140,6 +149,7 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     else{
       this.config.entitiesFetchFunction = pageLink =>
        this.shiftService.getCustomerShiftInfos(this.customerId,pageLink,this.config.componentsData.shiftsType);
+      this.config.deleteEntity = id => this.shiftService.unassignShiftFromCustomer(id.id);
     }
   }
 
@@ -152,7 +162,13 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
           icon:'security',
           isEnabled: () => true,
           onAction: ($event, entity) => ''
-        }
+        },
+        {
+          name: this.translate.instant('asset.assign-to-customer'),
+          icon: 'assignment_ind',
+          isEnabled: (entity) => (!entity.customerId || entity.customerId.id === NULL_UUID),
+          onAction: ($event, entity) => this.assignToCustomer($event, [entity.id])
+        },
       )
     }
     if(shiftScope == 'customer'){
@@ -162,7 +178,13 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
           icon:'security',
           isEnabled: () => true,
           onAction: ($event, entity) => ''
-        }
+        },
+        {
+          name: this.translate.instant('asset.assign-to-customer'),
+          icon: 'assignment_ind',
+          isEnabled: (entity) => (!entity.customerId || entity.customerId.id === NULL_UUID),
+          onAction: ($event, entity) => this.assignToCustomer($event, [entity.id])
+        },
       )
     }
     if(shiftScope == 'customer_user'){
@@ -172,10 +194,77 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
           icon:'security',
           isEnabled: () => true,
           onAction: ($event, entity) => ''
-        }
+        },
+        {
+          name: this.translate.instant('asset.assign-to-customer'),
+          icon: 'assignment_ind',
+          isEnabled: (entity) => (!entity.customerId || entity.customerId.id === NULL_UUID),
+          onAction: ($event, entity) => this.assignToCustomer($event, [entity.id])
+        },
       )
     }
    return actions;
+  }
+
+  onAssetAction(action: EntityAction<ShiftInfo>): boolean {
+    switch (action.action) {
+      case 'assignToCustomer':
+        this.assignToCustomer(action.event, [action.entity.id]);
+        return true;
+      // case 'unassignFromCustomer':
+      //   this.unassignFromCustomer(action.event, action.entity);
+      //   return true;
+    }
+    return false;
+  }
+
+  assignToCustomer($event: Event, shiftIds: Array<ShiftId>) {
+    if ($event) {
+      $event.stopPropagation();
+    }
+    this.dialog.open<AssignToCustomerDialogComponent, AssignToCustomerDialogData,
+      boolean>(AssignToCustomerDialogComponent, {
+      disableClose: true,
+      panelClass: ['tb-dialog', 'tb-fullscreen-dialog'],
+      data: {
+        entityIds: shiftIds,
+        entityType: EntityType.SHIFTS
+      }
+    }).afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.config.table.updateData();
+        }
+      });
+  }
+
+
+  unassignShiftsFromCustomer($event: Event, shifts: Array<ShiftInfo>) {
+    if ($event) {
+      $event.stopPropagation();
+    }
+    this.dialogService.confirm(
+      this.translate.instant('shift.unassign-shifts-title', {count: shifts.length}),
+      this.translate.instant('shift.unassign-shifts-text'),
+      this.translate.instant('shift.no'),
+      this.translate.instant('shift.yes'),
+      true
+    ).subscribe((res) => {
+        if (res) {
+          const tasks: Observable<any>[] = [];
+          shifts.forEach(
+            (shift) => {
+              tasks.push(this.shiftService.unassignShiftFromCustomer(shift.id.id));
+            }
+          );
+          forkJoin(tasks).subscribe(
+            () => {
+              this.config.table.updateData();
+            }
+          );
+        }
+      }
+    );
   }
 
 }

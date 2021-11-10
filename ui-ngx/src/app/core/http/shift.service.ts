@@ -27,8 +27,8 @@ export class ShiftService {
 
   public getCustomerShiftInfos(customerId:string,pageLink:PageLink,type:string='',
           config?:RequestConfig):Observable<PageData<ShiftInfo>>{
-      return this.http.get<PageData<ShiftInfo>>(`api/cutomer/${customerId}/shiftInfos${pageLink.toQuery()}&type=${type}`,
-      defaultHttpOptionsFromConfig(config))
+    return this.http.get<PageData<ShiftInfo>>(`api/cutomer/${customerId}/shiftInfos${pageLink.toQuery()}&type=${type}`,
+    defaultHttpOptionsFromConfig(config))
   }
 
   public saveShift(shift: Shift, config?: RequestConfig): Observable<ShiftInfo> {
@@ -42,6 +42,15 @@ export class ShiftService {
 
   public deleteShift(shiftId: string, config?: RequestConfig) {
     return this.http.delete(`/api/shift/${shiftId}`, defaultHttpOptionsFromConfig(config));
+  }
+
+  public assignShiftToCustomer(customerId: string, shiftId: string,
+    config?: RequestConfig): Observable<Shift> {
+    return this.http.post<Shift>(`/api/customer/${customerId}/shift/${shiftId}`, null, defaultHttpOptionsFromConfig(config));
+  }
+
+  public unassignShiftFromCustomer(shiftId: string, config?: RequestConfig) {
+    return this.http.delete(`/api/customer/shift/${shiftId}`, defaultHttpOptionsFromConfig(config));
   }
 
 }

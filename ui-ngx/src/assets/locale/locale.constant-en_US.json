@@ -504,8 +504,16 @@
         "delete-shift-text": "Be careful, after the confirmation the shift and all related data will become unrecoverable.",
         "delete-shifts-title": "Are you sure you want to delete { count, plural, 1 {1 shift} other {# shifts} }?",
         "delete-shifts-action-title": "Delete { count, plural, 1 {1 shift} other {# shifts} }",
-        "delete-shifts-text": "Be careful, after the confirmation all selected shifts will be removed and all related data will become unrecoverable."
-
+        "delete-shifts-text": "Be careful, after the confirmation all selected shifts will be removed and all related data will become unrecoverable.",
+        "assign-shift-to-customer": "Assign Shift(s) To Customer",
+        "assign-shift-to-customer-text": "Please select the shifts to assign to the customer",
+        "assign-to-customer": "Assign to customer",
+        "assign-to-customer-text": "Please select the customer to assign the shift(s)",
+        "unassign-shift-title": "Are you sure you want to unassign the shift '{{shiftName}}'?",
+        "unassign-shift-text": "After the confirmation the shift will be unassigned and won't be accessible by the customer.",
+        "unassign-shift": "Unassign shift",
+        "unassign-shifts-title": "Are you sure you want to unassign { count, plural, 1 {1 shift} other {# shifts} }?",
+        "unassign-shifts-text": "After the confirmation all selected shifts will be unassigned and won't be accessible by the customer."
     },
     "downtimeCodesConfiguration" :{
         "downtimeCodesConfiguration":"Downtime Code",
