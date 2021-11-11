@@ -463,7 +463,9 @@
         "selected-assets": "{ count, plural, 1 {1 asset} other {# assets} } selected"
     },
     "rubikx":{
-        "rubikx-management":"RubikX Management"
+        "rubikx-management":"RubikX Management",
+        "shifts": "Shifts",
+        "downtimeCodesConfigurations": "Downtime Codes"
     },
     "shift":{
         "shift": "Shift",
@@ -513,7 +515,10 @@
         "unassign-shift-text": "After the confirmation the shift will be unassigned and won't be accessible by the customer.",
         "unassign-shift": "Unassign shift",
         "unassign-shifts-title": "Are you sure you want to unassign { count, plural, 1 {1 shift} other {# shifts} }?",
-        "unassign-shifts-text": "After the confirmation all selected shifts will be unassigned and won't be accessible by the customer."
+        "unassign-shifts-text": "After the confirmaton all selected shifts will be unassigned and won't be accessible by the customer.",
+        "make-private-shift-title": "Are you sure you want to make the shift '{{shiftName}}' private?",
+        "make-private-shift-text": "After the confirmation the shift and all its data will be made private and won't be accessible by others.",
+        "unassign-from-customer": "Unassign from customer"
     },
     "downtimeCodesConfiguration" :{
         "downtimeCodesConfiguration":"Downtime Code",

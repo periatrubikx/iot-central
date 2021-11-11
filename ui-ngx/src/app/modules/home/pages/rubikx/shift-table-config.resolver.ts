@@ -164,10 +164,16 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
           onAction: ($event, entity) => ''
         },
         {
-          name: this.translate.instant('asset.assign-to-customer'),
+          name: this.translate.instant('shift.assign-to-customer'),
           icon: 'assignment_ind',
           isEnabled: (entity) => (!entity.customerId || entity.customerId.id === NULL_UUID),
           onAction: ($event, entity) => this.assignToCustomer($event, [entity.id])
+        },
+        {
+          name: this.translate.instant('shift.unassign-from-customer'),
+          icon: 'assignment_return',
+          isEnabled: (entity) => (entity.customerId && entity.customerId.id !== NULL_UUID && !entity.customerIsPublic),
+          onAction: ($event, entity) => this.unassignFromCustomer($event, entity)
         },
       )
     }
@@ -180,10 +186,16 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
           onAction: ($event, entity) => ''
         },
         {
-          name: this.translate.instant('asset.assign-to-customer'),
+          name: this.translate.instant('shift.assign-to-customer'),
           icon: 'assignment_ind',
           isEnabled: (entity) => (!entity.customerId || entity.customerId.id === NULL_UUID),
           onAction: ($event, entity) => this.assignToCustomer($event, [entity.id])
+        },
+        {
+          name: this.translate.instant('shift.unassign-from-customer'),
+          icon: 'assignment_return',
+          isEnabled: (entity) => (entity.customerId && entity.customerId.id !== NULL_UUID && !entity.customerIsPublic),
+          onAction: ($event, entity) => this.unassignFromCustomer($event, entity)
         },
       )
     }
@@ -200,6 +212,12 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
           icon: 'assignment_ind',
           isEnabled: (entity) => (!entity.customerId || entity.customerId.id === NULL_UUID),
           onAction: ($event, entity) => this.assignToCustomer($event, [entity.id])
+        },
+        {
+          name: this.translate.instant('shift.unassign-from-customer'),
+          icon: 'assignment_return',
+          isEnabled: (entity) => (entity.customerId && entity.customerId.id !== NULL_UUID && !entity.customerIsPublic),
+          onAction: ($event, entity) => this.unassignFromCustomer($event, entity)
         },
       )
     }
@@ -236,6 +254,39 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
           this.config.table.updateData();
         }
       });
+  }
+
+
+  unassignFromCustomer($event: Event, shift: ShiftInfo) {
+    if ($event) {
+      $event.stopPropagation();
+    }
+    const isPublic = shift.customerIsPublic;
+    let title;
+    let content;
+    if (isPublic) {
+      title = this.translate.instant('shift.make-private-asset-title', {shiftName: shift.name});
+      content = this.translate.instant('shift.make-private-asset-text');
+    } else {
+      title = this.translate.instant('shift.unassign-shift-title', {shiftName: shift.name});
+      content = this.translate.instant('shift.unassign-shift-text');
+    }
+    this.dialogService.confirm(
+      title,
+      content,
+      this.translate.instant('action.no'),
+      this.translate.instant('action.yes'),
+      true
+    ).subscribe((res) => {
+        if (res) {
+          this.shiftService.unassignShiftFromCustomer(shift.id.id).subscribe(
+            () => {
+              this.config.table.updateData();
+            }
+          );
+        }
+      }
+    );
   }
 
 
