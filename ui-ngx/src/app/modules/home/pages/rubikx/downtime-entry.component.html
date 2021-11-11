@@ -1,0 +1,37 @@
+<form [formGroup]="entityForm">
+    <fieldset  [disabled]="(isLoading$ | async) || !isEdit">
+        <mat-label translate>downtimeEntry.asset</mat-label>
+        <tb-entity-list
+          formControlName="asset"
+          required
+          [entityType]="entityType.ASSET">
+        </tb-entity-list>
+    </fieldset>
+
+    <fieldset  [disabled]="(isLoading$ | async) || !isEdit">
+        <mat-label translate>downtimeEntry.device</mat-label>
+        <tb-entity-list formControlName="device" required [entityType]="entityType.DEVICE">
+        </tb-entity-list>    
+    </fieldset>
+
+    <fieldset [disabled]="(isLoading$ | async) || !isEdit">
+            <tb-datetime formControlName="startDateTimeMs"
+            dateText="filter.date"
+            timeText="filter.time"
+            [showLabel]="true"></tb-datetime>
+    </fieldset>
+
+    <fieldset [disabled]="(isLoading$ | async) || !isEdit">
+            <tb-datetime formControlName="endDateTimeMs"
+            dateText="filter.date"
+            timeText="filter.time"
+             [showLabel]="true"></tb-datetime>
+    </fieldset>
+
+    <fieldset [disabled]="(isLoading$ | async) || !isEdit">
+        <mat-form-field class="mat-block">
+          <mat-label translate>downtimeEntry.reason</mat-label>
+          <input matInput formControlName="reason" autocomplete="off">
+        </mat-form-field>
+      </fieldset>
+</form>

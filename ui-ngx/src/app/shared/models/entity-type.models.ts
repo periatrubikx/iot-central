@@ -38,7 +38,8 @@ export enum EntityType {
   OTA_PACKAGE = 'OTA_PACKAGE',
   RPC = 'RPC',
   SHIFTS = 'SHIFTS',
-  DOWNTIME_CODES_CONFIGURATION = "DOWNTIME_CODES_CONFIGURATION"
+  DOWNTIME_CODES_CONFIGURATION = "DOWNTIME_CODES_CONFIGURATION",
+  DOWNTIME_ENTRY = "DOWNTIME_ENTRY"
 }
 
 export enum AliasEntityType {
@@ -149,6 +150,20 @@ export const entityTypeTranslations = new Map<EntityType | AliasEntityType, Enti
         noEntities:'downtimeCodesConfiguration.no-downtime-codes-configurations-text',
         search:'downtimeCodesConfiguration.search',
         selectedEntities:'downtimeCodesConfiguration.selected-downtime-codes-configuration'
+      }
+    ],
+    [
+      EntityType.DOWNTIME_ENTRY,
+      {
+        type:'entity.type-downtime-entry',
+        typePlural:'entity.type-downtime-entrys',
+        list:'entity.list-of-downtime-entrys',
+        nameStartsWith:'entity.user-name-starts-with',
+        details:'downtimeEntry.downtime-entry-details',
+        add:'downtimeEntry.add',
+        noEntities:'downtimeEntry.no-downtime-entrys-text',
+        search:'downtimeEntry.search',
+        selectedEntities:'downtimeEntry.selected-downtime-entry'
       }
     ],
     [
@@ -394,6 +409,12 @@ export const entityTypeResources = new Map<EntityType, EntityTypeResource<BaseDa
       EntityType.DOWNTIME_CODES_CONFIGURATION,
       {
         helpLinkId: 'downtimeCodesConfigurations'
+      }
+    ],
+    [
+      EntityType.DOWNTIME_ENTRY,
+      {
+        helpLinkId: 'downtimeEntry'
       }
     ],
     [

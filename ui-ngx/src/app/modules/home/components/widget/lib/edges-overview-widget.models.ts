@@ -67,6 +67,9 @@ export function textForEdgeGroupsType(translate: TranslateService, entityType: E
     case EntityType.SHIFTS:
       textForEdgeGroupsType = 'shift.shifts';
       break;
+    case EntityType.DOWNTIME_ENTRY:
+      textForEdgeGroupsType = 'downtimeEntry.downtime-entrys';
+      break;
     case EntityType.ASSET:
       textForEdgeGroupsType = 'asset.assets';
       break;

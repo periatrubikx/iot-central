@@ -4,6 +4,8 @@ import { Authority } from '@app/shared/models/authority.enum';
 import { ShiftTableConfigResolver } from './shift-table-config.resolver';
 import { EntitiesTableComponent } from '../../components/entity/entities-table.component';
 import { DowntimeCodesConfigTableConfigResolver } from './downtime-codes-table-config.resolver';
+import { DowntimeEntryId } from '@app/shared/models/id/downtime-entry-id';
+import { DowntimeEntryConfigResolver } from './downtime-entry-table-config.resolver';
 
 const routes: Routes = [
   {
@@ -56,6 +58,22 @@ const routes: Routes = [
         },
         resolve:{
           entitiesTableConfig:DowntimeCodesConfigTableConfigResolver
+        }
+      },
+      {
+        path:'downtimeEntry',
+        component:EntitiesTableComponent,
+        data:{
+          auth:[Authority.TENANT_ADMIN,Authority.CUSTOMER_USER],
+          title:'downtimeEntry.downtime-entry',
+          downtimeEntrysType:'downtimeEntry',
+          breadcrumb:{
+            label:'downtimeEntry.downtime-entry',
+            icon:'update'
+          }
+        },
+        resolve:{
+          entitiesTableConfig:DowntimeEntryConfigResolver
         }
       }
     ]

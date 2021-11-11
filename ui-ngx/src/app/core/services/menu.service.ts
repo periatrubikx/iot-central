@@ -352,7 +352,7 @@ export class MenuService {
         name: 'rubikx.rubikx-management',
         type: 'toggle',
         path: '/rubikx',
-        height: '80px',
+        height: '120px',
         icon: 'settings',
         pages: [
           {
@@ -368,6 +368,13 @@ export class MenuService {
             type: 'link',
             path: '/rubikx/downtimeCodesConfiguration',
             icon:'settings_applications'
+          },
+          {
+            id: guid(),
+            name: 'downtimeEntry.downtime-entry',
+            type: 'link',
+            path: '/rubikx/downtimeEntry',
+            icon:'update'
           }
         ]
       }, 
@@ -479,6 +486,11 @@ export class MenuService {
             name: 'rubikx.downtimeCodesConfigurations',
             icon: 'settings_applications',
             path: '/rubikx/downtimeCodesConfiguration'
+          },
+          {
+            name: 'rubikx.downtimeEntrys',
+            icon: 'update',
+            path: '/rubikx/downtimeEntry'
           }
         ]
       },
@@ -649,7 +661,7 @@ export class MenuService {
         name: 'rubikx.rubikx-management',
         type: 'toggle',
         path: '/rubikx',
-        height: '40px',
+        height: '120px',
         icon: 'settings',
         pages: [
           {
@@ -665,6 +677,13 @@ export class MenuService {
             type: 'link',
             path: '/rubikx/downtimeCodesConfiguration',
             icon:'settings_applications'
+          },
+          {
+            id: guid(),
+            name: 'downtimeEntry.downtime-entry',
+            type: 'link',
+            path: '/rubikx/downtimeEntry',
+            icon:'update'
           }
         ]
       }
@@ -753,7 +772,12 @@ export class MenuService {
             name: 'rubikx.downtimeCodesConfigurations',
             icon: 'settings_applications',
             path: '/rubikx/downtimeCodesConfiguration'
-          }
+          },
+          {
+            name: 'rubikx.downtimeEntrys',
+            icon: 'update',
+            path: '/rubikx/downtimeEntry'
+          },
         ]
       }
     );

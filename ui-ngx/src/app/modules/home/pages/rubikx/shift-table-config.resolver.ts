@@ -265,11 +265,11 @@ export class ShiftTableConfigResolver implements Resolve<EntityTableConfig<Shift
     let title;
     let content;
     if (isPublic) {
-      title = this.translate.instant('shift.make-private-asset-title', {shiftName: shift.name});
       content = this.translate.instant('shift.make-private-asset-text');
+      title = this.translate.instant('shift.make-private-asset-title', {shiftName: shift.name});
     } else {
-      title = this.translate.instant('shift.unassign-shift-title', {shiftName: shift.name});
       content = this.translate.instant('shift.unassign-shift-text');
+      title = this.translate.instant('shift.unassign-shift-title', {shiftName: shift.name});
     }
     this.dialogService.confirm(
       title,
