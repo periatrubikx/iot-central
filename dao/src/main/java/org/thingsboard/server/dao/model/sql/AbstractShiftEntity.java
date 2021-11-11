@@ -65,6 +65,7 @@ public abstract class AbstractShiftEntity<T extends Shift> extends BaseSqlEntity
     public AbstractShiftEntity(ShiftEntity shiftEntity){
         this.setId(shiftEntity.getId());
         this.setCreatedTime(shiftEntity.getCreatedTime());
+        this.name = shiftEntity.getName();
         this.tenantId = shiftEntity.getTenantId();
         this.customerId = shiftEntity.getCustomerId();
         this.areaName = shiftEntity.getAreaName();

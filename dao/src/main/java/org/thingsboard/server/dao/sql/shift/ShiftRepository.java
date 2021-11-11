@@ -26,7 +26,7 @@ public interface ShiftRepository extends PagingAndSortingRepository<ShiftEntity,
             "LEFT JOIN CustomerEntity c on c.id = a.customerId " +
             "WHERE a.tenantId = :tenantId " +
             "AND LOWER(a.searchText) LIKE LOWER(CONCAT('%', :textSearch, '%'))")
-    Page<ShiftInfoEntity> findAssetInfosByTenantId(@Param("tenantId") UUID tenantId,
+    Page<ShiftInfoEntity> findShiftInfosByTenantId(@Param("tenantId") UUID tenantId,
                                                    @Param("textSearch") String textSearch,
                                                    Pageable pageable);
 }
