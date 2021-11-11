@@ -88,4 +88,12 @@ public class ShiftServiceImpl extends AbstractEntityService implements ShiftServ
         shift.setCustomerId(null);
         return saveShift(shift);
     }
+
+    @Override
+    public PageData<ShiftInfo> findShiftInfosByTenantId(TenantId tenantId, PageLink pageLink) {
+        log.trace("Executing findShiftInfosByTenantId, tenantId [{}], pageLink [{}]", tenantId, pageLink);
+        validateId(tenantId, INCORRECT_TENANT_ID + tenantId);
+        validatePageLink(pageLink);
+        return shiftDao.findShiftInfosByTenantId(tenantId.getId(), pageLink);
+    }
 }

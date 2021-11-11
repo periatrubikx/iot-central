@@ -23,4 +23,6 @@ public interface ShiftService {
     Shift assignShiftToCustomer(TenantId tenantId, ShiftId shiftId, CustomerId customerId);
 
     Shift unassignAssetFromCustomer(TenantId tenantId, ShiftId shiftId);
+
+    PageData<ShiftInfo> findShiftInfosByTenantId(TenantId tenantId, PageLink pageLink);
 }

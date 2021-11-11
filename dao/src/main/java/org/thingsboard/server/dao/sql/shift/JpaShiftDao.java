@@ -11,7 +11,9 @@ import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.shift.ShiftInfo;
 import org.thingsboard.server.dao.DaoUtil;
+import org.thingsboard.server.dao.model.sql.AssetInfoEntity;
 import org.thingsboard.server.dao.model.sql.ShiftEntity;
+import org.thingsboard.server.dao.model.sql.ShiftInfoEntity;
 import org.thingsboard.server.dao.shift.ShiftDao;
 import org.thingsboard.server.dao.sql.JpaAbstractDao;
 import org.thingsboard.server.dao.sql.JpaAbstractSearchTextDao;
@@ -44,5 +46,14 @@ public class JpaShiftDao extends JpaAbstractSearchTextDao<ShiftEntity, Shift> im
     @Override
     public Shift findAssetInfoById(TenantId tenantId, UUID shiftId) {
         return DaoUtil.getData(shiftRepository.findAssetInfoById(shiftId));
+    }
+
+    @Override
+    public PageData<ShiftInfo> findShiftInfosByTenantId(UUID tenantId, PageLink pageLink) {
+        return DaoUtil.toPageData(
+                shiftRepository.findAssetInfosByTenantId(
+                        tenantId,
+                        Objects.toString(pageLink.getTextSearch(), ""),
+                        DaoUtil.toPageable(pageLink, ShiftInfoEntity.shiftInfoColumnMap)));
     }
 }

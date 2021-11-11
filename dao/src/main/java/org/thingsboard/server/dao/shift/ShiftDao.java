@@ -21,4 +21,6 @@ public interface ShiftDao extends Dao<Shift> {
     PageData<Shift> findShiftsByTennantId(UUID id, PageLink pageLink);
 
     Shift findAssetInfoById(TenantId tenantId, UUID id);
+
+    PageData<ShiftInfo> findShiftInfosByTenantId(UUID id, PageLink pageLink);
 }

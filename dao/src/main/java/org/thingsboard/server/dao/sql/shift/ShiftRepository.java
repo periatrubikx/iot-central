@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.thingsboard.server.common.data.shift.ShiftInfo;
 import org.thingsboard.server.dao.model.sql.AssetInfoEntity;
 import org.thingsboard.server.dao.model.sql.ShiftEntity;
+import org.thingsboard.server.dao.model.sql.ShiftInfoEntity;
 
 import java.util.UUID;
 
@@ -19,4 +20,13 @@ public interface ShiftRepository extends PagingAndSortingRepository<ShiftEntity,
 
     @Query("SELECT s FROM ShiftEntity s WHERE s.id = :shiftId ")
     ShiftEntity findAssetInfoById(@Param("shiftId") UUID shiftId);
+
+    @Query("SELECT new org.thingsboard.server.dao.model.sql.ShiftInfoEntity(a, c.title, c.additionalInfo) " +
+            "FROM ShiftEntity a " +
+            "LEFT JOIN CustomerEntity c on c.id = a.customerId " +
+            "WHERE a.tenantId = :tenantId " +
+            "AND LOWER(a.searchText) LIKE LOWER(CONCAT('%', :textSearch, '%'))")
+    Page<ShiftInfoEntity> findAssetInfosByTenantId(@Param("tenantId") UUID tenantId,
+                                                   @Param("textSearch") String textSearch,
+                                                   Pageable pageable);
 }

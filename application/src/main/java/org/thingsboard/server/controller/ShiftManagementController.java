@@ -35,6 +35,7 @@ import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.common.data.shift.Shift;
+import org.thingsboard.server.common.data.shift.ShiftInfo;
 import org.thingsboard.server.dao.exception.IncorrectParameterException;
 import org.thingsboard.server.dao.model.ModelConstants;
 import org.thingsboard.server.queue.util.TbCoreComponent;
@@ -89,7 +90,7 @@ public class ShiftManagementController extends BaseController {
                     PAGE_DATA_PARAMETERS)
     @RequestMapping(value = "/shift/shiftInfos", params = {"pageSize", "page"}, method = RequestMethod.GET)
     @ResponseBody
-    public PageData<Shift> getShifts(
+    public PageData<ShiftInfo> getShifts(
             @ApiParam(value = PAGE_SIZE_DESCRIPTION, required = true)
             @RequestParam int pageSize,
             @ApiParam(value = PAGE_NUMBER_DESCRIPTION, required = true)
@@ -103,7 +104,7 @@ public class ShiftManagementController extends BaseController {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             TenantId tenantId = getCurrentUser().getTenantId();
-            return checkNotNull(shiftService.findShiftsByTenantId(tenantId, pageLink));
+            return checkNotNull(shiftService.findShiftInfosByTenantId(tenantId, pageLink));
         } catch (Exception e) {
             throw handleException(e);
         }
