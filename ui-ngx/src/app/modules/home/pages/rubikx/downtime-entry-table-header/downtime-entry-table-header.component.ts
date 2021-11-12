@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AppState } from '@app/core/core.state';
 import { EntityTableHeaderComponent } from '@app/modules/home/components/entity/entity-table-header.component';
+import { EntityTableConfig } from '@app/modules/home/models/entity/entities-table-config.models';
 import { DowntimeEntryInfo } from '@app/shared/models/downtime-entry.models';
 import { EntityType } from '@app/shared/public-api';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'tb-downtime-entry-table-header',
@@ -13,9 +15,13 @@ import { Store } from '@ngrx/store';
 export class DowntimeEntryTableHeaderComponent extends EntityTableHeaderComponent<DowntimeEntryInfo> {
 
   entityType = EntityType;
+
   
   constructor(protected store:Store<AppState>) {
     super(store);
+  }
+
+  ngOnInit(){
   }
 
   downtimeEntryTypeChanged(downtimeEntryType: string) {

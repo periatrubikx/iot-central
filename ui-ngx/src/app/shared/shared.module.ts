@@ -157,6 +157,7 @@ import { HELP_MARKDOWN_COMPONENT_TOKEN, SHARED_MODULE_TOKEN } from '@shared/comp
 import { TbMarkdownComponent } from '@shared/components/markdown.component';
 import { TimepickerComponent } from './components/time/timepicker/timepicker.component';
 import { ProtobufContentComponent } from './components/protobuf-content.component';
+import { DatetimeRangeComponent } from './components/time/datetime-range.component';
 
 export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService) {
   return markedOptionsService;
@@ -215,6 +216,7 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     DashboardSelectPanelComponent,
     DatetimePeriodComponent,
     DatetimeComponent,
+    DatetimeRangeComponent,
     TimezoneSelectComponent,
     ValueInputComponent,
     DashboardAutocompleteComponent,
@@ -273,7 +275,7 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     TogglePasswordComponent,
     TimepickerComponent,
     TogglePasswordComponent,
-    ProtobufContentComponent
+    ProtobufContentComponent,
   ],
   imports: [
     CommonModule,
@@ -363,6 +365,7 @@ export function MarkedOptionsFactory(markedOptionsService: MarkedOptionsService)
     DashboardSelectComponent,
     DatetimePeriodComponent,
     DatetimeComponent,
+    DatetimeRangeComponent,
     TimezoneSelectComponent,
     DashboardAutocompleteComponent,
     EntitySubTypeAutocompleteComponent,

@@ -465,7 +465,8 @@
     "rubikx":{
         "rubikx-management":"RubikX Management",
         "shifts": "Shifts",
-        "downtimeCodesConfigurations": "Downtime Codes"
+        "downtimeCodesConfigurations": "Downtime Codes",
+        "downtimeEntrys": "Downtime Entrys"
     },
     "shift":{
         "shift": "Shift",

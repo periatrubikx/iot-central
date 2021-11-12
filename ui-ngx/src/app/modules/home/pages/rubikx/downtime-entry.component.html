@@ -1,17 +1,34 @@
 <form [formGroup]="entityForm">
     <fieldset  [disabled]="(isLoading$ | async) || !isEdit">
-        <mat-label translate>downtimeEntry.asset</mat-label>
-        <tb-entity-list
-          formControlName="asset"
-          required
-          [entityType]="entityType.ASSET">
-        </tb-entity-list>
+      <mat-form-field class="mat-block">
+          <mat-select formControlName="asset" placeholder="Asset" required>
+            <mat-option *ngFor="let item of assetsIds" [value]="item.id">
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="entityForm.get('asset')">
+            {{ 'downtimeEntry.asset-required' | translate }}
+          </mat-error>
+        </mat-form-field>
     </fieldset>
 
     <fieldset  [disabled]="(isLoading$ | async) || !isEdit">
-        <mat-label translate>downtimeEntry.device</mat-label>
-        <tb-entity-list formControlName="device" required [entityType]="entityType.DEVICE">
-        </tb-entity-list>    
+        <mat-form-field class="mat-block">
+            <mat-select formControlName="device" placeholder="Device" required>
+              <ng-container *ngFor="let itemDevice of deviceIds">
+                <!-- <ng-container *ngFor="let itemAsset of assetsIds"> -->
+                  <!-- <ng-container *ngIf="itemAsset.tenantId.id === itemDevice.tenantId.id"> -->
+                    <mat-option [value]="itemDevice.id">
+                      {{ itemDevice.name }}
+                    </mat-option>
+                  <!-- </ng-container> -->
+                <!-- </ng-container> -->
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="entityForm.get('device')">
+              {{ 'downtimeEntry.device-required' | translate }}
+            </mat-error>
+          </mat-form-field>
     </fieldset>
 
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
