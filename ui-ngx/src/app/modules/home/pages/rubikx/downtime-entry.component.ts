@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppState } from '@app/core/core.state';
-import { AssetService, DeviceService, EntityService, RequestConfig } from '@app/core/public-api';
+import { AssetService, DeviceService, EntityRelationService, EntityService, RequestConfig } from '@app/core/public-api';
 import { EntityComponent } from '@app/modules/home/components/entity/entity.component';
 import { EntityTableConfig } from '@app/modules/home/models/entity/entities-table-config.models';
 import { Asset, AssetInfo } from '@app/shared/models/asset.models';
@@ -29,7 +29,7 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
   entityType = EntityType;
   assetsIds = [];
   deviceIds = [];
-  entitiesObservable: Observable<PageData<BaseData<EntityId>>>;
+  entitiesObservable: any;
   downtimeEntryScope: 'tenant' | 'customer' | 'customer_user' ;
   
   constructor(
@@ -39,18 +39,17 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
     public fb: FormBuilder,
     private assetService:AssetService,
     private deviceService : DeviceService,
-    private entityService :EntityService,
+    private entityRelationService : EntityRelationService,
     protected cd: ChangeDetectorRef
   ){
     super(store, fb, entityValue, entitiesTableConfigValue, cd);
   }
 
   ngOnInit(): void {
+    const pageLink = new PageLink(10);
+    this.getEntitiesByPageLinkAssetObservable(pageLink);
     this.downtimeEntryScope = this.entitiesTableConfigValue.componentsData.downtimeEntryScope;
     super.ngOnInit();
-    const pageLink = new PageLink(10)
-    this.getEntitiesByPageLinkAssetObservable(pageLink);
-    this.getEntitiesByPageLinkDeviceObservable(pageLink)
   }
 
   getEntitiesByPageLinkAssetObservable(pageLink: PageLink, subType: string = '',
@@ -60,9 +59,28 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
           this.assetService.getTenantAssetInfos(pageLink,subType,config)
     if (this.entitiesObservable) {
       this.entitiesObservable.pipe(
-            map((data) => {return data && data.data.length ? this.assetsIds = data.data : null})).subscribe();
+            map((data) => {return data && data['data'].length ? this.assetsIds = data['data'] : null})).subscribe();
         } else {
           return of(null);
+    }
+  }
+
+  AssetsChangeEvent(event){
+    this.deviceIds = [];
+   this.entitiesObservable = this.entityRelationService.findInfoByFrom(event.value)
+    if (this.entitiesObservable) {
+       this.entitiesObservable.pipe(
+          map((data:Array<[]>) => {
+            return data && data.length ? this.deviceIds = data : null})).subscribe();
+        } else {
+          return of(null);
+    }
+  }
+
+  DeviceChangeEvent(event){
+    if(event && this.deviceIds.length == 0){
+    const pageLink = new PageLink(10);
+    this.getEntitiesByPageLinkDeviceObservable(pageLink);
     }
   }
 
@@ -73,7 +91,7 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
           this.deviceService.getTenantDeviceInfos(pageLink,subType,config)
     if (this.entitiesObservable) {
        this.entitiesObservable.pipe(
-          map((data) => {return data && data.data.length ? this.deviceIds = data.data : null})).subscribe();
+          map((data) => {return data && data['data'].length ? this.deviceIds = data['data'] : null})).subscribe();
         } else {
           return of(null);
     }
