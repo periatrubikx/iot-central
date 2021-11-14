@@ -42,7 +42,8 @@ public enum Resource {
     EDGE(EntityType.EDGE),
     RPC(EntityType.RPC),
     SHIFT(EntityType.SHIFT),
-    DOWNTIME_CODE(EntityType.DOWNTIME_CODE);
+    DOWNTIME_CODE(EntityType.DOWNTIME_CODE),
+    DOWNTIME_ENTRY(EntityType.DOWNTIME_ENTRY);
 
     private final EntityType entityType;
 

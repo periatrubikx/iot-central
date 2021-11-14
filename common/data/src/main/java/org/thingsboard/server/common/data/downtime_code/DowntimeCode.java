@@ -38,6 +38,11 @@ public class DowntimeCode extends BaseData<DowntimeCodeId> implements HasName, H
     public DowntimeCode(DowntimeCode downtimeCode){
         super(downtimeCode);
         this.level1 = downtimeCode.getLevel1();
+        this.level2 = downtimeCode.getLevel2();
+        this.level3 = downtimeCode.getLevel3();
+        this.customerId = downtimeCode.getCustomerId();
+        this.tenantId = downtimeCode.getTenantId();
+        this.code = downtimeCode.getCode();
     }
 
     @ApiModelProperty(position = 1, value = "JSON object with the asset Id. " +

@@ -52,7 +52,7 @@ import org.thingsboard.server.common.data.alarm.AlarmInfo;
 import org.thingsboard.server.common.data.asset.Asset;
 import org.thingsboard.server.common.data.asset.AssetInfo;
 import org.thingsboard.server.common.data.audit.ActionType;
-import org.thingsboard.server.common.data.downtimecode.DowntimeCode;
+import org.thingsboard.server.common.data.downtime_code.DowntimeCode;
 import org.thingsboard.server.common.data.edge.Edge;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
 import org.thingsboard.server.common.data.edge.EdgeEventType;
@@ -83,6 +83,7 @@ import org.thingsboard.server.dao.device.ClaimDevicesService;
 import org.thingsboard.server.dao.device.DeviceCredentialsService;
 import org.thingsboard.server.dao.device.DeviceProfileService;
 import org.thingsboard.server.dao.device.DeviceService;
+import org.thingsboard.server.dao.downtimeentry.DowntimeEntryService;
 import org.thingsboard.server.dao.downtimecode.DowntimeCodesService;
 import org.thingsboard.server.dao.edge.EdgeService;
 import org.thingsboard.server.dao.entityview.EntityViewService;
@@ -273,6 +274,9 @@ public abstract class BaseController {
 
     @Autowired
     protected DowntimeCodesService downtimeCodesService;
+
+    @Autowired
+    protected DowntimeEntryService downtimeEntryService;
 
     @Value("${server.log_controller_error_stack_trace}")
     @Getter

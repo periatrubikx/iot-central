@@ -44,6 +44,7 @@ public class CustomerUserPermissions extends AbstractPermissions {
         put(Resource.RPC, rpcPermissionChecker);
         put(Resource.SHIFT, customerEntityPermissionChecker);
         put(Resource.DOWNTIME_CODE, customerEntityPermissionChecker);
+        put(Resource.DOWNTIME_ENTRY, customerEntityPermissionChecker);
     }
 
     private static final PermissionChecker customerEntityPermissionChecker =

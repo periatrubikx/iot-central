@@ -3,7 +3,7 @@ package org.thingsboard.server.dao.model.sql;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.TypeDef;
-import org.thingsboard.server.common.data.downtimecode.DowntimeCode;
+import org.thingsboard.server.common.data.downtime_code.DowntimeCode;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.DowntimeCodeId;
 import org.thingsboard.server.common.data.id.TenantId;

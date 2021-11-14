@@ -5,15 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
-import org.thingsboard.server.common.data.downtimecode.DowntimeCode;
+import org.thingsboard.server.common.data.downtime_code.DowntimeCode;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
-import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.dao.DaoUtil;
 import org.thingsboard.server.dao.downtimecode.DowntimeCodesDao;
 import org.thingsboard.server.dao.model.sql.DowntimeCodeEntity;
-import org.thingsboard.server.dao.model.sql.ShiftEntity;
 import org.thingsboard.server.dao.sql.JpaAbstractSearchTextDao;
 
 import java.util.Objects;

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @TypeDef(name = "json", typeClass = JsonStringType.class)
-@Table(name = "downtime_code")
+@Table(name = "downtime_entry")
 public class DowntimeEntryEntity extends AbstractDowntimeEntryEntity<DowntimeEntry> {
     public DowntimeEntryEntity() {
         super();

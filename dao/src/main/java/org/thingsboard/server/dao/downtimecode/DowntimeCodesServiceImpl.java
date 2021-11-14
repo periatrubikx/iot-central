@@ -3,13 +3,12 @@ package org.thingsboard.server.dao.downtimecode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.thingsboard.server.common.data.downtimecode.DowntimeCode;
+import org.thingsboard.server.common.data.downtime_code.DowntimeCode;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.DowntimeCodeId;
 import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
-import org.thingsboard.server.common.data.shift.Shift;
 import org.thingsboard.server.dao.entity.AbstractEntityService;
 
 import static org.thingsboard.server.dao.service.Validator.validateId;

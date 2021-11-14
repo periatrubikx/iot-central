@@ -24,11 +24,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.Customer;
 import org.thingsboard.server.common.data.EntityType;
-import org.thingsboard.server.common.data.asset.Asset;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
-import org.thingsboard.server.common.data.id.AssetId;
 import org.thingsboard.server.common.data.id.CustomerId;
 import org.thingsboard.server.common.data.id.ShiftId;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -126,7 +124,7 @@ public class ShiftManagementController extends BaseController {
 
             Shift savedShiftAsset = checkNotNull(shiftService.saveShift(shift));
 
-            onAssetCreatedOrUpdated(savedShiftAsset, shift.getId() != null, getCurrentUser());
+            onShiftCreatedOrUpdated(savedShiftAsset, shift.getId() != null, getCurrentUser());
 
             return savedShiftAsset;
         } catch (Exception e) {
@@ -136,7 +134,7 @@ public class ShiftManagementController extends BaseController {
         }
     }
 
-    private void onAssetCreatedOrUpdated(Shift shift, boolean updated, SecurityUser user) {
+    private void onShiftCreatedOrUpdated(Shift shift, boolean updated, SecurityUser user) {
         try {
             logEntityAction(user, shift.getId(), shift,
                     shift.getCustomerId(),

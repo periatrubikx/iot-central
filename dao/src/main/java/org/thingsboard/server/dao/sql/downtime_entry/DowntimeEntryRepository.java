@@ -10,7 +10,7 @@ import org.thingsboard.server.dao.model.sql.DowntimeEntryInfoEntity;
 
 import java.util.UUID;
 
-public interface DowntimeEntryRespository extends PagingAndSortingRepository<DowntimeEntryEntity, UUID>{
+public interface DowntimeEntryRepository extends PagingAndSortingRepository<DowntimeEntryEntity, UUID>{
 
     @Query("SELECT new org.thingsboard.server.dao.model.sql.DowntimeEntryInfoEntity(a, c.title, c.additionalInfo) " +
             "FROM DowntimeEntryEntity a " +

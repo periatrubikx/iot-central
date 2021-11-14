@@ -41,6 +41,10 @@ public class DowntimeEntry extends BaseData<DowntimeEntryId> implements HasName,
         this.tenantId = downtimeEntry.getTenantId();
         this.customerId = downtimeEntry.getCustomerId();
         this.name = downtimeEntry.getName();
+        this.deviceId = downtimeEntry.getDeviceId();
+        this.reason = downtimeEntry.getReason();
+        this.startDateTimeMs = downtimeEntry.startDateTimeMs;
+        this.endDateTimeMs = downtimeEntry.endDateTimeMs;
     }
 
 
@@ -53,13 +57,13 @@ public class DowntimeEntry extends BaseData<DowntimeEntryId> implements HasName,
         return super.getId();
     }
 
-    @ApiModelProperty(position = 2, value = "Timestamp of the device creation, in milliseconds", example = "1609459200000", readOnly = true)
+    @ApiModelProperty(position = 2, value = "Timestamp of the DowntimeEntry creation, in milliseconds", example = "1609459200000", readOnly = true)
     @Override
     public long getCreatedTime() {
         return super.getCreatedTime();
     }
 
-    @ApiModelProperty(position = 3, value = "JSON object with Tenant Id. Use 'assignDeviceToTenant' to change the Tenant Id.", readOnly = true)
+    @ApiModelProperty(position = 3, value = "JSON object with Tenant Id. Use 'assignDowntimeEntryToTenant' to change the Tenant Id.", readOnly = true)
     public TenantId getTenantId() {
         return tenantId;
     }
@@ -68,7 +72,7 @@ public class DowntimeEntry extends BaseData<DowntimeEntryId> implements HasName,
         this.tenantId = tenantId;
     }
 
-    @ApiModelProperty(position = 4, value = "JSON object with Customer Id. Use 'assignDeviceToCustomer' to change the Customer Id.", readOnly = true)
+    @ApiModelProperty(position = 4, value = "JSON object with Customer Id. Use 'assignDowntimeEntryToCustomer' to change the Customer Id.", readOnly = true)
     public CustomerId getCustomerId() {
         return customerId;
     }
@@ -77,7 +81,7 @@ public class DowntimeEntry extends BaseData<DowntimeEntryId> implements HasName,
         this.customerId = customerId;
     }
 
-    @ApiModelProperty(position = 5, required = true, value = "Unique Device Name in scope of Tenant", example = "A4B72CCDFF33")
+    @ApiModelProperty(position = 5, required = true, value = "Unique DowntimeEntry Name in scope of Tenant", example = "A4B72CCDFF33")
     @Override
     public String getName() {
         return name;

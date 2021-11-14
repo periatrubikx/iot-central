@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thingsboard.server.common.data.EntityType;
 import org.thingsboard.server.common.data.audit.ActionType;
 import org.thingsboard.server.common.data.downtime_entry.DowntimeEntry;
+import org.thingsboard.server.common.data.downtime_entry.DowntimeEntryInfo;
 import org.thingsboard.server.common.data.edge.EdgeEventActionType;
 import org.thingsboard.server.common.data.exception.ThingsboardException;
 import org.thingsboard.server.common.data.id.TenantId;
@@ -27,32 +28,32 @@ import static org.thingsboard.server.controller.ControllerConstants.SORT_ORDER_A
 @TbCoreComponent
 @RequestMapping("/api")
 @Slf4j
-public class DowntimeCodeEntryController extends BaseController {
+public class DowntimeEntryController extends BaseController {
 
-//    @ApiOperation(value = "Get Downtime Entry Info (getDowntimeEntries)",
-//            notes = "Returns a page of Downtime Entries. " +
-//                    PAGE_DATA_PARAMETERS)
-//    @RequestMapping(value = "/downtimeEntry/downtimeEntryInfos", params = {"pageSize", "page"}, method = RequestMethod.GET)
-//    @ResponseBody
-//    public PageData<DowntimeEntryInfo> getDowntimeEntries(
-//            @ApiParam(value = PAGE_SIZE_DESCRIPTION, required = true)
-//            @RequestParam int pageSize,
-//            @ApiParam(value = PAGE_NUMBER_DESCRIPTION, required = true)
-//            @RequestParam int page,
-//            @ApiParam(value = CUSTOMER_TEXT_SEARCH_DESCRIPTION)
-//            @RequestParam(required = false) String textSearch,
-//            @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = CUSTOMER_SORT_PROPERTY_ALLOWABLE_VALUES)
-//            @RequestParam(required = false) String sortProperty,
-//            @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
-//            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
-//        try {
-//            PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
-//            TenantId tenantId = getCurrentUser().getTenantId();
-//            return checkNotNull(downtimeEntryService.findDowntimeEntryInfosByTenantId(tenantId, pageLink));
-//        } catch (Exception e) {
-//            throw handleException(e);
-//        }
-//    }
+    @ApiOperation(value = "Get Downtime Entry Info (getDowntimeEntries)",
+            notes = "Returns a page of Downtime Entries. " +
+                    PAGE_DATA_PARAMETERS)
+    @RequestMapping(value = "/downtimeEntry/downtimeEntryInfos", params = {"pageSize", "page"}, method = RequestMethod.GET)
+    @ResponseBody
+    public PageData<DowntimeEntryInfo> getDowntimeEntries(
+            @ApiParam(value = PAGE_SIZE_DESCRIPTION, required = true)
+            @RequestParam int pageSize,
+            @ApiParam(value = PAGE_NUMBER_DESCRIPTION, required = true)
+            @RequestParam int page,
+            @ApiParam(value = CUSTOMER_TEXT_SEARCH_DESCRIPTION)
+            @RequestParam(required = false) String textSearch,
+            @ApiParam(value = SORT_PROPERTY_DESCRIPTION, allowableValues = CUSTOMER_SORT_PROPERTY_ALLOWABLE_VALUES)
+            @RequestParam(required = false) String sortProperty,
+            @ApiParam(value = SORT_ORDER_DESCRIPTION, allowableValues = SORT_ORDER_ALLOWABLE_VALUES)
+            @RequestParam(required = false) String sortOrder) throws ThingsboardException {
+        try {
+            PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
+            TenantId tenantId = getCurrentUser().getTenantId();
+            return checkNotNull(downtimeEntryService.findDowntimeEntryInfosByTenantId(tenantId, pageLink));
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
 
     @ApiOperation(value = "Create Or Update Downtime Entry (saveDowntimeEntry)",
             notes = "Creates or Updates the Downtime Entry. When creating downtime entry, platform generates Downtime Entry Id as [time-based UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_1_(date-time_and_MAC_address) " +
@@ -89,7 +90,4 @@ public class DowntimeCodeEntryController extends BaseController {
             sendEntityNotificationMsg(downtimeEntry.getTenantId(), downtimeEntry.getId(), EdgeEventActionType.UPDATED);
         }
     }
-
-
-
 }

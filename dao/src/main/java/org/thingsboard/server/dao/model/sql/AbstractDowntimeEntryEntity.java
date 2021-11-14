@@ -5,10 +5,7 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.TypeDef;
 import org.thingsboard.server.common.data.downtime_code.DowntimeCode;
 import org.thingsboard.server.common.data.downtime_entry.DowntimeEntry;
-import org.thingsboard.server.common.data.id.AssetId;
-import org.thingsboard.server.common.data.id.CustomerId;
-import org.thingsboard.server.common.data.id.DowntimeEntryId;
-import org.thingsboard.server.common.data.id.TenantId;
+import org.thingsboard.server.common.data.id.*;
 import org.thingsboard.server.dao.model.BaseSqlEntity;
 import org.thingsboard.server.dao.model.SearchTextEntity;
 import org.thingsboard.server.dao.util.mapping.JsonStringType;
@@ -43,6 +40,10 @@ public abstract class AbstractDowntimeEntryEntity<T extends DowntimeEntry> exten
     @Column(name="start_date_time")
     private Long startDateTime;
 
+    @Column(name="end_date_time")
+    private Long endDateTime;
+
+
     @Column(name="search_text")
     private String searchText;
 
@@ -61,9 +62,27 @@ public abstract class AbstractDowntimeEntryEntity<T extends DowntimeEntry> exten
         if(downtimeEntry.getCustomerId()!=null){
             this.customerId = downtimeEntry.getCustomerId().getId();
         }
-        this.assetId = downtimeEntry.getAssetId().getId();
-        this.deviceId = downtimeEntry.getDeviceId().getId();
+        if (downtimeEntry.getAssetId()!=null) {
+            this.assetId = downtimeEntry.getAssetId().getId();
+        }
+        if (downtimeEntry.getDeviceId()!=null) {
+            this.deviceId = downtimeEntry.getDeviceId().getId();
+        }
+        this.startDateTime = downtimeEntry.getStartDateTimeMs();
+        this.endDateTime = downtimeEntry.getEndDateTimeMs();
         this.reason = downtimeEntry.getReason();
+        this.searchText = downtimeEntry.getReason();
+    }
+
+    public AbstractDowntimeEntryEntity(DowntimeEntryEntity downtimeEntryEntity){
+        this.setId(downtimeEntryEntity.getId());
+        this.setCreatedTime(downtimeEntryEntity.getCreatedTime());
+        this.tenantId = downtimeEntryEntity.getTenantId();
+        this.customerId = downtimeEntryEntity.getCustomerId();
+        this.startDateTime = downtimeEntryEntity.getStartDateTime();
+        this.endDateTime = downtimeEntryEntity.getEndDateTime();
+        this.reason = downtimeEntryEntity.getReason();
+        this.searchText = downtimeEntryEntity.getReason();
     }
 
 
@@ -76,9 +95,15 @@ public abstract class AbstractDowntimeEntryEntity<T extends DowntimeEntry> exten
         if(customerId!=null){
             downtimeEntry.setCustomerId(new CustomerId(customerId));
         }
-        downtimeEntry.setAssetId(new AssetId(assetId));
-        downtimeEntry.setCustomerId(new CustomerId(customerId));
+        if (assetId!=null) {
+            downtimeEntry.setAssetId(new AssetId(assetId));
+        }
+        if (deviceId!=null) {
+            downtimeEntry.setDeviceId(new DeviceId(deviceId));
+        }
         downtimeEntry.setReason(reason);
+        downtimeEntry.setStartDateTimeMs(startDateTime);
+        downtimeEntry.setEndDateTimeMs(endDateTime);
         return downtimeEntry;
     }
 
