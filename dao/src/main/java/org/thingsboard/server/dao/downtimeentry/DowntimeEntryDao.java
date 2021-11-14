@@ -14,4 +14,6 @@ public interface DowntimeEntryDao extends Dao<DowntimeEntry> {
     DowntimeEntry save(TenantId tenantId, DowntimeEntry downtimeEntry);
 
     PageData<DowntimeEntryInfo> findDowntimeEntryInfosByTenantId(UUID id, PageLink pageLink);
+
+    DowntimeEntry findDowntimeCodeInfoById(TenantId tenantId, UUID id);
 }

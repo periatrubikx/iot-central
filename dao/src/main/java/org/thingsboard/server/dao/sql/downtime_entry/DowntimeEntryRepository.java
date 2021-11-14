@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.thingsboard.server.common.data.downtime_entry.DowntimeEntry;
+import org.thingsboard.server.dao.model.sql.DowntimeCodeEntity;
 import org.thingsboard.server.dao.model.sql.DowntimeEntryEntity;
 import org.thingsboard.server.dao.model.sql.DowntimeEntryInfoEntity;
 
@@ -20,4 +22,6 @@ public interface DowntimeEntryRepository extends PagingAndSortingRepository<Down
     Page<DowntimeEntryInfoEntity> findDowntimeEntryInfosByTenantId(@Param("tenantId") UUID tenantId,
                                                                    @Param("textSearch") String textSearch,
                                                                    Pageable pageable);
+    @Query("SELECT dc FROM DowntimeEntryEntity dc WHERE dc.id = :downtimeEntryId ")
+    DowntimeEntryEntity findDowntimeEntryById(@Param("downtimeEntryId") UUID downtimeEntryId);
 }

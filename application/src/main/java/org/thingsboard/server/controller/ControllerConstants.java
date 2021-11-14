@@ -20,6 +20,7 @@ public class ControllerConstants {
 
     protected static final String SHIFT_ID_PARAM_DESCRIPTION = "A string value representing the shift id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'";
     protected static final String DOWNTIME_CODE_ID_PARAM_DESCRIPTION = "A string value representing the downtimecode id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'";
+    protected static final String DOWNTIME_ENTRY_ID_PARAM_DESCRIPTION = "A string value representing the downtime entry id. For example, '784f394c-42b6-435a-983c-b7beff2784f9'";
 
     protected static final String NEW_LINE = "\n\n";
     protected static final String UUID_WIKI_LINK = "[time-based UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_1_(date-time_and_MAC_address)). ";

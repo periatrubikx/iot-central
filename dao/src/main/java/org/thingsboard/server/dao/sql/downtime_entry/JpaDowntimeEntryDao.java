@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.thingsboard.server.common.data.downtime_entry.DowntimeEntry;
 import org.thingsboard.server.common.data.downtime_entry.DowntimeEntryInfo;
+import org.thingsboard.server.common.data.id.TenantId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
 import org.thingsboard.server.dao.DaoUtil;
@@ -40,5 +41,10 @@ public class JpaDowntimeEntryDao extends JpaAbstractSearchTextDao<DowntimeEntryE
                         tenantId,
                         Objects.toString(pageLink.getTextSearch(), ""),
                         DaoUtil.toPageable(pageLink, DowntimeEntryInfoEntity.downtimeEntryInfoColumnMap)));
+    }
+
+    @Override
+    public DowntimeEntry findDowntimeCodeInfoById(TenantId tenantId, UUID downtimeEntryId) {
+        return DaoUtil.getData(downtimeEntryRepository.findDowntimeEntryById(downtimeEntryId));
     }
 }
