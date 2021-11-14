@@ -1,7 +1,7 @@
 <form [formGroup]="entityForm">
     <fieldset  [disabled]="(isLoading$ | async) || !isEdit">
       <mat-form-field class="mat-block">
-          <mat-select formControlName="asset" placeholder="Asset" required>
+          <mat-select formControlName="asset" placeholder="Asset" required (selectionChange)="AssetsChangeEvent($event)">
             <mat-option *ngFor="let item of assetsIds" [value]="item.id">
               {{ item.name }}
             </mat-option>
@@ -14,15 +14,19 @@
 
     <fieldset  [disabled]="(isLoading$ | async) || !isEdit">
         <mat-form-field class="mat-block">
-            <mat-select formControlName="device" placeholder="Device" required>
+            <mat-select formControlName="device" placeholder="Device" required (focus)="DeviceChangeEvent($event)">
               <ng-container *ngFor="let itemDevice of deviceIds">
-                <!-- <ng-container *ngFor="let itemAsset of assetsIds"> -->
-                  <!-- <ng-container *ngIf="itemAsset.tenantId.id === itemDevice.tenantId.id"> -->
-                    <mat-option [value]="itemDevice.id">
-                      {{ itemDevice.name }}
-                    </mat-option>
-                  <!-- </ng-container> -->
-                <!-- </ng-container> -->
+                <ng-container *ngIf="itemDevice.to">
+                  <mat-option [value]="itemDevice.to" >
+                    {{ itemDevice.toName }}
+                  </mat-option>
+                </ng-container>
+                <ng-container *ngIf="itemDevice.id">
+                  <mat-option [value]="itemDevice.id" >
+                    {{ itemDevice.name }}
+                  </mat-option>
+                </ng-container>
+                
               </ng-container>
             </mat-select>
             <mat-error *ngIf="entityForm.get('device')">
