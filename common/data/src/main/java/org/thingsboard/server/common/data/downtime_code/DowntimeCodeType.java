@@ -1,4 +1,4 @@
-package org.thingsboard.server.common.data.downtimecode;
+package org.thingsboard.server.common.data.downtime_code;
 
 import io.swagger.annotations.ApiModelProperty;
 import org.thingsboard.server.common.data.BaseData;
