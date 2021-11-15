@@ -58,13 +58,11 @@
         <mat-select formControlName="downtimeCodeId" placeholder="Reason">
           <ng-container *ngFor="let item of downtimeCodeConfigIds">
               <mat-option [value]="item.id" (click)="DowntimeEntryChangeEvent(item)"> 
-                <ng-container>
                   {{ item.level1 ? item.level1 : '' }}
                   {{ item.level2 ? ' -> ' : ''}}
                   {{ item.level2 ? item.level2 : '' }}
                   {{ item.level3 ? ' -> ' : ''}}
                   {{ item.level3 ? item.level3 : ''}}
-                </ng-container>
               </mat-option>
             </ng-container>
         </mat-select>

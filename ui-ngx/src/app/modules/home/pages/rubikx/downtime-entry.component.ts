@@ -136,11 +136,16 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
 
 
   updateForm(entity: DowntimeEntryInfo) {
+    if(this.downtimeCodeConfigIds && this.downtimeCodeConfigIds.length > 0){
+      this.downtimeCodeConfigIds.forEach((item)=>{
+        if(item.id['id'] === entity.downtimeCodeId['id'])
+          this.entityForm.patchValue({downtimeCodeId:item.id})
+      })
+    }
     this.entityForm.patchValue({asset:entity.assetId});
     this.entityForm.patchValue({device:entity.deviceId});
     this.entityForm.patchValue({startDateTimeMs:entity.startDateTimeMs});
     this.entityForm.patchValue({endDateTimeMs:entity.endDateTimeMs});
-    this.entityForm.patchValue({downtimeCodeId:entity.downtimeCodeId});
 
   }
 
