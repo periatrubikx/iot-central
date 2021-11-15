@@ -27,6 +27,7 @@ export interface DowntimeEntry extends BaseData<DowntimeEntryId>{
     customerId?:CustomerId;
     assetId:string;
     deviceId:string;
+    name:string;
     startDateTimeMs:number;
     endDateTimeMs:number;
     downtimeCodeId:string;
@@ -36,6 +37,7 @@ export interface DowntimeEntry extends BaseData<DowntimeEntryId>{
 export interface ImportEntityData{
     assetId:string;
     deviceId:string;
+    name:string;
     startDateTimeMs:number;
     endDateTimeMs:number;
     downtimeCodeId:string;

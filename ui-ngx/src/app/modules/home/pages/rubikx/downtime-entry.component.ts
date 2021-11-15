@@ -87,6 +87,12 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
     }
   }
 
+  DowntimeEntryChangeEvent(event){
+    const name = (event.level1 ? event.level1 : '') + (event.level2 ? ' -> ' : '') + (event.level2 ? event.level2 : '' ) +
+            (event.level3 ? ' -> ' : '') + (event.level3 ? event.level3 : '')
+    this.entity.name = name;
+  }
+
   getEntitiesByPageLinkDeviceObservable(pageLink: PageLink, subType: string = '',
                       config?: RequestConfig): Observable<Array<BaseData<EntityId>>> {
     this.deviceIds = [];
@@ -108,23 +114,7 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
     if (this.entitiesObservable) {
        this.entitiesObservable.pipe(
           map((data) => {
-            const response = data && data['data'].length ? data['data'] : null;
-            if(response && response.length > 0){
-              response.forEach(element => {
-                const name = (element.level1 ? element.level1 : '') + (element.level2 ? ' -> ' : '') +
-                      (element.level2 ? element.level2 : '')  + (element.level3 ? ' -> ' : '') +  (element.level3 ? element.level3 : '');
-                  let object = {
-                    entityType: element.entityType,
-                    downtimeCodeId : element.id,
-                    name:name
-                  }
-                  this.downtimeCodeConfigIds.push(object);
-              });
-            }
-          
-          })).subscribe();
-
-            return 
+            return data && data['data'].length ? this.downtimeCodeConfigIds = data['data'] : null})).subscribe();
         } else {
           return of(null);
     }
