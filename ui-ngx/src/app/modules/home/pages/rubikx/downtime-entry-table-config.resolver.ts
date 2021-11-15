@@ -48,7 +48,7 @@ export class DowntimeEntryConfigResolver implements Resolve<EntityTableConfig<Do
 
     this.config.deleteEntityContent=()=> this.translate.instant('downtimeEntry.delete-downtime-entry-text');
     this.config.deleteEntityTitle = count => this.translate.instant('downtimeEntry.delete-downtime-entrys-title',{count});
-    this.config.deleteEntityTitle = downtimeEntry => this.translate.instant('downtimeEntry.delete-downtime-entry-title', {downTimeEntryName: downtimeEntry.name});
+    this.config.deleteEntityTitle = downtimeEntry => this.translate.instant('downtimeEntry.delete-downtime-entry-title', {downtimeEntryName: downtimeEntry.name});
     this.config.deleteEntitiesContent = () => this.translate.instant('downtimeEntry.delete-downtime-entrys-text');
 
     this.config.loadEntity =id => this.downtimeEntryService.getDowntimeEntryInfo(id.id);
