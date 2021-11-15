@@ -45,22 +45,27 @@ TABLESPACE pg_default;
 ALTER TABLE public.shift
     OWNER to postgres;
 
--- Table: public.downtime_code_entry
+-- Table: public.downtime_entry
 
--- DROP TABLE public.downtime_code_entry;
+-- DROP TABLE public.downtime_entry;
 
-CREATE TABLE IF NOT EXISTS public.downtime_code_entry
+CREATE TABLE IF NOT EXISTS public.downtime_entry
 (
-    created_time bigint NOT NULL,
-    shift_id uuid NOT NULL,
+    shift_id uuid,
     asset_id uuid,
     device_id uuid,
     start_date_time bigint NOT NULL,
     end_date_time bigint NOT NULL,
-    reason character varying(255) COLLATE pg_catalog."default" NOT NULL
+    reason character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    search_text character varying COLLATE pg_catalog."default",
+    customer_id uuid,
+    tenant_id uuid,
+    id uuid NOT NULL,
+    created_time bigint,
+    CONSTRAINT downtime_entry_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.downtime_code_entry
+ALTER TABLE public.downtime_entry
     OWNER to postgres;
