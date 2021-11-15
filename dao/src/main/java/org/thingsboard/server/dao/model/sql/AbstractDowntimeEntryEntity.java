@@ -3,7 +3,6 @@ package org.thingsboard.server.dao.model.sql;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.TypeDef;
-import org.thingsboard.server.common.data.downtime_code.DowntimeCode;
 import org.thingsboard.server.common.data.downtime_entry.DowntimeEntry;
 import org.thingsboard.server.common.data.id.*;
 import org.thingsboard.server.dao.model.BaseSqlEntity;
@@ -34,8 +33,8 @@ public abstract class AbstractDowntimeEntryEntity<T extends DowntimeEntry> exten
     @Column(name="device_id")
     private UUID deviceId;
 
-    @Column(name="reason")
-    private String reason;
+    @Column(name="downtime_code_id")
+    private UUID downtimeCodeId;
 
     @Column(name="start_date_time")
     private Long startDateTime;
@@ -43,6 +42,8 @@ public abstract class AbstractDowntimeEntryEntity<T extends DowntimeEntry> exten
     @Column(name="end_date_time")
     private Long endDateTime;
 
+    @Column(name="name")
+    private String name;
 
     @Column(name="search_text")
     private String searchText;
@@ -68,10 +69,13 @@ public abstract class AbstractDowntimeEntryEntity<T extends DowntimeEntry> exten
         if (downtimeEntry.getDeviceId()!=null) {
             this.deviceId = downtimeEntry.getDeviceId().getId();
         }
+        if (downtimeEntry.getDowntimeCodeId()!=null) {
+            this.downtimeCodeId = downtimeEntry.getDowntimeCodeId().getId();
+        }
         this.startDateTime = downtimeEntry.getStartDateTimeMs();
         this.endDateTime = downtimeEntry.getEndDateTimeMs();
-        this.reason = downtimeEntry.getReason();
-        this.searchText = downtimeEntry.getReason();
+        this.name = downtimeEntry.getName();
+//        this.searchText = downtimeEntry.getDowntimeCodeId();
     }
 
     public AbstractDowntimeEntryEntity(DowntimeEntryEntity downtimeEntryEntity){
@@ -79,10 +83,13 @@ public abstract class AbstractDowntimeEntryEntity<T extends DowntimeEntry> exten
         this.setCreatedTime(downtimeEntryEntity.getCreatedTime());
         this.tenantId = downtimeEntryEntity.getTenantId();
         this.customerId = downtimeEntryEntity.getCustomerId();
+        this.assetId = downtimeEntryEntity.getAssetId();
+        this.deviceId = downtimeEntryEntity.getDeviceId();
         this.startDateTime = downtimeEntryEntity.getStartDateTime();
         this.endDateTime = downtimeEntryEntity.getEndDateTime();
-        this.reason = downtimeEntryEntity.getReason();
-        this.searchText = downtimeEntryEntity.getReason();
+        this.downtimeCodeId = downtimeEntryEntity.getDowntimeCodeId();
+        this.name = downtimeEntryEntity.getName();
+//        this.searchText = downtimeEntryEntity.getDowntimeCodeId();
     }
 
 
@@ -101,16 +108,20 @@ public abstract class AbstractDowntimeEntryEntity<T extends DowntimeEntry> exten
         if (deviceId!=null) {
             downtimeEntry.setDeviceId(new DeviceId(deviceId));
         }
-        downtimeEntry.setReason(reason);
+        if (downtimeCodeId!=null) {
+            downtimeEntry.setDowntimeCodeId(new DowntimeCodeId(downtimeCodeId));
+        }
         downtimeEntry.setStartDateTimeMs(startDateTime);
         downtimeEntry.setEndDateTimeMs(endDateTime);
+        downtimeEntry.setName(name);
         return downtimeEntry;
     }
 
 
+    //TODO: Need to update this to something meaningful.
     @Override
     public String getSearchTextSource() {
-        return reason;
+        return "";
     }
 
     @Override

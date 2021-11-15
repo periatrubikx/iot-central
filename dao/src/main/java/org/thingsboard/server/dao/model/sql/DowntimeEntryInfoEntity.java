@@ -11,6 +11,9 @@ public class DowntimeEntryInfoEntity extends AbstractDowntimeEntryEntity<Downtim
     public static final Map<String,String> downtimeEntryInfoColumnMap = new HashMap<>();
     static {
         downtimeEntryInfoColumnMap.put("customerTitle", "c.title");
+        downtimeEntryInfoColumnMap.put("assetTitle", "a.name");
+        downtimeEntryInfoColumnMap.put("deviceTitle", "d.name");
+        downtimeEntryInfoColumnMap.put("reason", "r.name");
     }
 
     private String customerTitle;

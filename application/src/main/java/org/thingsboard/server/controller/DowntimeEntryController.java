@@ -76,7 +76,8 @@ public class DowntimeEntryController extends BaseController {
         try {
             PageLink pageLink = createPageLink(pageSize, page, textSearch, sortProperty, sortOrder);
             TenantId tenantId = getCurrentUser().getTenantId();
-            return checkNotNull(downtimeEntryService.findDowntimeEntryInfosByTenantId(tenantId, pageLink));
+            PageData<DowntimeEntryInfo> downtimeEntryInfosByTenantId = downtimeEntryService.findDowntimeEntryInfosByTenantId(tenantId, pageLink);
+            return checkNotNull(downtimeEntryInfosByTenantId);
         } catch (Exception e) {
             throw handleException(e);
         }

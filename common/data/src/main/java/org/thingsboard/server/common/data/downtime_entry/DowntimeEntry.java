@@ -26,7 +26,7 @@ public class DowntimeEntry extends BaseData<DowntimeEntryId> implements HasName,
     @NoXss
     private Long endDateTimeMs;
     @NoXss
-    private String reason;
+    private DowntimeCodeId downtimeCodeId;
 
     public DowntimeEntry() {
         super();
@@ -42,7 +42,8 @@ public class DowntimeEntry extends BaseData<DowntimeEntryId> implements HasName,
         this.customerId = downtimeEntry.getCustomerId();
         this.name = downtimeEntry.getName();
         this.deviceId = downtimeEntry.getDeviceId();
-        this.reason = downtimeEntry.getReason();
+        this.assetId = downtimeEntry.getAssetId();
+        this.downtimeCodeId = downtimeEntry.getDowntimeCodeId();
         this.startDateTimeMs = downtimeEntry.startDateTimeMs;
         this.endDateTimeMs = downtimeEntry.endDateTimeMs;
     }
@@ -106,9 +107,9 @@ public class DowntimeEntry extends BaseData<DowntimeEntryId> implements HasName,
     public void setDeviceId(DeviceId deviceId){this.deviceId = deviceId;}
 
     @ApiModelProperty(position = 8, required = true, value = "Asset Id", example = "Test Asset")
-    public String getReason(){return reason;}
+    public DowntimeCodeId getDowntimeCodeId(){return downtimeCodeId;}
 
-    public void setReason(String reason){this.reason = reason;}
+    public void setDowntimeCodeId(DowntimeCodeId downtimeCodeId){this.downtimeCodeId = downtimeCodeId;}
 
     @ApiModelProperty(position = 9, required = true, value = "Start time for the shift", example = "Date time")
     public Long getStartDateTimeMs() {
@@ -146,7 +147,7 @@ public class DowntimeEntry extends BaseData<DowntimeEntryId> implements HasName,
         builder.append(", createdTime=");
         builder.append(createdTime);
         builder.append(", reason=");
-        builder.append(reason);
+        builder.append(downtimeCodeId);
         builder.append(", id=");
         builder.append(id);
         builder.append("]");
