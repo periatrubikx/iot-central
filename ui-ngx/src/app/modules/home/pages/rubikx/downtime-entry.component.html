@@ -1,12 +1,12 @@
 <form [formGroup]="entityForm">
     <fieldset  [disabled]="(isLoading$ | async) || !isEdit">
       <mat-form-field class="mat-block">
-          <mat-select formControlName="asset" placeholder="Asset" required (selectionChange)="AssetsChangeEvent($event)">
+          <mat-select formControlName="assetId" placeholder="Asset" required (selectionChange)="AssetsChangeEvent($event)">
             <mat-option *ngFor="let item of assetsIds" [value]="item.id">
               {{ item.name }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="entityForm.get('asset')">
+          <mat-error *ngIf="entityForm.get('assetId')">
             {{ 'downtimeEntry.asset-required' | translate }}
           </mat-error>
         </mat-form-field>
@@ -14,7 +14,7 @@
 
     <fieldset  [disabled]="(isLoading$ | async) || !isEdit">
         <mat-form-field class="mat-block">
-            <mat-select formControlName="device" placeholder="Device" required (focus)="DeviceChangeEvent($event)">
+            <mat-select formControlName="deviceId" placeholder="Device" required (focus)="DeviceChangeEvent($event)">
               <ng-container *ngFor="let itemDevice of deviceIds">
                 <ng-container *ngIf="itemDevice.to">
                   <mat-option [value]="itemDevice.to" >
@@ -26,33 +26,42 @@
                     {{ itemDevice.name }}
                   </mat-option>
                 </ng-container>
-                
               </ng-container>
             </mat-select>
-            <mat-error *ngIf="entityForm.get('device')">
+            <mat-error *ngIf="entityForm.get('deviceId')">
               {{ 'downtimeEntry.device-required' | translate }}
             </mat-error>
           </mat-form-field>
     </fieldset>
 
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
-            <tb-datetime formControlName="startDateTimeMs"
-            dateText="filter.date"
-            timeText="filter.time"
-            [showLabel]="true"></tb-datetime>
+        <tb-datetime
+          dateText="downtimeEntry.start-date"
+          timeText="downtimeEntry.start-ts"
+          [maxDate]="maxStartDateTimeMs | async"
+          formControlName="startDateTimeMs"
+        ></tb-datetime>
+    
     </fieldset>
 
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
-            <tb-datetime formControlName="endDateTimeMs"
-            dateText="filter.date"
-            timeText="filter.time"
-             [showLabel]="true"></tb-datetime>
+          <tb-datetime
+            dateText="downtimeEntry.end-date"
+            timeText="downtimeEntry.end-ts"
+            [minDate]="minEndDateTimeMs | async"
+            formControlName="endDateTimeMs"
+          ></tb-datetime>
     </fieldset>
 
     <fieldset [disabled]="(isLoading$ | async) || !isEdit">
-        <mat-form-field class="mat-block">
-          <mat-label translate>downtimeEntry.reason</mat-label>
-          <input matInput formControlName="reason" autocomplete="off">
-        </mat-form-field>
-      </fieldset>
+      <mat-form-field class="mat-block">
+        <mat-select formControlName="reasonId" placeholder="Reason">
+          <ng-container *ngFor="let item of downtimeCodeConfigIds">
+              <mat-option [value]="item.id" >
+                {{ item.level1 + ' -> ' + item.level2 + ' -> ' + item.level3}}
+              </mat-option>
+            </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
 </form>

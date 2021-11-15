@@ -550,6 +550,16 @@ export class EntitiesTableComponent extends PageComponent implements AfterViewIn
             entity['endTimeMs'] = formattedEndDateTime;
           }
         }
+        if(column.key == 'startDateTimeMs'){
+          const datePipe = new DatePipe('en-US');
+          const formattedStartDateTime = datePipe.transform(entity['startDateTimeMs'], 'MMM d y, h:mm a');
+          entity['startDateTimeMs'] = formattedStartDateTime;
+        }
+        else if(column.key == 'endDateTimeMs'){
+          const datePipe = new DatePipe('en-US');
+          const formattedEndDateTime = datePipe.transform(entity['endDateTimeMs'], 'MMM d y, h:mm a');
+          entity['endDateTimeMs'] = formattedEndDateTime;
+        }
           res = this.domSanitizer.bypassSecurityTrustHtml(column.cellContentFunction(entity, column.key));
           this.cellContentCache[index] = res;
       }

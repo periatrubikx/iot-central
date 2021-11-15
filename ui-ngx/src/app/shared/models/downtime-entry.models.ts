@@ -25,20 +25,20 @@ export declare type HasId = EntityId | HasUUID;
 export interface DowntimeEntry extends BaseData<DowntimeEntryId>{
     tenantId?:TenantId;
     customerId?:CustomerId;
-    asset:string;
-    device:string;
+    assetId:string;
+    deviceId:string;
     startDateTimeMs:number;
     endDateTimeMs:number;
-    reason:string;
+    reasonId:string;
 }
 
 
 export interface ImportEntityData{
-    asset:string;
-    device:string;
+    assetId:string;
+    deviceId:string;
     startDateTimeMs:number;
     endDateTimeMs:number;
-    reason:string;
+    reasonId:string;
     credential: {
       accessToken?: string;
       x509?: string;
