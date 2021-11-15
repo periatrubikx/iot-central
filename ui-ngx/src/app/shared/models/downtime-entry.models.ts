@@ -29,7 +29,7 @@ export interface DowntimeEntry extends BaseData<DowntimeEntryId>{
     deviceId:string;
     startDateTimeMs:number;
     endDateTimeMs:number;
-    reasonId:string;
+    downtimeCodeId:string;
 }
 
 
@@ -38,7 +38,7 @@ export interface ImportEntityData{
     deviceId:string;
     startDateTimeMs:number;
     endDateTimeMs:number;
-    reasonId:string;
+    downtimeCodeId:string;
     credential: {
       accessToken?: string;
       x509?: string;

@@ -121,7 +121,7 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
         deviceId: [entity ? entity.deviceId : null,[Validators.required]],
         startDateTimeMs: [entity ? entity.startDateTimeMs : null],
         endDateTimeMs: [entity ? entity.endDateTimeMs : null],
-        reasonId: [entity ? entity.reasonId : null],
+        downtimeCodeId: [entity ? entity.downtimeCodeId : null],
       }
     );
   }
@@ -132,7 +132,7 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
     this.entityForm.patchValue({device:entity.deviceId});
     this.entityForm.patchValue({startDateTimeMs:entity.startDateTimeMs});
     this.entityForm.patchValue({endDateTimeMs:entity.endDateTimeMs});
-    this.entityForm.patchValue({reasonId:entity.reasonId});
+    this.entityForm.patchValue({downtimeCodeId:entity.downtimeCodeId});
 
   }
 
