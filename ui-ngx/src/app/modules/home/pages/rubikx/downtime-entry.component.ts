@@ -88,8 +88,10 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
   }
 
   DowntimeEntryChangeEvent(event){
-    const name = (event.level1 ? event.level1 : '') + (event.level2 ? ' -> ' : '') + (event.level2 ? event.level2 : '' ) +
-            (event.level3 ? ' -> ' : '') + (event.level3 ? event.level3 : '')
+    let name = "";
+    if(event.level3) name = event.level3; 
+    else if(event.level2) name = event.level3; 
+    else if(event.level1) name= event.level1;
     this.entity.name = name;
   }
 

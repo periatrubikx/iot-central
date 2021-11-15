@@ -71,7 +71,7 @@ export class DowntimeEntryConfigResolver implements Resolve<EntityTableConfig<Do
           new EntityTableColumn<DowntimeEntryInfo>('device', 'downtimeEntry.device', '25%'),
           new EntityTableColumn<DowntimeEntryInfo>('startDateTimeMs', 'downtimeEntry.startDateTime', '25%'),
           new EntityTableColumn<DowntimeEntryInfo>('endDateTimeMs','downtimeEntry.endDateTime','25%'),
-          new EntityTableColumn<DowntimeEntryInfo>('reason','downtimeEntry.reason','25%')
+          new EntityTableColumn<DowntimeEntryInfo>('name','downtimeEntry.reason','25%')
         ];
         if (downtimeEntryScope === 'tenant') {
           columns.push(
