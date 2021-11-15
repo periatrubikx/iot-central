@@ -20,7 +20,7 @@ import { DowntimeCodesConfigurationService } from '@app/core/http/downtime-codes
   styleUrls: ['./downtime-entry.component.scss']
 })
 export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
-  
+
   entityType = EntityType;
   assetsIds = [];
   deviceIds = [];
@@ -30,7 +30,7 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
 
   maxStartDateTimeMs: Observable<number | null>;
   minEndDateTimeMs: Observable<number | null>;
-  
+
   constructor(
     protected store: Store<AppState>,
     @Inject('entity') protected entityValue: DowntimeEntryInfo,
@@ -58,7 +58,7 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
   getEntitiesByPageLinkAssetObservable(pageLink: PageLink, subType: string = '',
                       config?: RequestConfig): Observable<Array<BaseData<EntityId>>> {
     this.assetsIds = [];
-    this.entitiesObservable = 
+    this.entitiesObservable =
           this.assetService.getTenantAssetInfos(pageLink,subType,config)
     if (this.entitiesObservable) {
       this.entitiesObservable.pipe(
@@ -89,16 +89,16 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
 
   DowntimeEntryChangeEvent(event){
     let name = "";
-    if(event.level3) name = event.level3; 
-    else if(event.level2) name = event.level3; 
-    else if(event.level1) name= event.level1;
+    if(event.level1) name = event.level1;
+    if(event.level2) name = event.level2;
+    if(event.level3) name= event.level3;
     this.entity.name = name;
   }
 
   getEntitiesByPageLinkDeviceObservable(pageLink: PageLink, subType: string = '',
                       config?: RequestConfig): Observable<Array<BaseData<EntityId>>> {
     this.deviceIds = [];
-    this.entitiesObservable = 
+    this.entitiesObservable =
           this.deviceService.getTenantDeviceInfos(pageLink,subType,config)
     if (this.entitiesObservable) {
        this.entitiesObservable.pipe(
@@ -111,7 +111,7 @@ export class DowntimeEntryComponent extends EntityComponent<DowntimeEntryInfo> {
   getEntitiesByPageLinkDowntimeCodeConfigObservable(pageLink: PageLink, subType: string = '',
                       config?: RequestConfig): Observable<Array<BaseData<EntityId>>> {
     this.downtimeCodeConfigIds = [];
-    this.entitiesObservable = 
+    this.entitiesObservable =
           this.downtimeCodeConfigService.getTenantDowntimeCodesConfigurationInfos(pageLink,subType,config)
     if (this.entitiesObservable) {
        this.entitiesObservable.pipe(
