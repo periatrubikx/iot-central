@@ -466,7 +466,7 @@
         "rubikx-management":"RubikX Management",
         "shifts": "Shifts",
         "downtimeCodesConfigurations": "Downtime Codes",
-        "downtimeEntrys": "Downtime Entrys"
+        "downtimeEntrys": "Downtime Entries"
     },
     "shift":{
         "shift": "Shift",
@@ -596,7 +596,7 @@
         "delete-downtime-entrys-title": "Are you sure you want to delete { count, plural, 1 {1 downtimeEntry} other {# downtimeEntrys} }?",
         "delete-downtime-entrys-action-title": "Delete { count, plural, 1 {1 downtimeEntry} other {# downtimeEntrys} }",
         "delete-downtime-entrys-text": "Be careful, after the confirmation all selected downtime entrys will be removed and all related data will become unrecoverable."
-       
+
     },
     "attribute": {
         "attributes": "Attributes",

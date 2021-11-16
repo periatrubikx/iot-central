@@ -14,11 +14,13 @@ import java.util.UUID;
 
 public interface DowntimeEntryRepository extends PagingAndSortingRepository<DowntimeEntryEntity, UUID>{
 
-    @Query("SELECT new org.thingsboard.server.dao.model.sql.DowntimeEntryInfoEntity(a, c.title, c.additionalInfo) " +
-            "FROM DowntimeEntryEntity a " +
-            "LEFT JOIN CustomerEntity c on c.id = a.customerId " +
-            "WHERE a.tenantId = :tenantId " +
-            "AND LOWER(a.searchText) LIKE LOWER(CONCAT('%', :textSearch, '%'))")
+    @Query("SELECT new org.thingsboard.server.dao.model.sql.DowntimeEntryInfoEntity(dt, c.title, c.additionalInfo, a.name, d.name) " +
+            "FROM DowntimeEntryEntity dt " +
+            "LEFT JOIN CustomerEntity c on c.id = dt.customerId " +
+            "LEFT JOIN AssetEntity a on a.id = dt.assetId " +
+            "LEFT JOIN DeviceEntity d on d.id = dt.deviceId " +
+            "WHERE dt.tenantId = :tenantId " +
+            "AND LOWER(dt.searchText) LIKE LOWER(CONCAT('%', :textSearch, '%'))")
     Page<DowntimeEntryInfoEntity> findDowntimeEntryInfosByTenantId(@Param("tenantId") UUID tenantId,
                                                                    @Param("textSearch") String textSearch,
                                                                    Pageable pageable);
