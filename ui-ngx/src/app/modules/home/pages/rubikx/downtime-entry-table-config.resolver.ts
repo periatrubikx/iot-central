@@ -27,7 +27,7 @@ import { Customer } from '@app/shared/models/customer.model';
 export class DowntimeEntryConfigResolver implements Resolve<EntityTableConfig<DowntimeEntryInfo>> {
 
     private readonly config : EntityTableConfig<DowntimeEntryInfo> = new EntityTableConfig<DowntimeEntryInfo>();
-    
+
     private customerId : string;
 
     constructor(private store:Store<AppState>,
@@ -37,7 +37,7 @@ export class DowntimeEntryConfigResolver implements Resolve<EntityTableConfig<Do
         private datePipe: DatePipe,
         private homeDialogs: HomeDialogsService,
         private broadcast: BroadcastService,
-        private dialogService: DialogService, 
+        private dialogService: DialogService,
         private dialog: MatDialog
         ){
 
@@ -67,8 +67,8 @@ export class DowntimeEntryConfigResolver implements Resolve<EntityTableConfig<Do
     configureColumns(downtimeEntryScope: string): Array<EntityTableColumn<DowntimeEntryInfo>> {
         const columns: Array<EntityTableColumn<DowntimeEntryInfo>> = [
           new DateEntityTableColumn<DowntimeEntryInfo>('createdTime', 'common.created-time', this.datePipe, '150px'),
-          new EntityTableColumn<DowntimeEntryInfo>('asset', 'downtimeEntry.asset', '25%'),
-          new EntityTableColumn<DowntimeEntryInfo>('device', 'downtimeEntry.device', '25%'),
+          new EntityTableColumn<DowntimeEntryInfo>('assetTitle', 'downtimeEntry.asset', '25%'),
+          new EntityTableColumn<DowntimeEntryInfo>('deviceTitle', 'downtimeEntry.device', '25%'),
           new EntityTableColumn<DowntimeEntryInfo>('startDateTimeMs', 'downtimeEntry.startDateTime', '25%'),
           new EntityTableColumn<DowntimeEntryInfo>('endDateTimeMs','downtimeEntry.endDateTime','25%'),
           new EntityTableColumn<DowntimeEntryInfo>('name','downtimeEntry.reason','25%')
@@ -117,7 +117,7 @@ export class DowntimeEntryConfigResolver implements Resolve<EntityTableConfig<Do
           this.config.entitiesDeleteEnabled = this.config.componentsData.downtimeEntryScope === 'tenant';
           this.config.deleteEnabled = () => this.config.componentsData.downtimeEntryScope === 'tenant';
         return this.config;
-    
+
         })
         );
     }
@@ -132,7 +132,7 @@ export class DowntimeEntryConfigResolver implements Resolve<EntityTableConfig<Do
     }
 
     configureEntityFuncations(downtimeEntryScope:string):void{
-    
+
         if(downtimeEntryScope === 'tenant'){
           this.config.entitiesFetchFunction = pageLink =>
           this.downtimeEntryService.getTenantDowntimeEntryInfos(pageLink,this.config.componentsData.downtimeEntrysType);
@@ -145,6 +145,6 @@ export class DowntimeEntryConfigResolver implements Resolve<EntityTableConfig<Do
         //   this.config.deleteEntity = id => this.downtimeEntryService.unassignShiftFromCustomer(id.id);
         }
       }
-    
-    
+
+
 }
