@@ -43,6 +43,7 @@ import org.thingsboard.server.dao.cassandra.CassandraCluster;
 import org.thingsboard.server.dao.customer.CustomerService;
 import org.thingsboard.server.dao.dashboard.DashboardService;
 import org.thingsboard.server.dao.device.DeviceService;
+import org.thingsboard.server.dao.downtimeentry.DowntimeEntryService;
 import org.thingsboard.server.dao.edge.EdgeEventService;
 import org.thingsboard.server.dao.edge.EdgeService;
 import org.thingsboard.server.dao.entityview.EntityViewService;
@@ -266,4 +267,6 @@ public interface TbContext {
     void removeListeners();
 
     TenantProfile getTenantProfile();
+
+    DowntimeEntryService getDowntimeEntryService();
 }

@@ -65,6 +65,7 @@ import org.thingsboard.server.dao.cassandra.CassandraCluster;
 import org.thingsboard.server.dao.customer.CustomerService;
 import org.thingsboard.server.dao.dashboard.DashboardService;
 import org.thingsboard.server.dao.device.DeviceService;
+import org.thingsboard.server.dao.downtimeentry.DowntimeEntryService;
 import org.thingsboard.server.dao.edge.EdgeEventService;
 import org.thingsboard.server.dao.edge.EdgeService;
 import org.thingsboard.server.dao.entityview.EntityViewService;
@@ -626,6 +627,11 @@ class DefaultTbContext implements TbContext {
     @Override
     public TenantProfile getTenantProfile() {
         return mainCtx.getTenantProfileCache().get(getTenantId());
+    }
+
+    @Override
+    public DowntimeEntryService getDowntimeEntryService() {
+        return mainCtx.getDowntimeEntryService();
     }
 
     private TbMsgMetaData getActionMetaData(RuleNodeId ruleNodeId) {

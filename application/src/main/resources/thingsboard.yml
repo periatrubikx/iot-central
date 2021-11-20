@@ -117,7 +117,7 @@ cluster:
 # Plugins configuration parameters
 plugins:
   # Comma separated package list used during classpath scanning for plugins
-  scan_packages: "${PLUGINS_SCAN_PACKAGES:org.thingsboard.server.extensions,org.thingsboard.rule.engine}"
+  scan_packages: "${PLUGINS_SCAN_PACKAGES:org.thingsboard.server.extensions,org.thingsboard.rule.engine,io.rubikx.nodes}"
 
 # Security parameters
 security:
